@@ -1,0 +1,21 @@
+import React from "react";
+import { GetStaticProps } from "next";
+// import {  } from "@estilos/pages/{{getPath folder (createFilename nomePag)}}.styled";
+
+export const getStaticProps: GetStaticProps = async () => {
+    return {
+        props: {
+            título: "{{nomePag}}",
+        },
+    };
+};
+
+const {{nomePag}}: React.FC = () => {
+    return (
+        <div>
+            <div>{{nomePag}}</div>
+        </div>
+    );
+};
+
+export default {{nomePag}};

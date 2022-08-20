@@ -1,0 +1,14 @@
+{
+	"extends": ["next/core-web-vitals", "prettier"], // regras que o ESLint seguirá
+	"plugins": ["prettier"], // integração com o ESLint
+	"rules": {
+		"@next/next/no-img-element": "off",
+		"@next/next/no-css-tags": "off",
+		"prettier/prettier": ["error", {
+			"endOfLine": "CRLF"
+		}] // Prettier mostra onde estão os erros e confirma que o término da linha será CRLF
+		// "quotes": ["error", "double"], // padroniza strings com aspas duplas
+		// "semi": ["error", "aways"] // padroniza que a linha sempre deve encerrar com ";"
+	}
+}
+

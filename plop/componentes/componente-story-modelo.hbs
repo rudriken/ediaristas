@@ -1,0 +1,15 @@
+import { ComponentMeta, ComponentStory } from "@storybook/react";
+import {{nomeC}} from "./{{nomeC}}";
+
+export default {
+	title: "{{tipoC}}/{{nomeC}}",
+	component: {{nomeC}},
+	argTypes: {},
+} as ComponentMeta<typeof {{nomeC}}>;
+
+const Modelo: ComponentStory<typeof {{nomeC}}> = (argumentos) => (
+	<{{nomeC}} {...argumentos} />
+);
+
+export const Padrao = Modelo.bind({});
+Padrao.args = {};
