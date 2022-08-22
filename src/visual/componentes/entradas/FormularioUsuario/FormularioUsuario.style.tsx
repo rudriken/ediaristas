@@ -29,3 +29,8 @@ export const DadosNovoContato = styled(GradeBase)`
 			"confirmar-senha";
 	}
 `;
+
+export const ImagemSelecionada = styled(GradeBase)`
+	grid-template-columns: 1fr;
+	padding: 0;
+`;
