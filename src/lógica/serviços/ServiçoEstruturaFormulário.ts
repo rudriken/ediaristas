@@ -13,10 +13,11 @@ export const ServiçoEstruturaFormulário = {
 						.min(5, "Senha muito curta")
 						.oneOf(
 							[yup.ref("password"), null],
-							"As senhas não estão iguais"
+							"As senhas não conferem"
 						),
 				}),
 			})
 			.defined();
 	},
 };
+
