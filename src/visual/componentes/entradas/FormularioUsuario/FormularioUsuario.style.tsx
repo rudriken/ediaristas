@@ -14,6 +14,21 @@ export const GradeBase = styled("div")`
 	}
 `;
 
+export const DadosUsuario = styled(GradeBase)`
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-areas:
+		"nome 				nome 	nome"
+		"data-nascimento 	cpf 	telefone";
+
+	${({ theme }) => theme.breakpoints.down("md")} {
+		grid-template-areas:
+			"nome"
+			"data-nascimento"
+			"cpf"
+			"telefone";
+	}
+`;
+
 export const DadosNovoContato = styled(GradeBase)`
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-areas:

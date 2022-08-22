@@ -5,7 +5,7 @@ import { OutlinedTextFieldProps } from "@mui/material";
 // import {  } from "./CampoDeTextoComMascara.style";
 
 export interface CampoDeTextoComMascaraProps
-	extends Omit<OutlinedTextFieldProps, "vari-ant"> {
+	extends Omit<OutlinedTextFieldProps, "variant"> {
 	// estende todas as propriedades, exceto a "variant"
 	máscara: string;
 }
