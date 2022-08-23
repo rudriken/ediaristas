@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { ServiçoData } from "./ServiçoData";
+import { ServiçoPagamento } from "./ServiçoPagamento";
 import { ServiçoValidação } from "./ServiçoValidação";
 
 export const ServiçoEstruturaFormulário = {
@@ -41,7 +42,7 @@ export const ServiçoEstruturaFormulário = {
 			})
 			.defined();
 	},
-	novoCxntato() {
+	novoContato() {
 		return yup
 			.object()
 			.shape({
@@ -54,6 +55,58 @@ export const ServiçoEstruturaFormulário = {
 						.oneOf(
 							[yup.ref("password"), null],
 							"As senhas não conferem"
+						),
+				}),
+			})
+			.defined();
+	},
+	pagamento() {
+		return yup
+			.object()
+			.shape({
+				pagamento: yup.object().shape({
+					número_cartão: yup
+						.string()
+						.test(
+							"verificar número do cartão",
+							"Número de cartão inválido",
+							(valor) => {
+								return ServiçoPagamento.validar({
+									card_number: valor as string,
+									card_holder_name: "",
+									card_cvv: "",
+									card_expiration_date: "",
+								}).card_number;
+							}
+						),
+					nome_titular_cartão: yup.string(),
+					validade: yup
+						.string()
+						.test(
+							"verificar validade do cartão",
+							"Data de validade inválida",
+							(valor) => {
+								return ServiçoPagamento.validar({
+									card_number: "",
+									card_holder_name: "",
+									card_cvv: "",
+									card_expiration_date: valor as string,
+								}).card_expiration_date;
+							}
+						),
+					código_cvv: yup
+						.string()
+						.test(
+							"verificar código validador do cartão",
+							"Código do cartão inválido",
+							(valor) => {
+								return ServiçoPagamento.validar({
+									card_number: "",
+									card_holder_name: "",
+									card_cvv: valor as string,
+									card_expiration_date: "",
+								}).card_cvv;
+							}
 						),
 				}),
 			})

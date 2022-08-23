@@ -45,6 +45,24 @@ export const DadosNovoContato = styled(GradeBase)`
 	}
 `;
 
+export const DadosPagamento = styled(GradeBase)`
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-areas:
+		"número 	número"
+		"nome 		nome"
+		"validade 	código"
+		"erro 		erro";
+
+	${({ theme }) => theme.breakpoints.down("md")} {
+		grid-template-areas:
+			"número"
+			"nome"
+			"validade"
+			"código"
+			"erro";
+	}
+`;
+
 export const ImagemSelecionada = styled(GradeBase)`
 	grid-template-columns: 1fr;
 	padding: 0;
