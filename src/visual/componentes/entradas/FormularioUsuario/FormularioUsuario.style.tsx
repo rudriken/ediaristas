@@ -63,6 +63,18 @@ export const DadosPagamento = styled(GradeBase)`
 	}
 `;
 
+export const DadosEndereco = styled(GradeBase)`
+	grid-template-columns: repeat(7, 1fr);
+	grid-template-areas:
+		"cep 		cep 	estado 		estado 		cidade 	cidade 			cidade"
+		"bairro 	bairro 	logradouro 	logradouro 	número 	complemento 	complemento";
+
+	${({ theme }) => theme.breakpoints.down("md")} {
+		grid-template-areas: 
+			"cep" "estado" "cidade" "bairro" "logradouro" "número" "complemento";
+	}
+`;
+
 export const ImagemSelecionada = styled(GradeBase)`
 	grid-template-columns: 1fr;
 	padding: 0;

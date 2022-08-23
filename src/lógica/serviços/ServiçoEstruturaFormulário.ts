@@ -17,7 +17,7 @@ export const ServiçoEstruturaFormulário = {
 						.transform(ServiçoData.converterStringEmData)
 						.min(
 							ServiçoData.dataDeNascimentoMáxima(),
-							"Digite uma data válida "
+							"Digite uma data válida"
 						)
 						.max(
 							ServiçoData.dataDeNascimentoMínima(),
@@ -38,6 +38,30 @@ export const ServiçoEstruturaFormulário = {
 							"Telefone inválido",
 							ServiçoValidação.verificarTelefone
 						),
+				}),
+			})
+			.defined();
+	},
+	endereço() {
+		return yup
+			.object()
+			.shape({
+				endereço: yup.object().shape({
+					cep: yup
+						.string()
+						.test("validar CEP", "CEP inválido", (valor) =>
+							ServiçoValidação.verificarCEP(valor)
+						),
+					estado: yup.string(),
+					cidade: yup.string(),
+					bairro: yup.string(),
+					logradouro: yup.string(),
+					número: yup.string(),
+					complemento: yup
+						.string()
+						.nullable()
+						.default(undefined)
+						.notRequired(),
 				}),
 			})
 			.defined();
@@ -110,6 +134,6 @@ export const ServiçoEstruturaFormulário = {
 						),
 				}),
 			})
-			.defined();
+			.defined(); /* ( . . . ) */
 	},
 };
