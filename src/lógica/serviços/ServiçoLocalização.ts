@@ -1,4 +1,5 @@
 import {
+	CepResposta,
 	CidadeInterface,
 	EstadoInterface,
 } from "lógica/@tipos/EndereçoInterface";
@@ -54,6 +55,14 @@ export const ServiçoLocalização = {
 				cidade: cidade.nome,
 				código_ibge: cidade.id,
 			}));
+		} catch (erro) {}
+	},
+	async localizarCEP(cep: string): Promise<CepResposta | undefined> {
+		try {
+			const resposta = await ServiçoAPI.request<CepResposta>({
+				url: "api/enderecos?cep=" + cep.replace(/\D/g, ""),
+			});
+			return resposta.data;
 		} catch (erro) {}
 	},
 };

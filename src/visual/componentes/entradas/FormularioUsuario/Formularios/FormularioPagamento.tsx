@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Typography } from "@mui/material";
 import CampoDeTexto from "../../CampoDeTexto/CampoDeTexto";
 import { DadosPagamento } from "../FormularioUsuario.style";
@@ -18,6 +19,11 @@ export const FormularioPagamento = () => {
 		};
 		pagamento_recusado: object;
 	}>();
+
+	useEffect(() => {
+		register("pagamento_recusado");
+	}, []);
+
 	return (
 		<DadosPagamento>
 			<Controller
