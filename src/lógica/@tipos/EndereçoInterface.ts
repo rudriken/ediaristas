@@ -1,3 +1,15 @@
+export interface EndereçoInterface {
+	id?: number;
+	logradouro?: string;
+	bairro: string;
+	complemento: string;
+	cep: string;
+	cidade: string;
+	estado: string;
+	número: string;
+	código_ibge?: number;
+}
+
 export interface EstadoInterface {
 	nome: string;
 	sigla: string;

@@ -1,6 +1,32 @@
-import { styled } from "@mui/material";
-// import {  } from "@mui/material";
+import { styled, Container } from "@mui/material";
 // import { FormularioUsuarioProps } from "./FormularioUsuario";
+
+export const ContainerFormularioEstilizado = styled(Container)`
+	${({ theme }) => theme.breakpoints.down("md")} {
+		.MuiPaper-root {
+			box-shadow: none;
+		}
+	}
+`;
+
+export const ContainerPaginaFormulario = styled("div", {
+	shouldForwardProp: (propriedade) => propriedade !== "larguraTotal",
+})<{ larguraTotal?: boolean }>`
+	display: grid;
+	grid-template-columns: ${({ larguraTotal }) =>
+		larguraTotal ? "1fr" : "minmax(652px, 1fr) minmax(150px, 318px)"};
+	gap: ${({ theme }) => theme.spacing(6)};
+	align-items: flex-start;
+	margin-bottom: ${({ theme }) => theme.spacing(8)};
+
+	${({ theme }) => theme.breakpoints.down("md")} {
+		grid-template-columns: 1fr;
+		gap: ${({ theme }) => theme.spacing(3)};
+		.MuiPaper-root {
+			padding: 0;
+		}
+	}
+`;
 
 export const GradeBase = styled("div")`
 	display: grid;
@@ -70,8 +96,7 @@ export const DadosEndereco = styled(GradeBase)`
 		"bairro 	bairro 	logradouro 	logradouro 	número 	complemento 	complemento";
 
 	${({ theme }) => theme.breakpoints.down("md")} {
-		grid-template-areas: 
-			"cep" "estado" "cidade" "bairro" "logradouro" "número" "complemento";
+		grid-template-areas: "cep" "estado" "cidade" "bairro" "logradouro" "número" "complemento";
 	}
 `;
 

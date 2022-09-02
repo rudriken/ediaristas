@@ -1,6 +1,6 @@
 import React from "react";
 import { GetStaticProps } from "next";
-import VerificarProfissionais from "@parciais/encontrar-diarista/_verificar-profissionais";
+import Contratacao from "@parciais/encontrar-diarista/_contratacao";
 // import {  } from "@estilos/pages/encontrar-diarista.styled";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -14,7 +14,8 @@ export const getStaticProps: GetStaticProps = async () => {
 const EncontrarDiarista: React.FC = () => {
     return (
         <div>
-            <VerificarProfissionais />
+            {/* <VerificarProfissionais /> */}
+			<Contratacao />
         </div>
     );
 };

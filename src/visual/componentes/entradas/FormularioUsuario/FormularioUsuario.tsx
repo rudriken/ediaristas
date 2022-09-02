@@ -1,18 +1,19 @@
 import React from "react";
-import { FormularioImagem } from "./Formularios/FormularioImagem";
-import { FormularioNovoContato } from "./Formularios/FormularioNovoContato";
-import { FormularioPagamento } from "./Formularios/FormularioPagamento";
 // import {  } from "@mui/material";
-// import {  } from "./FormularioUsuario.style";
+import { ContainerFormularioEstilizado } from "./FormularioUsuario.style";
 
 export interface FormularioUsuarioProps {}
 
+export const FormularioUsuarioContainer = ContainerFormularioEstilizado;
+
 const FormularioUsuario: React.FC<FormularioUsuarioProps> = () => {
-	return (
-		<div>
-			<FormularioPagamento />
-		</div>
-	);
+	return <div></div>;
 };
 
 export default FormularioUsuario;
+
+export * from "./Formularios/FormularioEndereco";
+export * from "./Formularios/FormularioNovoContato";
+export * from "./Formularios/FormularioPagamento";
+export * from "./Formularios/FormularioImagem";
+export * from "./Formularios/FormularioDadosUsuario";

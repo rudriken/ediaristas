@@ -39,4 +39,14 @@ export const ServiçoValidação = {
 		if (rev !== parseInt(cpf.charAt(10))) return false;
 		return true;
 	},
+	verificarHora(horário = ""): boolean {
+		return /^([01][0-9]|2[0-3]):([0-5][0-9])$/.test(horário);
+	},
+	verificarPrazoMínimoParaAgendamento(data: string, hora: string): boolean {
+		const agora = Date.now(),
+			dataHora = new Date(data + "T" + hora).getTime(),
+			diferença = (dataHora - agora) / 1000 / 60 / 60,
+			mínimoHoras = 48;
+		return diferença > mínimoHoras;
+	},
 };
