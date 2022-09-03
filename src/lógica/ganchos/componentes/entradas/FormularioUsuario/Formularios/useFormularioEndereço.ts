@@ -2,6 +2,7 @@ import useCidades from "lógica/ganchos/useCidades.hook";
 import { ServiçoLocalização } from "lógica/serviços/ServiçoLocalização";
 import { useFormContext } from "react-hook-form";
 import { useMemo, useEffect } from "react";
+import { NovaDiáriaFormulárioDeDadosInterface } from "lógica/@tipos/FormulárioInterface";
 
 export default function useFormularioEndereço() {
 	const {
@@ -10,18 +11,7 @@ export default function useFormularioEndereço() {
 			watch,
 			setValue,
 			formState: { errors },
-		} = useFormContext<{
-			endereço: {
-				cep: string;
-				estado: string;
-				cidade: string;
-				bairro: string;
-				logradouro: string;
-				número: string;
-				complemento: string;
-				código_ibge: number;
-			};
-		}>(),
+		} = useFormContext<NovaDiáriaFormulárioDeDadosInterface>(),
 		[endereçoEstado, endereçoCidade, endereçoCEP] = watch([
 			"endereço.estado",
 			"endereço.cidade",

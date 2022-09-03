@@ -72,7 +72,11 @@ export const FormularioEndereco = () => {
 						loadingText={"Carregando cidades ..."}
 						noOptionsText={"Nenhuma cidade com esse nome!"}
 						renderInput={(parâmetros) => (
-							<CampoDeTexto label={"Cidade"} {...parâmetros} />
+							<CampoDeTexto
+								label={"Cidade"}
+								{...parâmetros}
+								InputLabelProps={{ required: false }}
+							/>
 						)}
 					/>
 				)}

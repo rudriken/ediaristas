@@ -3,7 +3,9 @@ import CampoDeTexto from "../../CampoDeTexto/CampoDeTexto";
 import { ImagemSelecionada } from "../FormularioUsuario.style";
 
 export const FormularioImagem = () => {
-	const { control } = useFormContext();
+	const { control } = useFormContext<{
+		usuário: { foto_documento: string };
+	}>();
 	return (
 		<ImagemSelecionada>
 			<Controller
