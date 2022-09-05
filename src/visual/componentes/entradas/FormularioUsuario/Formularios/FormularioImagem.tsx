@@ -15,7 +15,7 @@ export const FormularioImagem = () => {
 				render={({ field }) => (
 					<CampoDeTexto
 						onChange={(arquivo) => field.onChange(arquivo)}
-						// onChange={(arquivos) => field.onChange(arquivos[0])} deu erro
+						// onChange={(arquivos) => field.onChange(arquivos[0])}
 						inputProps={{ accept: ".jpeg, .jpg, .png" }}
 					/>
 				)}

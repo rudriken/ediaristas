@@ -3,15 +3,30 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ServiçoInterface } from "lógica/@tipos/ServiçoInterface";
 import { ServiçoEstruturaFormulário } from "../../serviços/ServiçoEstruturaFormulário";
-import { NovaDiáriaFormulárioDeDadosInterface } from "lógica/@tipos/FormulárioInterface";
+import {
+	CadastroClienteFormulárioDeDadosInterface,
+	NovaDiáriaFormulárioDeDadosInterface,
+} from "lógica/@tipos/FormulárioInterface";
 
 export default function useContratacao() {
-	const [passo, alterarPasso] = useState(1),
-		migalhaDePãoItens = ["Detalhes da Diária","Identificação","Pagamento",],
+	const [passo, alterarPasso] = useState(2),
+		[temLogin, alterarTemLogin] = useState(false),
+		migalhaDePãoItens = [
+			"Detalhes da Diária",
+			"Identificação",
+			"Pagamento",
+		],
 		formulárioServiço = useForm<NovaDiáriaFormulárioDeDadosInterface>({
 			resolver: yupResolver(
 				ServiçoEstruturaFormulário.endereço().concat(
 					ServiçoEstruturaFormulário.detalhesServiço()
+				)
+			),
+		}),
+		formulárioCliente = useForm<CadastroClienteFormulárioDeDadosInterface>({
+			resolver: yupResolver(
+				ServiçoEstruturaFormulário.dadosUsuário().concat(
+					ServiçoEstruturaFormulário.novoContato()
 				)
 			),
 		}),
@@ -78,15 +93,28 @@ export default function useContratacao() {
 			},
 		];
 
-	function aoSubmeterFormulárioServiço(dados: NovaDiáriaFormulárioDeDadosInterface) {
+	function aoSubmeterFormulárioServiço(
+		dados: NovaDiáriaFormulárioDeDadosInterface
+	) {
+		console.log(dados);
+	}
+
+	function aoSubmeterFormulárioCliente(
+		dados: CadastroClienteFormulárioDeDadosInterface
+	) {
 		console.log(dados);
 	}
 
 	return {
 		passo,
+		alterarPasso,
 		migalhaDePãoItens,
 		formulárioServiço,
+		formulárioCliente,
 		aoSubmeterFormulárioServiço,
+		aoSubmeterFormulárioCliente,
 		serviços,
+		temLogin,
+		alterarTemLogin,
 	};
 }
