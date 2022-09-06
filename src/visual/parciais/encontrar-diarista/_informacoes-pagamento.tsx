@@ -16,7 +16,7 @@ const InformacoesPagamento: React.FC = () => {
 					color={"secondary"}
 					type={"submit"}
 				>
-					fazer Pagamento
+					Fazer Pagamento
 				</Button>
 			</Container>
 		</>

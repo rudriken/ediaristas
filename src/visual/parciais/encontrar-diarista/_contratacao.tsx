@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 import { FormProvider } from "react-hook-form";
 import useMóvelAtivo from "lógica/ganchos/useMóvelAtivo";
 import useContratacao from "lógica/ganchos/pages/useContratacao.page";
@@ -12,6 +12,7 @@ import { ContainerPaginaFormulario } from "visual/componentes/entradas/Formulari
 import DetalhesServico from "./_detalhes-servico";
 import CadastroCliente, { LoginCliente } from "./_cadastro-cliente";
 import InformacoesPagamento from "./_informacoes-pagamento";
+import Elo from "visual/componentes/navegacao/Link/Link";
 
 const Contratacao: React.FC = () => {
 	const móvel = useMóvelAtivo(),
@@ -116,41 +117,89 @@ const Contratacao: React.FC = () => {
 						</FormProvider>
 
 						{passo === 3 && (
-							<FormProvider {...formulárioCliente}>
+							<FormProvider {...formularioPagamento}>
 								<form
-									onSubmit={formulárioCliente.handleSubmit(
-										aoSubmeterFormulárioCliente
+									onSubmit={formularioPagamento.handleSubmit(
+										aoSubmeterFormularioPagamento
 									)}
 								>
 									<InformacoesPagamento />
 								</form>
 							</FormProvider>
 						)}
+
+						{passo === 4 && (
+							<Box sx={{ textAlign: "center" }}>
+								<Typography
+									color={"secondary"}
+									sx={{ fontSize: "82px" }}
+								>
+									<i className={"twf-check-circle"} />
+								</Typography>
+								<Typography
+									color={"secondary"}
+									sx={{ fontSize: "22px", pb: 3 }}
+								>
+									Pagamento realizado com sucesso!
+								</Typography>
+								<Typography
+									sx={{
+										maxWidth: "410px",
+										mb: 3,
+										mx: "auto",
+									}}
+									variant={"body2"}
+									color={"textSecondary"}
+								>
+									Sua diária foi paga com sucesso! Já estamos
+									procurando o(a) melhor profissional para
+									atender sua residência. Caso nenhum(a)
+									profissional seja encontrado(a),
+									devolveremos seu dinheiro automaticamente 24
+									horas antes da data agendada. Você também
+									poderá cancelar a sua diária sem nenhuma
+									multa até 24 horas antes da hora do
+									agendamento.
+								</Typography>
+								<Elo
+									href={"/diarias"}
+									ComponenteReact={Button}
+									mui={{
+										color: "secondary",
+										variant: "contained",
+									}}
+								>
+									Ir para minhas diárias
+								</Elo>
+							</Box>
+						)}
 					</Paper>
-					<InformacaoLateral
-						título={"Detalhes"}
-						itens={[
-							{
-								títuloI: "Tipo",
-								descriçãoI: [""],
-								íconeI: "twf-check-circle",
-							},
-							{
-								títuloI: "Tamanho",
-								descriçãoI: [""],
-								íconeI: "twf-check-circle",
-							},
-							{
-								títuloI: "Data",
-								descriçãoI: [""],
-								íconeI: "twf-check-circle",
-							},
-						]}
-						rodapé={{
-							textoR: "R$ 80,00",
-							íconeR: "twf-credit-card",
-						}}
-					/>
+					{!móvel && passo !== 4 && (
+						<InformacaoLateral
+							título={"Detalhes"}
+							itens={[
+								{
+									títuloI: "Tipo",
+									descriçãoI: [""],
+									íconeI: "twf-check-circle",
+								},
+								{
+									títuloI: "Tamanho",
+									descriçãoI: [""],
+									íconeI: "twf-check-circle",
+								},
+								{
+									títuloI: "Data",
+									descriçãoI: [""],
+									íconeI: "twf-check-circle",
+								},
+							]}
+							rodapé={{
+								textoR: "R$ 80,00",
+								íconeR: "twf-credit-card",
+							}}
+						/>
+					)}
 				</ContainerPaginaFormulario>
 			</FormularioUsuarioContainer>
 		</div>
