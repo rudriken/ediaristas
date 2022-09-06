@@ -7,11 +7,12 @@ import {
 	CadastroClienteFormulárioDeDadosInterface,
 	LoginFormularioDeDadosInterface,
 	NovaDiáriaFormulárioDeDadosInterface,
+	PagamentoFormularioDeDadosInterface,
 } from "lógica/@tipos/FormulárioInterface";
 
 export default function useContratacao() {
-	const [passo, alterarPasso] = useState(2),
-		[temLogin, alterarTemLogin] = useState(false),
+	const [passo, alterarPasso] = useState(3),
+		[temLogin, alterarTemLogin] = useState(true),
 		[erroDeLogin, alterarErroDeLogin] = useState(""),
 		migalhaDePãoItens = [
 			"Detalhes da Diária",
@@ -34,6 +35,9 @@ export default function useContratacao() {
 		}),
 		formularioLogin = useForm<LoginFormularioDeDadosInterface>({
 			resolver: yupResolver(ServiçoEstruturaFormulário.login()),
+		}),
+		formularioPagamento = useForm<PagamentoFormularioDeDadosInterface>({
+			resolver: yupResolver(ServiçoEstruturaFormulário.pagamento()),
 		}),
 		serviços: ServiçoInterface[] = [
 			{
@@ -114,6 +118,12 @@ export default function useContratacao() {
 		console.log(dados);
 	}
 
+	function aoSubmeterFormularioPagamento(
+		dados: PagamentoFormularioDeDadosInterface
+	) {
+		console.log(dados);
+	}
+
 	return {
 		passo,
 		alterarPasso,
@@ -121,9 +131,11 @@ export default function useContratacao() {
 		formulárioServiço,
 		formulárioCliente,
 		formularioLogin,
+		formularioPagamento,
 		aoSubmeterFormulárioServiço,
 		aoSubmeterFormulárioCliente,
 		aoSubmeterFormularioLogin,
+		aoSubmeterFormularioPagamento,
 		serviços,
 		temLogin,
 		erroDeLogin,

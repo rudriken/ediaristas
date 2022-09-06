@@ -1,3 +1,4 @@
+import { boolean } from "yup";
 import { DiáriaInterface } from "./DiáriaInterface";
 import { EndereçoInterface } from "./EndereçoInterface";
 import { InterfaceDoUsuário } from "./InterfaceDoUsuário";
@@ -14,4 +15,12 @@ export interface LoginFormularioDeDadosInterface {
 
 export interface CadastroClienteFormulárioDeDadosInterface {
 	usuário: InterfaceDoUsuário;
+}
+
+export interface PagamentoFormularioDeDadosInterface {
+	nome_cartao: string;
+	numero_cartao: string;
+	codigo: string;
+	validade: string;
+	pagamento_recusado?: boolean;
 }

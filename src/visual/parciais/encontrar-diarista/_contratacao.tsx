@@ -11,6 +11,7 @@ import { FormularioUsuarioContainer } from "visual/componentes/entradas/Formular
 import { ContainerPaginaFormulario } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario.style";
 import DetalhesServico from "./_detalhes-servico";
 import CadastroCliente, { LoginCliente } from "./_cadastro-cliente";
+import InformacoesPagamento from "./_informacoes-pagamento";
 
 const Contratacao: React.FC = () => {
 	const móvel = useMóvelAtivo(),
@@ -21,9 +22,11 @@ const Contratacao: React.FC = () => {
 			formulárioServiço,
 			formulárioCliente,
 			formularioLogin,
+			formularioPagamento,
 			aoSubmeterFormulárioServiço,
 			aoSubmeterFormulárioCliente,
 			aoSubmeterFormularioLogin,
+			aoSubmeterFormularioPagamento,
 			serviços,
 			temLogin,
 			erroDeLogin,
@@ -77,7 +80,7 @@ const Contratacao: React.FC = () => {
 						</FormProvider>
 
 						{passo === 2 && temLogin && (
-							<FormProvider {...formulárioCliente}>
+							<FormProvider {...formularioLogin}>
 								<form
 									onSubmit={formularioLogin.handleSubmit(
 										aoSubmeterFormularioLogin
@@ -111,6 +114,18 @@ const Contratacao: React.FC = () => {
 								/>
 							</form>
 						</FormProvider>
+
+						{passo === 3 && (
+							<FormProvider {...formulárioCliente}>
+								<form
+									onSubmit={formulárioCliente.handleSubmit(
+										aoSubmeterFormulárioCliente
+									)}
+								>
+									<InformacoesPagamento />
+								</form>
+							</FormProvider>
+						)}
 					</Paper>
 					<InformacaoLateral
 						título={"Detalhes"}
