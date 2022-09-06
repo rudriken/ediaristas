@@ -3,8 +3,10 @@ import { Button, Container, Divider, Typography } from "@mui/material";
 import {
 	FormularioDadosUsuario,
 	FormularioImagem,
+	FormularioLogin,
 	FormularioNovoContato,
 } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario";
+import { LoginBotoesContainer } from "./_cadastro-cliente.styled";
 // import { Component } from "./_cadastro-cliente.styled";
 
 const CadastroCliente: React.FC<{ paraVoltar: () => void }> = ({
@@ -52,6 +54,34 @@ const CadastroCliente: React.FC<{ paraVoltar: () => void }> = ({
 					Ir para pagamento
 				</Button>
 			</Container>
+		</>
+	);
+};
+
+export const LoginCliente: React.FC<{ paraVoltar: () => void }> = ({
+	paraVoltar,
+}) => {
+	return (
+		<>
+			<FormularioLogin />
+			<LoginBotoesContainer>
+				<Button
+					variant={"outlined"}
+					color={"primary"}
+					type={"button"}
+					onClick={paraVoltar}
+				>
+					Voltar para detalhes da diária
+				</Button>
+
+				<Button
+					variant={"contained"}
+					color={"secondary"}
+					type={"submit"}
+				>
+					Ir para pagamento
+				</Button>
+			</LoginBotoesContainer>
 		</>
 	);
 };

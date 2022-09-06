@@ -1,7 +1,12 @@
 import { styled } from "@mui/material";
-// import {  } from "@mui/material";
 
-export const Component = styled("div")`
-    background-color: white;
-	color: black;
+export const LoginBotoesContainer = styled("div")`
+	display: flex;
+	justify-content: flex-end;
+	gap: ${({ theme }) => theme.spacing(3)};
+	${({ theme }) => theme.breakpoints.down("md")} {
+		flex-direction: column;
+		margin: 0 auto;
+		max-width: 300px;
+	}
 `;

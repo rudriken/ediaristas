@@ -7,6 +7,11 @@ export interface NovaDiáriaFormulárioDeDadosInterface {
 	faxina: DiáriaInterface;
 }
 
+export interface LoginFormularioDeDadosInterface {
+	email: string;
+	password: string;
+}
+
 export interface CadastroClienteFormulárioDeDadosInterface {
 	usuário: InterfaceDoUsuário;
 }

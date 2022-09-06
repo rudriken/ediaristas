@@ -110,7 +110,7 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
 					return (
 						<Controller
 							key={item.nome}
-							name={"faxina." + item.nome}
+							name={`faxina.${item.nome}` as any}
 							defaultValue={0}
 							control={control}
 							render={({ field }) => {

@@ -5,12 +5,14 @@ import { ServiçoInterface } from "lógica/@tipos/ServiçoInterface";
 import { ServiçoEstruturaFormulário } from "../../serviços/ServiçoEstruturaFormulário";
 import {
 	CadastroClienteFormulárioDeDadosInterface,
+	LoginFormularioDeDadosInterface,
 	NovaDiáriaFormulárioDeDadosInterface,
 } from "lógica/@tipos/FormulárioInterface";
 
 export default function useContratacao() {
 	const [passo, alterarPasso] = useState(2),
 		[temLogin, alterarTemLogin] = useState(false),
+		[erroDeLogin, alterarErroDeLogin] = useState(""),
 		migalhaDePãoItens = [
 			"Detalhes da Diária",
 			"Identificação",
@@ -29,6 +31,9 @@ export default function useContratacao() {
 					ServiçoEstruturaFormulário.novoContato()
 				)
 			),
+		}),
+		formularioLogin = useForm<LoginFormularioDeDadosInterface>({
+			resolver: yupResolver(ServiçoEstruturaFormulário.login()),
 		}),
 		serviços: ServiçoInterface[] = [
 			{
@@ -105,16 +110,24 @@ export default function useContratacao() {
 		console.log(dados);
 	}
 
+	function aoSubmeterFormularioLogin(dados: LoginFormularioDeDadosInterface) {
+		console.log(dados);
+	}
+
 	return {
 		passo,
 		alterarPasso,
 		migalhaDePãoItens,
 		formulárioServiço,
 		formulárioCliente,
+		formularioLogin,
 		aoSubmeterFormulárioServiço,
 		aoSubmeterFormulárioCliente,
+		aoSubmeterFormularioLogin,
 		serviços,
 		temLogin,
+		erroDeLogin,
 		alterarTemLogin,
+		alterarErroDeLogin,
 	};
 }

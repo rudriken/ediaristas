@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Paper } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import { FormProvider } from "react-hook-form";
 import useMóvelAtivo from "lógica/ganchos/useMóvelAtivo";
 import useContratacao from "lógica/ganchos/pages/useContratacao.page";
@@ -10,7 +10,7 @@ import InformacaoLateral from "visual/componentes/exibe-dados/InformacaoLateral/
 import { FormularioUsuarioContainer } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario";
 import { ContainerPaginaFormulario } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario.style";
 import DetalhesServico from "./_detalhes-servico";
-import CadastroCliente from "./_cadastro-cliente";
+import CadastroCliente, { LoginCliente } from "./_cadastro-cliente";
 
 const Contratacao: React.FC = () => {
 	const móvel = useMóvelAtivo(),
@@ -20,11 +20,15 @@ const Contratacao: React.FC = () => {
 			migalhaDePãoItens,
 			formulárioServiço,
 			formulárioCliente,
+			formularioLogin,
 			aoSubmeterFormulárioServiço,
 			aoSubmeterFormulárioCliente,
+			aoSubmeterFormularioLogin,
 			serviços,
 			temLogin,
+			erroDeLogin,
 			alterarTemLogin,
+			alterarErroDeLogin,
 		} = useContratacao();
 	return (
 		<div>
@@ -71,6 +75,30 @@ const Contratacao: React.FC = () => {
 								<DetalhesServico serviços={serviços} />
 							</form>
 						</FormProvider>
+
+						{passo === 2 && temLogin && (
+							<FormProvider {...formulárioCliente}>
+								<form
+									onSubmit={formularioLogin.handleSubmit(
+										aoSubmeterFormularioLogin
+									)}
+								>
+									{erroDeLogin && (
+										<Typography
+											color={"error"}
+											align={"center"}
+											sx={{ mb: 2 }}
+										>
+											{erroDeLogin}
+										</Typography>
+									)}
+									<LoginCliente
+										paraVoltar={() => alterarPasso(1)}
+									/>
+								</form>
+							</FormProvider>
+						)}
+
 						<FormProvider {...formulárioCliente}>
 							<form
 								onSubmit={formulárioCliente.handleSubmit(
