@@ -7,28 +7,39 @@ import temaOficial from "visual/temas/temas";
 import Cabecalho from "visual/componentes/superficies/Header/Header";
 import Rodape from "visual/componentes/superficies/Footer/Footer";
 import { AppContainer } from "@estilos/pages/_app.styled";
+import { ProvedorPrincipal } from "lógica/contextos/ContextoPrincipal";
 
-function MyApp({ Component, pageProps }: AppProps) {
-    useEffect(() => {
-        document.querySelector("#jss-server-side")?.remove();
-    }, []);
+function App({ Component, pageProps }: AppProps) {
+	useEffect(() => {
+		document.querySelector("#jss-server-side")?.remove();
+	}, []);
 
-    return (
-        <>
-            <Head>
-                <title>e-diaristas {pageProps.título && ` - ${pageProps.título}`}</title>
-            </Head>
-            <ThemeProvider theme={temaOficial}>
-                <AppContainer>
-                    <Cabecalho />
-                    <main>
-                        <Component {...pageProps} />
-                    </main>
-                    <Rodape />
-                </AppContainer>
-            </ThemeProvider>
-        </>
-    );
+	return (
+		<>
+			<Head>
+				<title>
+					e-diaristas {pageProps.título && ` - ${pageProps.título}`}
+				</title>
+			</Head>
+			<ThemeProvider theme={temaOficial}>
+				<AppContainer>
+					<Cabecalho />
+					<main>
+						<Component {...pageProps} />
+					</main>
+					<Rodape />
+				</AppContainer>
+			</ThemeProvider>
+		</>
+	);
 }
 
-export default MyApp;
+const ContainerAppProvedor: React.FC<AppProps> = (propriedades) => {
+	return (
+		<ProvedorPrincipal>
+			<App {...propriedades} />
+		</ProvedorPrincipal>
+	);
+};
+
+export default ContainerAppProvedor;
