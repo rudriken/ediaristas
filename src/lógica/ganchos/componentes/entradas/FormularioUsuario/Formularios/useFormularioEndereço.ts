@@ -1,11 +1,14 @@
 import useCidades from "lógica/ganchos/useCidades.hook";
 import { ServiçoLocalização } from "lógica/serviços/ServiçoLocalização";
 import { useFormContext } from "react-hook-form";
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useContext } from "react";
 import { NovaDiáriaFormulárioDeDadosInterface } from "lógica/@tipos/FormulárioInterface";
+import { ContextoUsuario } from "lógica/contextos/ContextoUsuario";
 
 export default function useFormularioEndereço() {
-	const {
+	const { enderecoUsuario, usuario } =
+			useContext(ContextoUsuario).estadoUsuario,
+		{
 			register,
 			control,
 			watch,
@@ -62,6 +65,8 @@ export default function useFormularioEndereço() {
 		}
 	}, [endereçoCEP]);
 	return {
+		enderecoUsuario,
+		usuario,
 		control,
 		errors,
 		estados,

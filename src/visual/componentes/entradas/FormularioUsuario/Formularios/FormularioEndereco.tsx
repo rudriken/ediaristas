@@ -8,6 +8,8 @@ import useFormularioEndereço from "lógica/ganchos/componentes/entradas/Formula
 
 export const FormularioEndereco = () => {
 	const {
+		enderecoUsuario,
+		usuario,
 		control,
 		errors,
 		estados,
@@ -19,7 +21,7 @@ export const FormularioEndereco = () => {
 		<DadosEndereco>
 			<Controller
 				name={"endereço.cep"}
-				defaultValue={""}
+				defaultValue={enderecoUsuario.cep}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
 					<CampoDeTextoComMascara
@@ -35,7 +37,7 @@ export const FormularioEndereco = () => {
 			/>
 			<Controller
 				name={"endereço.estado"}
-				defaultValue={""}
+				defaultValue={enderecoUsuario.estado}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
 					<Seletor
@@ -56,7 +58,7 @@ export const FormularioEndereco = () => {
 			/>
 			<Controller
 				name={"endereço.cidade"}
-				defaultValue={""}
+				defaultValue={enderecoUsuario.cidade}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
 					<Autocomplete
@@ -83,7 +85,7 @@ export const FormularioEndereco = () => {
 			/>
 			<Controller
 				name={"endereço.bairro"}
-				defaultValue={""}
+				defaultValue={enderecoUsuario.bairro}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
 					<CampoDeTexto
@@ -97,7 +99,7 @@ export const FormularioEndereco = () => {
 			/>
 			<Controller
 				name={"endereço.logradouro"}
-				defaultValue={""}
+				defaultValue={enderecoUsuario.logradouro}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
 					<CampoDeTexto
@@ -112,7 +114,7 @@ export const FormularioEndereco = () => {
 			<CampoDeTexto
 				label={"Número"}
 				style={{ gridArea: "número" }}
-				defaultValue={""}
+				defaultValue={enderecoUsuario.número}
 				{...register("endereço.número")}
 				error={errors?.endereço?.número !== undefined}
 				helperText={errors?.endereço?.número?.message}
@@ -120,7 +122,7 @@ export const FormularioEndereco = () => {
 			<CampoDeTexto
 				label={"Complemento"}
 				style={{ gridArea: "complemento" }}
-				defaultValue={""}
+				defaultValue={enderecoUsuario.complemento}
 				{...register("endereço.complemento")}
 				error={errors?.endereço?.complemento !== undefined}
 				helperText={errors?.endereço?.complemento?.message}
