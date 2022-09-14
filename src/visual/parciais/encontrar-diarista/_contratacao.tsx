@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, Button, Paper, Typography } from "@mui/material";
+import {
+	Box,
+	Button,
+	CircularProgress,
+	Container,
+	Paper,
+	Typography,
+} from "@mui/material";
 import { FormProvider } from "react-hook-form";
 import useMóvelAtivo from "lógica/ganchos/useMóvelAtivo";
 import useContratacao from "lógica/ganchos/pages/useContratacao.page";
@@ -34,6 +41,15 @@ const Contratacao: React.FC = () => {
 			alterarTemLogin,
 			alterarErroDeLogin,
 		} = useContratacao();
+
+	if (!serviços || serviços.length < 1) {
+		return (
+			<Container sx={{ textAlign: "center", my: 10 }}>
+				<CircularProgress />
+			</Container>
+		);
+	}
+
 	return (
 		<div>
 			{!móvel && <AmbienteSeguro />}
