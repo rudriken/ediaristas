@@ -20,6 +20,8 @@ import DetalhesServico from "./_detalhes-servico";
 import CadastroCliente, { LoginCliente } from "./_cadastro-cliente";
 import InformacoesPagamento from "./_informacoes-pagamento";
 import Elo from "visual/componentes/navegacao/Link/Link";
+import { ServicoFormatadorDeTexto } from "lógica/serviços/ServicoFormatadorDeTexto";
+import ListaDeDados from "visual/componentes/exibe-dados/ListaDeDados/ListaDeDados";
 
 const Contratacao: React.FC = () => {
 	const móvel = useMóvelAtivo(),
@@ -37,10 +39,14 @@ const Contratacao: React.FC = () => {
 			aoSubmeterFormularioPagamento,
 			serviços,
 			temLogin,
+			tipoLimpeza,
+			totalPreco,
+			tamanhoCasa,
 			erroDeLogin,
 			alterarTemLogin,
 			alterarErroDeLogin,
-		} = useContratacao();
+		} = useContratacao(),
+		dataAtendimento = formulárioServiço.watch("faxina.data_atendimento");
 
 	if (!serviços || serviços.length < 1) {
 		return (
@@ -57,6 +63,28 @@ const Contratacao: React.FC = () => {
 				itens={migalhaDePãoItens}
 				selecionado={migalhaDePãoItens[passo - 1]}
 			/>
+			{móvel && [2, 3].includes(passo) && (
+				<ListaDeDados
+					cabeçalho={
+						<Typography
+							color={"primary"}
+							sx={{ fontWeight: "thin" }}
+						>
+							O valor total do serviço é:{" "}
+							{ServicoFormatadorDeTexto.formatarMoeda(totalPreco)}
+						</Typography>
+					}
+					corpo={
+						<>
+							{tipoLimpeza.nome}
+							<br />
+							Tamanho: {tamanhoCasa.join(", ")}
+							<br />
+							Data: {dataAtendimento}
+						</>
+					}
+				/>
+			)}
 			{passo === 1 && (
 				<TituloPagina título={"Nos conte um pouco sobre o serviço!"} />
 			)}
@@ -196,22 +224,24 @@ const Contratacao: React.FC = () => {
 							itens={[
 								{
 									títuloI: "Tipo",
-									descriçãoI: [""],
+									descriçãoI: [tipoLimpeza?.nome],
 									íconeI: "twf-check-circle",
 								},
 								{
 									títuloI: "Tamanho",
-									descriçãoI: [""],
+									descriçãoI: tamanhoCasa,
 									íconeI: "twf-check-circle",
 								},
 								{
 									títuloI: "Data",
-									descriçãoI: [""],
+									descriçãoI: [dataAtendimento as string],
 									íconeI: "twf-check-circle",
 								},
 							]}
 							rodapé={{
-								textoR: "R$ 80,00",
+								textoR: ServicoFormatadorDeTexto.formatarMoeda(
+									totalPreco
+								),
 								íconeR: "twf-credit-card",
 							}}
 						/>

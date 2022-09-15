@@ -13,6 +13,7 @@ import useApi from "../useApi.hook";
 import { DiáriaInterface } from "lógica/@tipos/DiáriaInterface";
 import { ServiçoValidação } from "lógica/serviços/ServiçoValidação";
 import { ServiçoData } from "lógica/serviços/ServiçoData";
+import { cômodosDaCasa } from "@parciais/encontrar-diarista/_detalhes-servico";
 
 export default function useContratacao() {
 	const [passo, alterarPasso] = useState(1),
@@ -56,6 +57,12 @@ export default function useContratacao() {
 			}
 			return {} as ServiçoInterface;
 		}, [serviços, dadosFaxina]),
+		tamanhoCasa = useMemo<string[]>(() => {
+			return listarComodos(dadosFaxina);
+		}, [tipoLimpeza, dadosFaxina]),
+		totalPreco = useMemo<number>(() => {
+			return calcularPreco(dadosFaxina, tipoLimpeza);
+		}, [tipoLimpeza, dadosFaxina]),
 		totalTempo = useMemo<number>(() => {
 			return calcularTempoServico(dadosFaxina, tipoLimpeza);
 		}, [dadosFaxina, tipoLimpeza]);
@@ -101,6 +108,23 @@ export default function useContratacao() {
 		console.log(dados);
 	}
 
+	function listarComodos(dadosFaxina: DiáriaInterface): string[] {
+		const comodos: string[] = [];
+		if (dadosFaxina) {
+			cômodosDaCasa.forEach((comodoDaCasa) => {
+				const total = dadosFaxina[
+					comodoDaCasa.nome as keyof DiáriaInterface
+				] as number;
+				if (total > 0) {
+					const nome =
+						total > 1 ? comodoDaCasa.plural : comodoDaCasa.singular;
+					comodos.push(`${total} ${nome}`);
+				}
+			});
+		}
+		return comodos;
+	}
+
 	function calcularTempoServico(
 		dadosFaxina: DiáriaInterface,
 		tipoLimpeza: ServiçoInterface
@@ -120,6 +144,25 @@ export default function useContratacao() {
 		return total;
 	}
 
+	function calcularPreco(
+		dadosFaxina: DiáriaInterface,
+		tipoLimpeza: ServiçoInterface
+	) {
+		let total = 0;
+		if (dadosFaxina && tipoLimpeza) {
+			total += tipoLimpeza.valor_quarto * dadosFaxina.quantidade_quartos;
+			total += tipoLimpeza.valor_sala * dadosFaxina.quantidade_salas;
+			total +=
+				tipoLimpeza.valor_banheiro * dadosFaxina.quantidade_banheiros;
+			total +=
+				tipoLimpeza.valor_cozinha * dadosFaxina.quantidade_cozinhas;
+			total +=
+				tipoLimpeza.valor_quintal * dadosFaxina.quantidade_quintais;
+			total += tipoLimpeza.valor_outros * dadosFaxina.quantidade_outros;
+		}
+		return Math.max(total, tipoLimpeza.valor_minimo);
+	}
+
 	return {
 		passo,
 		alterarPasso,
@@ -134,6 +177,9 @@ export default function useContratacao() {
 		aoSubmeterFormularioPagamento,
 		serviços,
 		temLogin,
+		tipoLimpeza,
+		totalPreco,
+		tamanhoCasa,
 		erroDeLogin,
 		alterarTemLogin,
 		alterarErroDeLogin,

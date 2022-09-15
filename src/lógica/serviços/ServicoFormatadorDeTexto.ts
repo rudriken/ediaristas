@@ -1,3 +1,8 @@
+const FormatadorDeMoeda = new Intl.NumberFormat("pt-BR", {
+	style: "currency",
+	currency: "BRL",
+});
+
 export const ServicoFormatadorDeTexto = {
 	reverterFormatoDeData(data: string): string {
 		if (data.includes("/")) {
@@ -16,4 +21,10 @@ export const ServicoFormatadorDeTexto = {
 		}
 		return data.split("-").reverse().join("/");
 	},
+	formatarMoeda(preco = 0): string {
+		if (isNaN(preco)) {
+			preco = 0;
+		}
+		return FormatadorDeMoeda.format(preco);
+	}
 };
