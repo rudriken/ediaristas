@@ -1,4 +1,11 @@
 export const ServiçoData = {
+	adicionarHoras(horarioInicial: string, horas: number): string {
+		let [hora, minuto] = horarioInicial.split(":").map(Number);
+		hora = Math.min(hora + horas, 23);
+		const novaHora = hora.toString().padStart(2, "0"),
+			novoMinuto = minuto.toString().padStart(2, "0");
+		return `${novaHora}:${novoMinuto}`;
+	},
 	dataDeNascimentoMínima(): Date {
 		const data = new Date();
 		data.setFullYear(data.getFullYear() - 18);
