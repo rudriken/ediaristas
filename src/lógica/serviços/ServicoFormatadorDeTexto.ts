@@ -21,10 +21,20 @@ export const ServicoFormatadorDeTexto = {
 		}
 		return data.split("-").reverse().join("/");
 	},
+	dataParaString(data: Date, comHorario = false): string {
+		const tempo = data.toISOString();
+		if (comHorario) {
+			return tempo.substring(0, 19);
+		}
+		return tempo.substring(0, 10);
+	},
+	pegarNumerosParaTexto(texto = ""): string {
+		return texto.replace(/\D/g, "");
+	},
 	formatarMoeda(preco = 0): string {
 		if (isNaN(preco)) {
 			preco = 0;
 		}
 		return FormatadorDeMoeda.format(preco);
-	}
+	},
 };
