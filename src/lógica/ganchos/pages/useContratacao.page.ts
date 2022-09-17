@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ServiçoInterface } from "lógica/@tipos/ServiçoInterface";
@@ -14,6 +14,8 @@ import { DiáriaInterface } from "lógica/@tipos/DiáriaInterface";
 import { ServiçoValidação } from "lógica/serviços/ServiçoValidação";
 import { ServiçoData } from "lógica/serviços/ServiçoData";
 import { cômodosDaCasa } from "@parciais/encontrar-diarista/_detalhes-servico";
+import { ContextoServicosExternos } from "lógica/contextos/ContextoServicosExternos";
+import { linksResolver, ServiçoAPI } from "lógica/serviços/ServiçoAPI";
 
 export default function useContratacao() {
 	const [passo, alterarPasso] = useState(1),
@@ -44,8 +46,11 @@ export default function useContratacao() {
 		formularioPagamento = useForm<PagamentoFormularioDeDadosInterface>({
 			resolver: yupResolver(ServiçoEstruturaFormulário.pagamento()),
 		}),
+		{ estadoServicosExternos } = useContext(ContextoServicosExternos),
 		serviços = useApi<ServiçoInterface[]>("/api/servicos").data,
 		dadosFaxina = formulárioServiço.watch("faxina"),
+		cepFaxina = formulárioServiço.watch("endereço.cep"),
+		[podemosAtender, alterarPodemosAtender] = useState(true),
 		tipoLimpeza = useMemo<ServiçoInterface>(() => {
 			if (serviços && dadosFaxina?.servico) {
 				const servicoSelecionado = serviços.find(
@@ -96,6 +101,28 @@ export default function useContratacao() {
 			formulárioServiço.setValue("faxina.hora_término", "");
 		}
 	}, [dadosFaxina?.hora_início, totalTempo]);
+
+	useEffect(() => {
+		const cep = ((cepFaxina as string) || "").replace(/\D/g, "");
+		if (ServiçoValidação.verificarCEP(cep)) {
+			const linkDisponibilidade = linksResolver(
+				estadoServicosExternos.servicosExternos,
+				"verificar_disponibilidade_atendimento"
+			);
+			if (linkDisponibilidade) {
+				ServiçoAPI.request<{ disponibilidade: boolean }>({
+					url: linkDisponibilidade.uri + "?cep=" + cep,
+					method: linkDisponibilidade.type,
+				})
+					.then((resposta) => {
+						alterarPodemosAtender(resposta.data.disponibilidade);
+					})
+					.catch((_erro) => alterarPodemosAtender(false));
+			}
+		} else {
+			alterarPodemosAtender(true);
+		}
+	}, [cepFaxina]);
 
 	function aoSubmeterFormulárioServiço(
 		dados: NovaDiáriaFormulárioDeDadosInterface
@@ -187,6 +214,7 @@ export default function useContratacao() {
 		aoSubmeterFormularioLogin,
 		aoSubmeterFormularioPagamento,
 		serviços,
+		podemosAtender,
 		temLogin,
 		tipoLimpeza,
 		totalPreco,

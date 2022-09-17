@@ -38,6 +38,7 @@ const Contratacao: React.FC = () => {
 			aoSubmeterFormularioLogin,
 			aoSubmeterFormularioPagamento,
 			serviços,
+			podemosAtender,
 			temLogin,
 			tipoLimpeza,
 			totalPreco,
@@ -120,7 +121,11 @@ const Contratacao: React.FC = () => {
 								)}
 								hidden={passo !== 1}
 							>
-								<DetalhesServico serviços={serviços} />
+								<DetalhesServico
+									serviços={serviços}
+									cômodos={tamanhoCasa.length}
+									podemosAtender={podemosAtender}
+								/>
 							</form>
 						</FormProvider>
 
