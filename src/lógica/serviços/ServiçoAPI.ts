@@ -11,13 +11,13 @@ export const ServiçoAPI = axios.create({
 		"content-type": "application/json",
 	},
 });
-// ( . . . )
+
 ServiçoAPI.interceptors.response.use(
 	(resposta) => resposta,
 	(erro) => {
 		if (
-			erro.resposta.HTTP === 401 &&
-			erro.resposta.data.código === "token_não_validado"
+			erro.response.HTTP === 401 &&
+			erro.response.data.código === "token_não_validado"
 		) {
 			lidarComAtualizacaoDoToken(erro);
 		}
@@ -26,7 +26,7 @@ ServiçoAPI.interceptors.response.use(
 );
 
 async function lidarComAtualizacaoDoToken(erro: {
-	config: AxiosRequestConfig;
+	configuracao: AxiosRequestConfig;
 }) {
 	const tokenRefresh = LocalStorage.pegar<string>("token_refresh", "");
 	if (tokenRefresh) {
@@ -49,11 +49,11 @@ async function lidarComAtualizacaoDoToken(erro: {
 			LocalStorage.gravar("token_refresh", data.refresh);
 			ServiçoAPI.defaults.headers.common.Authorization =
 				"Bearer " + data.acesso;
-			if (erro.config.headers) {
-				erro.config.headers.Authorization =
+			if (erro.configuracao.headers) {
+				erro.configuracao.headers.Authorization =
 					ServiçoAPI.defaults.headers.common.Authorization;
 			}
-			return ServiçoAPI(erro.config);
+			return ServiçoAPI(erro.configuracao);
 		} catch (err) {
 			return erro;
 		}
