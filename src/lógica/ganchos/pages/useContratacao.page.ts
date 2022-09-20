@@ -9,13 +9,17 @@ import {
 	NovaDiáriaFormulárioDeDadosInterface,
 	PagamentoFormularioDeDadosInterface,
 } from "lógica/@tipos/FormulárioInterface";
-import useApi from "../useApi.hook";
+import useApi, { useApiHateoas } from "../useApi.hook";
 import { DiáriaInterface } from "lógica/@tipos/DiáriaInterface";
 import { ServiçoValidação } from "lógica/serviços/ServiçoValidação";
 import { ServiçoData } from "lógica/serviços/ServiçoData";
 import { cômodosDaCasa } from "@parciais/encontrar-diarista/_detalhes-servico";
 import { ContextoServicosExternos } from "lógica/contextos/ContextoServicosExternos";
-import { linksResolver, ServiçoAPI } from "lógica/serviços/ServiçoAPI";
+import {
+	linksResolver,
+	ServicoAPIHateoas,
+	ServiçoAPI,
+} from "lógica/serviços/ServiçoAPI";
 
 export default function useContratacao() {
 	const [passo, alterarPasso] = useState(1),
@@ -47,7 +51,10 @@ export default function useContratacao() {
 			resolver: yupResolver(ServiçoEstruturaFormulário.pagamento()),
 		}),
 		{ estadoServicosExternos } = useContext(ContextoServicosExternos),
-		serviços = useApi<ServiçoInterface[]>("/api/servicos").data,
+		serviços = useApiHateoas<ServiçoInterface[]>(
+			estadoServicosExternos.servicosExternos,
+			"listar_servicos"
+		).data,
 		dadosFaxina = formulárioServiço.watch("faxina"),
 		cepFaxina = formulárioServiço.watch("endereço.cep"),
 		[podemosAtender, alterarPodemosAtender] = useState(true),
@@ -105,20 +112,23 @@ export default function useContratacao() {
 	useEffect(() => {
 		const cep = ((cepFaxina as string) || "").replace(/\D/g, "");
 		if (ServiçoValidação.verificarCEP(cep)) {
-			const linkDisponibilidade = linksResolver(
+			ServicoAPIHateoas(
 				estadoServicosExternos.servicosExternos,
-				"verificar_disponibilidade_atendimento"
-			);
-			if (linkDisponibilidade) {
-				ServiçoAPI.request<{ disponibilidade: boolean }>({
-					url: linkDisponibilidade.uri + "?cep=" + cep,
-					method: linkDisponibilidade.type,
-				})
-					.then((resposta) => {
-						alterarPodemosAtender(resposta.data.disponibilidade);
+				"verificar_disponibilidade_atendimento",
+				(requisicao) => {
+					requisicao<{ disponibilidade: boolean }>({
+						params: {
+							cep: cep,
+						},
 					})
-					.catch((_erro) => alterarPodemosAtender(false));
-			}
+						.then((resposta) => {
+							alterarPodemosAtender(
+								resposta.data.disponibilidade
+							);
+						})
+						.catch((_erro) => alterarPodemosAtender(false));
+				}
+			);
 		} else {
 			alterarPodemosAtender(true);
 		}

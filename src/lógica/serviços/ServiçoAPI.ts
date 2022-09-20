@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { ApiLinksInterface } from "lógica/@tipos/ApiLinksInterface";
 import { LocalStorage } from "./ServicoArmazenamento";
 
@@ -67,4 +67,26 @@ export function linksResolver(
 	nome: string
 ): ApiLinksInterface | undefined {
 	return links.find((link) => link.rel === nome);
+}
+// ( . . . )
+export function ServicoAPIHateoas(
+	links: ApiLinksInterface[] = [],
+	nome: string,
+	aoPoderRequisitar: (
+		requisicao: <T>(dado?: AxiosRequestConfig) => Promise<AxiosResponse<T>>
+	) => void,
+	aoNaoPoderRequisitar?: Function
+) {
+	const requisicaoLinks = linksResolver(links, nome);
+	if (requisicaoLinks) {
+		aoPoderRequisitar(<T>(dado?: AxiosRequestConfig) => {
+			return ServiçoAPI.request<T>({
+				method: requisicaoLinks.type,
+				url: requisicaoLinks.uri,
+				...dado,
+			});
+		});
+	} else {
+		aoNaoPoderRequisitar?.();
+	}
 }
