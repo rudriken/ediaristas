@@ -1,7 +1,10 @@
+import { ApiLinksInterface } from "./ApiLinksInterface";
+
 export interface InterfaceDoUsuário {
 	id?: number;
 	password_confirmation?: string;
 	new_password?: string;
+	links?: ApiLinksInterface[];
 	tipo_usuario: TipoDoUsuário;
 	password?: string;
 	last_login?: Date;

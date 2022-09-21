@@ -9,17 +9,16 @@ import {
 	NovaDiáriaFormulárioDeDadosInterface,
 	PagamentoFormularioDeDadosInterface,
 } from "lógica/@tipos/FormulárioInterface";
-import useApi, { useApiHateoas } from "../useApi.hook";
+import { useApiHateoas } from "../useApi.hook";
 import { DiáriaInterface } from "lógica/@tipos/DiáriaInterface";
 import { ServiçoValidação } from "lógica/serviços/ServiçoValidação";
 import { ServiçoData } from "lógica/serviços/ServiçoData";
 import { cômodosDaCasa } from "@parciais/encontrar-diarista/_detalhes-servico";
 import { ContextoServicosExternos } from "lógica/contextos/ContextoServicosExternos";
-import {
-	linksResolver,
-	ServicoAPIHateoas,
-	ServiçoAPI,
-} from "lógica/serviços/ServiçoAPI";
+import { ServicoAPIHateoas } from "lógica/serviços/ServiçoAPI";
+import { ContextoUsuario } from "lógica/contextos/ContextoUsuario";
+import { InterfaceDoUsuário } from "lógica/@tipos/InterfaceDoUsuário";
+import { ServicoFormatadorDeTexto } from "lógica/serviços/ServicoFormatadorDeTexto";
 
 export default function useContratacao() {
 	const [passo, alterarPasso] = useState(1),
@@ -50,6 +49,7 @@ export default function useContratacao() {
 		formularioPagamento = useForm<PagamentoFormularioDeDadosInterface>({
 			resolver: yupResolver(ServiçoEstruturaFormulário.pagamento()),
 		}),
+		{ estadoUsuario, despachoUsuario } = useContext(ContextoUsuario),
 		{ estadoServicosExternos } = useContext(ContextoServicosExternos),
 		serviços = useApiHateoas<ServiçoInterface[]>(
 			estadoServicosExternos.servicosExternos,
@@ -58,6 +58,7 @@ export default function useContratacao() {
 		dadosFaxina = formulárioServiço.watch("faxina"),
 		cepFaxina = formulárioServiço.watch("endereço.cep"),
 		[podemosAtender, alterarPodemosAtender] = useState(true),
+		[novaDiaria, alterarNovaDiaria] = useState({} as DiáriaInterface),
 		tipoLimpeza = useMemo<ServiçoInterface>(() => {
 			if (serviços && dadosFaxina?.servico) {
 				const servicoSelecionado = serviços.find(
@@ -137,7 +138,11 @@ export default function useContratacao() {
 	function aoSubmeterFormulárioServiço(
 		dados: NovaDiáriaFormulárioDeDadosInterface
 	) {
-		console.log(dados);
+		if (estadoUsuario.usuario.nome_completo) {
+			criarDiaria(estadoUsuario.usuario);
+		} else {
+			alterarPasso(2);
+		}
 	}
 
 	function aoSubmeterFormulárioCliente(
@@ -209,6 +214,43 @@ export default function useContratacao() {
 			total += tipoLimpeza.valor_outros * dadosFaxina.quantidade_outros;
 		}
 		return Math.max(total, tipoLimpeza.valor_minimo);
+	}
+
+	async function criarDiaria(usuario: InterfaceDoUsuário) {
+		if (usuario.nome_completo) {
+			const dadoDoServico = formulárioServiço.getValues();
+			ServicoAPIHateoas(
+				usuario.links,
+				"cadastrar_diaria",
+				async (requisicao) => {
+					try {
+						const novaDiaria = (
+							await requisicao<DiáriaInterface>({
+								data: {
+									...dadoDoServico.endereço,
+									...dadoDoServico.faxina,
+									cep: ServicoFormatadorDeTexto.pegarNumerosParaTexto(
+										dadoDoServico.endereço.cep
+									),
+									preco: totalPreco,
+									tempo_atendimento:
+										ServicoFormatadorDeTexto.reverterFormatoDeData(
+											dadoDoServico.faxina
+												.data_atendimento as string
+										) +
+										"T" +
+										dadoDoServico.faxina.hora_início,
+								},
+							})
+						).data;
+						if (novaDiaria) {
+							alterarPasso(3);
+							alterarNovaDiaria(novaDiaria);
+						}
+					} catch (erro) {}
+				}
+			);
+		}
 	}
 
 	return {
