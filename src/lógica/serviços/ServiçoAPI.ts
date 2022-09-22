@@ -68,7 +68,7 @@ export function linksResolver(
 ): ApiLinksInterface | undefined {
 	return links.find((link) => link.rel === nome);
 }
-// ( . . . )
+
 export function ServicoAPIHateoas(
 	links: ApiLinksInterface[] = [],
 	nome: string,

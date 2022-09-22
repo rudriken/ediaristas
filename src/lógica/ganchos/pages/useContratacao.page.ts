@@ -15,11 +15,16 @@ import { ServiçoValidação } from "lógica/serviços/ServiçoValidação";
 import { ServiçoData } from "lógica/serviços/ServiçoData";
 import { cômodosDaCasa } from "@parciais/encontrar-diarista/_detalhes-servico";
 import { ContextoServicosExternos } from "lógica/contextos/ContextoServicosExternos";
-import { ServicoAPIHateoas } from "lógica/serviços/ServiçoAPI";
+import { linksResolver, ServicoAPIHateoas } from "lógica/serviços/ServiçoAPI";
 import { ContextoUsuario } from "lógica/contextos/ContextoUsuario";
-import { InterfaceDoUsuário } from "lógica/@tipos/InterfaceDoUsuário";
+import {
+	InterfaceDoUsuário,
+	TipoDoUsuário,
+} from "lógica/@tipos/InterfaceDoUsuário";
 import { ServicoFormatadorDeTexto } from "lógica/serviços/ServicoFormatadorDeTexto";
 import { ServicoLogin } from "lógica/serviços/ServicoLogin";
+import { ApiLinksInterface } from "lógica/@tipos/ApiLinksInterface";
+import { ServicoUsuario } from "lógica/serviços/ServicoUsuario";
 
 export default function useContratacao() {
 	const [passo, alterarPasso] = useState(1),
@@ -146,10 +151,40 @@ export default function useContratacao() {
 		}
 	}
 
-	function aoSubmeterFormulárioCliente(
+	async function aoSubmeterFormulárioCliente(
 		dados: CadastroClienteFormulárioDeDadosInterface
 	) {
-		console.log(dados);
+		const novoUsuarioLink = linksResolver(
+			estadoServicosExternos.servicosExternos,
+			"cadastrar_usuario"
+		);
+		if (novoUsuarioLink) {
+			try {
+				await cadastrarUsuario(dados, novoUsuarioLink);
+			} catch (erro) {
+				ServicoUsuario.tratarErroNovosUsuarios(erro, formulárioCliente);
+			}
+		}
+	}
+
+	async function cadastrarUsuario(
+		dados: CadastroClienteFormulárioDeDadosInterface,
+		link: ApiLinksInterface
+	) {
+		const novoUsuario = await ServicoUsuario.cadastrar(
+			dados.usuário,
+			TipoDoUsuário.Cliente,
+			link
+		);
+		if (novoUsuario) {
+			const loginSucesso = await login({
+				email: dados.usuário.email,
+				password: dados.usuário.password || "",
+			});
+			if (loginSucesso) {
+				criarDiaria(novoUsuario);
+			}
+		}
 	}
 
 	async function aoSubmeterFormularioLogin(dados: {
@@ -166,11 +201,12 @@ export default function useContratacao() {
 	}
 
 	async function login(
-		credenciais: LoginFormularioDeDadosInterface
+		credenciais: LoginFormularioDeDadosInterface,
+		usuario?: InterfaceDoUsuário
 	): Promise<boolean> {
 		const loginSucesso = await ServicoLogin.entrar(credenciais);
 		if (loginSucesso) {
-			const usuario = await ServicoLogin.informacoes();
+			if (!usuario) usuario = await ServicoLogin.informacoes();
 			despachoUsuario({ tipo: "SET_USER", carregarPagamento: usuario });
 		} else {
 			alterarErroDeLogin("E-mail e/ou senha inválidos!");
