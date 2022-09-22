@@ -19,6 +19,7 @@ import { ServicoAPIHateoas } from "lógica/serviços/ServiçoAPI";
 import { ContextoUsuario } from "lógica/contextos/ContextoUsuario";
 import { InterfaceDoUsuário } from "lógica/@tipos/InterfaceDoUsuário";
 import { ServicoFormatadorDeTexto } from "lógica/serviços/ServicoFormatadorDeTexto";
+import { ServicoLogin } from "lógica/serviços/ServicoLogin";
 
 export default function useContratacao() {
 	const [passo, alterarPasso] = useState(1),
@@ -151,8 +152,30 @@ export default function useContratacao() {
 		console.log(dados);
 	}
 
-	function aoSubmeterFormularioLogin(dados: LoginFormularioDeDadosInterface) {
-		console.log(dados);
+	async function aoSubmeterFormularioLogin(dados: {
+		login: LoginFormularioDeDadosInterface;
+	}) {
+		const loginSucesso = await login(dados.login);
+		if (loginSucesso) {
+			const usuario = await ServicoLogin.informacoes();
+			if (usuario) {
+				criarDiaria(usuario);
+				alterarPasso(3);
+			}
+		}
+	}
+
+	async function login(
+		credenciais: LoginFormularioDeDadosInterface
+	): Promise<boolean> {
+		const loginSucesso = await ServicoLogin.entrar(credenciais);
+		if (loginSucesso) {
+			const usuario = await ServicoLogin.informacoes();
+			despachoUsuario({ tipo: "SET_USER", carregarPagamento: usuario });
+		} else {
+			alterarErroDeLogin("E-mail e/ou senha inválidos!");
+		}
+		return loginSucesso;
 	}
 
 	function aoSubmeterFormularioPagamento(
@@ -218,7 +241,7 @@ export default function useContratacao() {
 
 	async function criarDiaria(usuario: InterfaceDoUsuário) {
 		if (usuario.nome_completo) {
-			const dadoDoServico = formulárioServiço.getValues();
+			const dadosDoServico = formulárioServiço.getValues();
 			ServicoAPIHateoas(
 				usuario.links,
 				"cadastrar_diaria",
@@ -227,19 +250,19 @@ export default function useContratacao() {
 						const novaDiaria = (
 							await requisicao<DiáriaInterface>({
 								data: {
-									...dadoDoServico.endereço,
-									...dadoDoServico.faxina,
+									...dadosDoServico.endereço,
+									...dadosDoServico.faxina,
 									cep: ServicoFormatadorDeTexto.pegarNumerosParaTexto(
-										dadoDoServico.endereço.cep
+										dadosDoServico.endereço.cep
 									),
 									preco: totalPreco,
 									tempo_atendimento:
 										ServicoFormatadorDeTexto.reverterFormatoDeData(
-											dadoDoServico.faxina
+											dadosDoServico.faxina
 												.data_atendimento as string
 										) +
 										"T" +
-										dadoDoServico.faxina.hora_início,
+										dadosDoServico.faxina.hora_início,
 								},
 							})
 						).data;
