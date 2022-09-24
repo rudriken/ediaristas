@@ -1,10 +1,5 @@
-import { ApiLinksInterface } from "./ApiLinksInterface";
-import { InterfaceDoUsuário } from "./InterfaceDoUsuário";
-
 export interface DiáriaInterface {
 	id?: number;
-	cliente?: InterfaceDoUsuário;
-	links?: ApiLinksInterface[];
 	data_atendimento: string | Date;
 	hora_início?: string;
 	hora_término?: string;

@@ -5,8 +5,6 @@ import { ServiçoInterface } from "lógica/@tipos/ServiçoInterface";
 import { ServiçoEstruturaFormulário } from "../../serviços/ServiçoEstruturaFormulário";
 import {
 	CadastroClienteFormulárioDeDadosInterface,
-	CredenciaisInterface,
-	InformacoesDoCartaoInterface,
 	LoginFormularioDeDadosInterface,
 	NovaDiáriaFormulárioDeDadosInterface,
 	PagamentoFormularioDeDadosInterface,
@@ -27,7 +25,6 @@ import { ServicoFormatadorDeTexto } from "lógica/serviços/ServicoFormatadorDeT
 import { ServicoLogin } from "lógica/serviços/ServicoLogin";
 import { ApiLinksInterface } from "lógica/@tipos/ApiLinksInterface";
 import { ServicoUsuario } from "lógica/serviços/ServicoUsuario";
-import { ServiçoPagamento } from "lógica/serviços/ServiçoPagamento";
 
 export default function useContratacao() {
 	const [passo, alterarPasso] = useState(1),
@@ -52,14 +49,10 @@ export default function useContratacao() {
 				)
 			),
 		}),
-		formularioLogin = useForm<
-			LoginFormularioDeDadosInterface<CredenciaisInterface>
-		>({
+		formularioLogin = useForm<LoginFormularioDeDadosInterface>({
 			resolver: yupResolver(ServiçoEstruturaFormulário.login()),
 		}),
-		formularioPagamento = useForm<
-			PagamentoFormularioDeDadosInterface<InformacoesDoCartaoInterface>
-		>({
+		formularioPagamento = useForm<PagamentoFormularioDeDadosInterface>({
 			resolver: yupResolver(ServiçoEstruturaFormulário.pagamento()),
 		}),
 		{ estadoUsuario, despachoUsuario } = useContext(ContextoUsuario),
@@ -153,29 +146,23 @@ export default function useContratacao() {
 	) {
 		if (estadoUsuario.usuario.nome_completo) {
 			criarDiaria(estadoUsuario.usuario);
-			console.log(estadoUsuario);
 		} else {
 			alterarPasso(2);
-			console.log(dados);
 		}
 	}
 
 	async function aoSubmeterFormulárioCliente(
 		dados: CadastroClienteFormulárioDeDadosInterface
 	) {
-		// console.log("Estou chegando até a submissão do formulário do cliente");
 		const novoUsuarioLink = linksResolver(
 			estadoServicosExternos.servicosExternos,
 			"cadastrar_usuario"
 		);
 		if (novoUsuarioLink) {
-			console.log(novoUsuarioLink);
 			try {
 				await cadastrarUsuario(dados, novoUsuarioLink);
-				console.log(dados, novoUsuarioLink);
 			} catch (erro) {
 				ServicoUsuario.tratarErroNovosUsuarios(erro, formulárioCliente);
-				console.log("ERROU");
 			}
 		}
 	}
@@ -184,33 +171,25 @@ export default function useContratacao() {
 		dados: CadastroClienteFormulárioDeDadosInterface,
 		link: ApiLinksInterface
 	) {
-		console.log("dados: ", dados);
 		const novoUsuario = await ServicoUsuario.cadastrar(
 			dados.usuário,
 			TipoDoUsuário.Cliente,
 			link
 		);
-		console.log("novoUsuario:", novoUsuario);
 		if (novoUsuario) {
-			const loginSucesso = await login(
-				{
-					email: dados.usuário.email,
-					password: dados.usuário.password || "",
-				},
-				novoUsuario
-			);
+			const loginSucesso = await login({
+				email: dados.usuário.email,
+				password: dados.usuário.password || "",
+			});
 			if (loginSucesso) {
 				criarDiaria(novoUsuario);
-				alterarPasso(3);
 			}
-		} else {
-			console.log("dancei");
 		}
 	}
 
-	async function aoSubmeterFormularioLogin(
-		dados: LoginFormularioDeDadosInterface<CredenciaisInterface>
-	) {
+	async function aoSubmeterFormularioLogin(dados: {
+		login: LoginFormularioDeDadosInterface;
+	}) {
 		const loginSucesso = await login(dados.login);
 		if (loginSucesso) {
 			const usuario = await ServicoLogin.informacoes();
@@ -222,7 +201,7 @@ export default function useContratacao() {
 	}
 
 	async function login(
-		credenciais: CredenciaisInterface,
+		credenciais: LoginFormularioDeDadosInterface,
 		usuario?: InterfaceDoUsuário
 	): Promise<boolean> {
 		const loginSucesso = await ServicoLogin.entrar(credenciais);
@@ -235,41 +214,10 @@ export default function useContratacao() {
 		return loginSucesso;
 	}
 
-	async function aoSubmeterFormularioPagamento(
-		dados: PagamentoFormularioDeDadosInterface<InformacoesDoCartaoInterface>
+	function aoSubmeterFormularioPagamento(
+		dados: PagamentoFormularioDeDadosInterface
 	) {
-		const cartao = {
-			card_number: dados.pagamento.numero_cartao.replaceAll(" ", ""),
-			card_holder_name: dados.pagamento.nome_cartao,
-			card_cvv: dados.pagamento.codigo_cvv,
-			card_expiration_date: dados.pagamento.validade,
-		};
-		const hash = await ServiçoPagamento.pegarHash(cartao);
-		console.log(hash);
-		console.log(novaDiaria.hora_início);
-		ServicoAPIHateoas(
-			novaDiaria.links,
-			"pagar_diaria",
-			async (requisicao) => {
-				try {
-					await requisicao({
-						data: {
-							card_hash: hash,
-						},
-					});
-					alterarPasso(4);
-				} catch (erro) {
-					console.log("erro no pagamento");
-					formularioPagamento.setError(
-						"pagamento.pagamento_recusado",
-						{
-							type: "manual",
-							message: "Pagamento recusado",
-						}
-					);
-				}
-			}
-		);
+		console.log(dados);
 	}
 
 	function listarComodos(dadosFaxina: DiáriaInterface): string[] {
@@ -330,13 +278,10 @@ export default function useContratacao() {
 	async function criarDiaria(usuario: InterfaceDoUsuário) {
 		if (usuario.nome_completo) {
 			const dadosDoServico = formulárioServiço.getValues();
-			console.log(dadosDoServico);
 			ServicoAPIHateoas(
 				usuario.links,
-				"cadastrar diária",
+				"cadastrar_diaria",
 				async (requisicao) => {
-					console.log("entrou no ServicoAPIHateoas");
-					console.log("usuario.links: ", usuario.links);
 					try {
 						const novaDiaria = (
 							await requisicao<DiáriaInterface>({
@@ -347,8 +292,7 @@ export default function useContratacao() {
 										dadosDoServico.endereço.cep
 									),
 									preco: totalPreco,
-									tempo_atendimento: totalTempo,
-									data_atendimento:
+									tempo_atendimento:
 										ServicoFormatadorDeTexto.reverterFormatoDeData(
 											dadosDoServico.faxina
 												.data_atendimento as string
@@ -358,17 +302,11 @@ export default function useContratacao() {
 								},
 							})
 						).data;
-						console.log(novaDiaria);
 						if (novaDiaria) {
 							alterarPasso(3);
 							alterarNovaDiaria(novaDiaria);
-							console.log("criou uma nova diária: ", novaDiaria);
-						} else {
-							console.log("NÃO criou uma nova diária: ", novaDiaria);
 						}
-					} catch (erro) {
-						console.log("criar novaDiaria: ERRO", erro);
-					}
+					} catch (erro) {}
 				}
 			);
 		}

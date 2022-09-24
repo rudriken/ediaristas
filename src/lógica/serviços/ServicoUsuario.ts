@@ -29,27 +29,12 @@ export const ServicoUsuario = {
 			cpf,
 			telefone,
 		});
-
-		console.log("usuario: ", usuario);
-		console.log("tipoDoUsuario: ", tipoDoUsuario);
-		console.log("dadosDoUsuario: ", dadosDoUsuario.get("nascimento"));
-		console.log("link: ", link);
-
 		const resposta = await ServiçoAPI.request<InterfaceDoUsuário>({
 			url: link.uri,
 			method: link.type,
 			data: dadosDoUsuario,
 			headers: { "Content-Type": "multipart/form-data" },
 		});
-		
-		console.log("resposta.status", resposta.status);
-
-		if (resposta) {
-			console.log("resposta.status", resposta.status);
-		} else {
-			console.log("sem resposta");
-		}
-
 		return resposta.data;
 	},
 	tratarErroNovosUsuarios<T extends FieldValues>(

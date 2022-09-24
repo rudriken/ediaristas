@@ -53,7 +53,7 @@ export const ServiçoLocalização = {
 			});
 			return resposta.data.map((cidade) => ({
 				cidade: cidade.nome,
-				codigo_ibge: cidade.id,
+				código_ibge: cidade.id,
 			}));
 		} catch (erro) {}
 	},

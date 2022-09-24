@@ -28,7 +28,7 @@ export default function useFormularioEndereço() {
 		);
 
 	useEffect(() => {
-		register("endereço.codigo_ibge");
+		register("endereço.código_ibge");
 	}, []);
 
 	useEffect(() => {
@@ -37,7 +37,7 @@ export default function useFormularioEndereço() {
 				item.cidade === endereçoCidade;
 			});
 			if (cidade) {
-				setValue("endereço.codigo_ibge", cidade.codigo_ibge);
+				setValue("endereço.código_ibge", cidade.código_ibge);
 			}
 		}
 	}, [endereçoCidade]);
@@ -52,7 +52,7 @@ export default function useFormularioEndereço() {
 					novoEndereço.localidade &&
 						setValue("endereço.cidade", novoEndereço.localidade);
 					novoEndereço.ibge &&
-						setValue("endereço.codigo_ibge", novoEndereço.ibge);
+						setValue("endereço.código_ibge", novoEndereço.ibge);
 					novoEndereço.bairro &&
 						setValue("endereço.bairro", novoEndereço.bairro);
 					novoEndereço.logradouro &&

@@ -6,8 +6,8 @@ export interface EndereçoInterface {
 	cep: string;
 	cidade: string;
 	estado: string;
-	numero: string;
-	codigo_ibge?: number;
+	número: string;
+	código_ibge?: number;
 }
 
 export interface EstadoInterface {
@@ -16,7 +16,7 @@ export interface EstadoInterface {
 }
 
 export interface CidadeInterface {
-	codigo_ibge: number;
+	código_ibge: number;
 	cidade: string;
 }
 

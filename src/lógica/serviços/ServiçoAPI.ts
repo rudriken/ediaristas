@@ -78,12 +78,8 @@ export function ServicoAPIHateoas(
 	aoNaoPoderRequisitar?: Function
 ) {
 	const requisicaoLinks = linksResolver(links, nome);
-	console.log("requisicaoLinks: ", requisicaoLinks);
 	if (requisicaoLinks) {
-		console.log("entrou na requisicaoLinks");
 		aoPoderRequisitar(<T>(dado?: AxiosRequestConfig) => {
-			console.log("dado dentro da aoPoderRequisitar: ", dado);
-
 			return ServiçoAPI.request<T>({
 				method: requisicaoLinks.type,
 				url: requisicaoLinks.uri,

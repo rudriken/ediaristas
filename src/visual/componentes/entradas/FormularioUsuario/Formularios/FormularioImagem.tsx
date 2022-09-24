@@ -1,5 +1,5 @@
 import { useFormContext, Controller } from "react-hook-form";
-import CampoDeArquivo from "../../CampoDeArquivo/CampoDeArquivo";
+import CampoDeTexto from "../../CampoDeTexto/CampoDeTexto";
 import { ImagemSelecionada } from "../FormularioUsuario.style";
 
 export const FormularioImagem = () => {
@@ -13,8 +13,9 @@ export const FormularioImagem = () => {
 				defaultValue={""}
 				control={control}
 				render={({ field }) => (
-					<CampoDeArquivo
-						onChange={(arquivos) => field.onChange(arquivos[0])}
+					<CampoDeTexto
+						onChange={(arquivo) => field.onChange(arquivo)}
+						// onChange={(arquivos) => field.onChange(arquivos[0])}
 						inputProps={{ accept: ".jpeg, .jpg, .png" }}
 					/>
 				)}
