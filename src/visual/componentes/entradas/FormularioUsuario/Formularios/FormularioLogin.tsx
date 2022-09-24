@@ -2,13 +2,13 @@ import { useFormContext } from "react-hook-form";
 import CampoDeTexto from "../../CampoDeTexto/CampoDeTexto";
 import { LoginDados } from "../FormularioUsuario.style";
 import Elo from "../../../navegacao/Link/Link";
-import { LoginFormularioDeDadosInterface } from "lógica/@tipos/FormulárioInterface";
+import { CredenciaisInterface, LoginFormularioDeDadosInterface } from "lógica/@tipos/FormulárioInterface";
 
 export const FormularioLogin = () => {
 	const {
 		register,
 		formState: { errors },
-	} = useFormContext<{ login: LoginFormularioDeDadosInterface }>();
+	} = useFormContext<LoginFormularioDeDadosInterface<CredenciaisInterface>>();
 	return (
 		<LoginDados>
 			<CampoDeTexto

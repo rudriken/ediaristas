@@ -89,7 +89,7 @@ export const ServiçoEstruturaFormulário = {
 			.object()
 			.shape({
 				pagamento: yup.object().shape({
-					número_cartão: yup
+					numero_cartao: yup
 						.string()
 						.test(
 							"verificar número do cartão",
@@ -103,7 +103,7 @@ export const ServiçoEstruturaFormulário = {
 								}).card_number;
 							}
 						),
-					nome_titular_cartão: yup.string(),
+					nome_cartao: yup.string(),
 					validade: yup
 						.string()
 						.test(
@@ -118,7 +118,7 @@ export const ServiçoEstruturaFormulário = {
 								}).card_expiration_date;
 							}
 						),
-					código_cvv: yup
+					codigo_cvv: yup
 						.string()
 						.test(
 							"verificar código validador do cartão",
@@ -140,61 +140,69 @@ export const ServiçoEstruturaFormulário = {
 		return yup
 			.object()
 			.shape({
-				data_atendimento: yup
-					.date()
-					.transform(ServiçoData.converterStringEmData)
-					.typeError("Digite uma data válida")
-					.test(
-						"verificar prazo mínimo para agendamento",
-						"O agendamento deve ser feito com, pelo menos, 48 horas de antecedência",
-						(valor, dados) => {
-							if (typeof valor === "object") {
-								return ServiçoValidação.verificarPrazoMínimoParaAgendamento(
-									valor.toJSON().substring(0, 10),
-									dados.parent.hora_início as string
-								);
+				faxina: yup.object().shape({
+					data_atendimento: yup
+						.date()
+						.transform(ServiçoData.converterStringEmData)
+						.typeError("Digite uma data válida")
+						.test(
+							"verificar prazo mínimo para agendamento",
+							"O agendamento deve ser feito com, pelo menos, 48 horas de antecedência",
+							(valor, dados) => {
+								if (typeof valor === "object") {
+									return ServiçoValidação.verificarPrazoMínimoParaAgendamento(
+										valor.toJSON().substring(0, 10),
+										dados.parent.hora_início as string
+									);
+								}
+								return false;
 							}
-							return false;
-						}
-					),
-				hora_início: yup
-					.string()
-					.test("verificar hora", "Digite uma hora válida", (valor) =>
-						ServiçoValidação.verificarHora(valor)
-					)
-					.test(
-						"verificar hora de início",
-						"O serviço não pode começar antes das 06:00!",
-						(valor) => {
-							const [hora] = valor?.split(":") || [""];
-							return +hora >= 6;
-						}
-					),
-				hora_término: yup
-					.string()
-					.test(
-						"verificar hora de término",
-						"O serviço não pode encerrar após as 22:00",
-						(valor) => {
-							const [hora, minuto] = valor?.split(":") || [""];
-							if (+hora < 22) {
-								return true;
-							} else if (+hora === 22) {
-								return +minuto === 0;
+						),
+					hora_início: yup
+						.string()
+						.test(
+							"verificar hora",
+							"Digite uma hora válida",
+							(valor) => ServiçoValidação.verificarHora(valor)
+						)
+						.test(
+							"verificar hora de início",
+							"O serviço não pode começar antes das 06:00!",
+							(valor) => {
+								const [hora] = valor?.split(":") || [""];
+								return +hora >= 6;
 							}
-							return false;
-						}
-					)
-					.test(
-						"verificar duração do atendimento",
-						"O serviço não pode ter mais que 8 horas de duração",
-						(valor, dados) => {
-							const [horaTérmino] = valor?.split(":") || [""];
-							const [horaInício] =
-								dados.parent?.hora_início?.split(":") || [""];
-							return +horaTérmino - +horaInício <= 8;
-						}
-					),
+						),
+					hora_término: yup
+						.string()
+						.test(
+							"verificar hora de término",
+							"O serviço não pode encerrar após as 22:00",
+							(valor) => {
+								const [hora, minuto] = valor?.split(":") || [
+									"",
+								];
+								if (+hora < 22) {
+									return true;
+								} else if (+hora === 22) {
+									return +minuto === 0;
+								}
+								return false;
+							}
+						)
+						.test(
+							"verificar duração do atendimento",
+							"O serviço não pode ter mais que 8 horas de duração",
+							(valor, dados) => {
+								const [horaTérmino] = valor?.split(":") || [""];
+								const [horaInício] =
+									dados.parent?.hora_início?.split(":") || [
+										"",
+									];
+								return +horaTérmino - +horaInício <= 8;
+							}
+						),
+				}),
 			})
 			.defined();
 	},

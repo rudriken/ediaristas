@@ -114,10 +114,10 @@ export const FormularioEndereco = () => {
 			<CampoDeTexto
 				label={"Número"}
 				style={{ gridArea: "número" }}
-				defaultValue={enderecoUsuario.número}
-				{...register("endereço.número")}
-				error={errors?.endereço?.número !== undefined}
-				helperText={errors?.endereço?.número?.message}
+				defaultValue={enderecoUsuario.numero}
+				{...register("endereço.numero")}
+				error={errors?.endereço?.numero !== undefined}
+				helperText={errors?.endereço?.numero?.message}
 			/>
 			<CampoDeTexto
 				label={"Complemento"}

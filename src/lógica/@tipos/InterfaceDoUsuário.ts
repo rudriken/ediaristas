@@ -24,9 +24,9 @@ export interface InterfaceDoUsuário {
 }
 
 export interface InterfaceInformaçãoCurtaDoUsuário {
-	nome_completo: string;
-	foto_usuario?: string;
-	reputacao?: number;
+	nome: string;
+	foto_do_usuário?: string;
+	reputação?: number;
 	cidade: string;
 }
 

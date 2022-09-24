@@ -31,7 +31,7 @@ export const estadoInicial = {
 		cep: "",
 		cidade: "",
 		estado: "",
-		número: "",
+		numero: "",
 	} as EndereçoInterface,
 	logando: false,
 };
