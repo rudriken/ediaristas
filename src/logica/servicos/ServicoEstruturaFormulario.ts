@@ -1,14 +1,14 @@
 import * as yup from "yup";
 import { ServicoData } from "./ServicoData";
-import { ServiçoPagamento } from "./ServicoPagamento";
+import { ServicoPagamento } from "./ServicoPagamento";
 import { ServicoValidacao } from "./ServicoValidacao";
 
-export const ServiçoEstruturaFormulário = {
+export const ServicoEstruturaFormulario = {
 	dadosUsuario() {
 		return yup
 			.object()
 			.shape({
-				usuário: yup.object().shape({
+				usuario: yup.object().shape({
 					nome_completo: yup
 						.string()
 						.min(3, "Digite seu nome completo"),
@@ -95,7 +95,7 @@ export const ServiçoEstruturaFormulário = {
 							"verificar número do cartão",
 							"Número de cartão inválido",
 							(valor) => {
-								return ServiçoPagamento.validar({
+								return ServicoPagamento.validar({
 									card_number: valor as string,
 									card_holder_name: "",
 									card_cvv: "",
@@ -110,7 +110,7 @@ export const ServiçoEstruturaFormulário = {
 							"verificar validade do cartão",
 							"Data de validade inválida",
 							(valor) => {
-								return ServiçoPagamento.validar({
+								return ServicoPagamento.validar({
 									card_number: "",
 									card_holder_name: "",
 									card_cvv: "",
@@ -124,7 +124,7 @@ export const ServiçoEstruturaFormulário = {
 							"verificar código validador do cartão",
 							"Código do cartão inválido",
 							(valor) => {
-								return ServiçoPagamento.validar({
+								return ServicoPagamento.validar({
 									card_number: "",
 									card_holder_name: "",
 									card_cvv: valor as string,
@@ -140,61 +140,69 @@ export const ServiçoEstruturaFormulário = {
 		return yup
 			.object()
 			.shape({
-				data_atendimento: yup
-					.date()
-					.transform(ServicoData.converterStringEmData)
-					.typeError("Digite uma data válida")
-					.test(
-						"verificar prazo mínimo para agendamento",
-						"O agendamento deve ser feito com, pelo menos, 48 horas de antecedência",
-						(valor, dados) => {
-							if (typeof valor === "object") {
-								return ServicoValidacao.verificarPrazoMinimoParaAgendamento(
-									valor.toJSON().substring(0, 10),
-									dados.parent.hora_inicio as string
-								);
+				faxina: yup.object().shape({
+					data_atendimento: yup
+						.date()
+						.transform(ServicoData.converterStringEmData)
+						.typeError("Digite uma data válida")
+						.test(
+							"verificar prazo mínimo para agendamento",
+							"O agendamento deve ser feito com, pelo menos, 48 horas de antecedência",
+							(valor, dados) => {
+								if (typeof valor === "object") {
+									return ServicoValidacao.verificarPrazoMinimoParaAgendamento(
+										valor.toJSON().substring(0, 10),
+										dados.parent.hora_inicio as string
+									);
+								}
+								return false;
 							}
-							return false;
-						}
-					),
-				hora_inicio: yup
-					.string()
-					.test("verificar hora", "Digite uma hora válida", (valor) =>
-						ServicoValidacao.verificarHora(valor)
-					)
-					.test(
-						"verificar hora de início",
-						"O serviço não pode começar antes das 06:00!",
-						(valor) => {
-							const [hora] = valor?.split(":") || [""];
-							return +hora >= 6;
-						}
-					),
-				hora_termino: yup
-					.string()
-					.test(
-						"verificar hora de término",
-						"O serviço não pode encerrar após as 22:00",
-						(valor) => {
-							const [hora, minuto] = valor?.split(":") || [""];
-							if (+hora < 22) {
-								return true;
-							} else if (+hora === 22) {
-								return +minuto === 0;
+						),
+					hora_inicio: yup
+						.string()
+						.test(
+							"verificar hora",
+							"Digite uma hora válida",
+							(valor) => ServicoValidacao.verificarHora(valor)
+						)
+						.test(
+							"verificar hora de início",
+							"O serviço não pode começar antes das 06:00!",
+							(valor) => {
+								const [hora] = valor?.split(":") || [""];
+								return +hora >= 6;
 							}
-							return false;
-						}
-					)
-					.test(
-						"verificar duração do atendimento",
-						"O serviço não pode ter mais que 8 horas de duração",
-						(valor, dados) => {
-							const [horaTermino] = valor?.split(":") || [""];
-							const [horaInicio] =
-								dados.parent?.hora_inicio?.split(":") || [""];
-							return +horaTermino - +horaInicio <= 8;
-						}
-					),
+						),
+					hora_termino: yup
+						.string()
+						.test(
+							"verificar hora de término",
+							"O serviço não pode encerrar após as 22:00",
+							(valor) => {
+								const [hora, minuto] = valor?.split(":") || [
+									"",
+								];
+								if (+hora < 22) {
+									return true;
+								} else if (+hora === 22) {
+									return +minuto === 0;
+								}
+								return false;
+							}
+						)
+						.test(
+							"verificar duração do atendimento",
+							"O serviço não pode ter mais que 8 horas de duração",
+							(valor, dados) => {
+								const [horaTermino] = valor?.split(":") || [""];
+								const [horaInicio] =
+									dados.parent?.hora_inicio?.split(":") || [
+										"",
+									];
+								return +horaTermino - +horaInicio <= 8;
+							}
+						),
+				}),
 			})
 			.defined();
 	},

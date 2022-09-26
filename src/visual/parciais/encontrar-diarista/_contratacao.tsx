@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	Box,
 	Button,
@@ -22,6 +22,7 @@ import InformacoesPagamento from "./_informacoes-pagamento";
 import Elo from "visual/componentes/navegacao/Link/Link";
 import { ServicoFormatadorDeTexto } from "logica/servicos/ServicoFormatadorDeTexto";
 import ListaDeDados from "visual/componentes/exibe-dados/ListaDeDados/ListaDeDados";
+import { ServicoNavegador } from "logica/servicos/ServicoNavegador";
 
 const Contratacao: React.FC = () => {
 	const móvel = useMovelAtivo(),
@@ -48,6 +49,10 @@ const Contratacao: React.FC = () => {
 			alterarErroDeLogin,
 		} = useContratacao(),
 		dataAtendimento = formularioServico.watch("faxina.data_atendimento");
+
+	useEffect(() => {
+		ServicoNavegador.rolarParaCima();
+	}, [passo]);
 
 	if (!servicos || servicos.length < 1) {
 		return (
@@ -108,6 +113,14 @@ const Contratacao: React.FC = () => {
 								</Button>
 							</span>
 						)
+					}
+				/>
+			)}
+			{passo === 3 && (
+				<TituloPagina
+					titulo={"Informe os dados do cartão para pagamento"}
+					subtitulo={
+						"Será feita uma reserva, mas o valor só será descontado quando você confirmar a presença do/da diarista"
 					}
 				/>
 			)}

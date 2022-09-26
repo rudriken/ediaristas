@@ -2,9 +2,11 @@ import { useState, useMemo, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ServicoInterface } from "logica/@tipos/ServicoInterface";
-import { ServiçoEstruturaFormulário } from "../../servicos/ServicoEstruturaFormulario";
+import { ServicoEstruturaFormulario } from "../../servicos/ServicoEstruturaFormulario";
 import {
 	CadastroClienteFormularioDeDadosInterface,
+	CartaoDadosInterface,
+	CredenciaisInterface,
 	LoginFormularioDeDadosInterface,
 	NovaDiariaFormularioDeDadosInterface,
 	PagamentoFormularioDeDadosInterface,
@@ -25,6 +27,7 @@ import { ServicoFormatadorDeTexto } from "logica/servicos/ServicoFormatadorDeTex
 import { ServicoLogin } from "logica/servicos/ServicoLogin";
 import { ApiLinksInterface } from "logica/@tipos/ApiLinksInterface";
 import { ServicoUsuario } from "logica/servicos/ServicoUsuario";
+import { ServicoPagamento } from "logica/servicos/ServicoPagamento";
 
 export default function useContratacao() {
 	const [passo, alterarPasso] = useState(1),
@@ -37,23 +40,27 @@ export default function useContratacao() {
 		],
 		formularioServico = useForm<NovaDiariaFormularioDeDadosInterface>({
 			resolver: yupResolver(
-				ServiçoEstruturaFormulário.endereco().concat(
-					ServiçoEstruturaFormulário.detalhesServico()
+				ServicoEstruturaFormulario.endereco().concat(
+					ServicoEstruturaFormulario.detalhesServico()
 				)
 			),
 		}),
 		formularioCliente = useForm<CadastroClienteFormularioDeDadosInterface>({
 			resolver: yupResolver(
-				ServiçoEstruturaFormulário.dadosUsuario().concat(
-					ServiçoEstruturaFormulário.novoContato()
+				ServicoEstruturaFormulario.dadosUsuario().concat(
+					ServicoEstruturaFormulario.novoContato()
 				)
 			),
 		}),
-		formularioLogin = useForm<LoginFormularioDeDadosInterface>({
-			resolver: yupResolver(ServiçoEstruturaFormulário.login()),
+		formularioLogin = useForm<
+			LoginFormularioDeDadosInterface<CredenciaisInterface>
+		>({
+			resolver: yupResolver(ServicoEstruturaFormulario.login()),
 		}),
-		formularioPagamento = useForm<PagamentoFormularioDeDadosInterface>({
-			resolver: yupResolver(ServiçoEstruturaFormulário.pagamento()),
+		formularioPagamento = useForm<
+			PagamentoFormularioDeDadosInterface<CartaoDadosInterface>
+		>({
+			resolver: yupResolver(ServicoEstruturaFormulario.pagamento()),
 		}),
 		{ estadoUsuario, despachoUsuario } = useContext(ContextoUsuario),
 		{ estadoServicosExternos } = useContext(ContextoServicosExternos),
@@ -187,9 +194,9 @@ export default function useContratacao() {
 		}
 	}
 
-	async function aoSubmeterFormularioLogin(dados: {
-		login: LoginFormularioDeDadosInterface;
-	}) {
+	async function aoSubmeterFormularioLogin(
+		dados: LoginFormularioDeDadosInterface<CredenciaisInterface>
+	) {
 		const loginSucesso = await login(dados.login);
 		if (loginSucesso) {
 			const usuario = await ServicoLogin.informacoes();
@@ -201,7 +208,7 @@ export default function useContratacao() {
 	}
 
 	async function login(
-		credenciais: LoginFormularioDeDadosInterface,
+		credenciais: CredenciaisInterface,
 		usuario?: InterfaceDoUsuario
 	): Promise<boolean> {
 		const loginSucesso = await ServicoLogin.entrar(credenciais);
@@ -214,10 +221,34 @@ export default function useContratacao() {
 		return loginSucesso;
 	}
 
-	function aoSubmeterFormularioPagamento(
-		dados: PagamentoFormularioDeDadosInterface
+	async function aoSubmeterFormularioPagamento(
+		dados: PagamentoFormularioDeDadosInterface<CartaoDadosInterface>
 	) {
-		console.log(dados);
+		const cartao = {
+			card_number: dados.pagamento.numero_cartao.replaceAll(" ", ""),
+			card_holder_name: dados.pagamento.nome_cartao,
+			card_cvv: dados.pagamento.codigo,
+			card_expiration_date: dados.pagamento.validade,
+		};
+		const hash = await ServicoPagamento.pegarHash(cartao);
+		ServicoAPIHateoas(
+			novaDiaria.links,
+			"pagar_diaria",
+			async (requisicao) => {
+				try {
+					await requisicao({ data: { card_hash: hash } });
+					alterarPasso(4);
+				} catch (erro) {
+					formularioPagamento.setError(
+						"pagamento.pagamento_recusado",
+						{
+							type: "manual",
+							message: "Pagamento recusado",
+						}
+					);
+				}
+			}
+		);
 	}
 
 	function listarComodos(dadosFaxina: DiariaInterface): string[] {
@@ -292,7 +323,8 @@ export default function useContratacao() {
 										dadosDoServico.endereco.cep
 									),
 									preco: totalPreco,
-									tempo_atendimento:
+									tempo_atendimento: totalTempo,
+									data_atendimento:
 										ServicoFormatadorDeTexto.reverterFormatoDeData(
 											dadosDoServico.faxina
 												.data_atendimento as string

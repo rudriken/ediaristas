@@ -35,7 +35,7 @@ export const FormularioPagamento = () => {
 						{...name_onBlur_onChange_value}
 						mascara={"9999 9999 9999 9999"}
 						label={"Número do cartão"}
-						style={{ gridArea: "número" }}
+						style={{ gridArea: "numero" }}
 						error={errors?.pagamento?.numero_cartao !== undefined}
 						helperText={errors?.pagamento?.numero_cartao?.message}
 					/>
@@ -73,7 +73,7 @@ export const FormularioPagamento = () => {
 						{...name_onBlur_onChange_value}
 						mascara={"9999"}
 						label={"CVV"}
-						style={{ gridArea: "código" }}
+						style={{ gridArea: "codigo" }}
 						error={errors?.pagamento?.codigo_cvv !== undefined}
 						helperText={errors?.pagamento?.codigo_cvv?.message}
 					/>
