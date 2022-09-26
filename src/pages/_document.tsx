@@ -15,8 +15,8 @@ export default class QualquerNome extends Document {
             renderizaçãoPáginaOriginal = contexto.renderPage;
         contexto.renderPage = () =>
             renderizaçãoPáginaOriginal({
-                enhanceApp: (Aplicação) => (propriedades) =>
-                    folhas.collect(<Aplicação {...propriedades} />),
+                enhanceApp: (Aplicacao) => (propriedades) =>
+                    folhas.collect(<Aplicacao {...propriedades} />),
             });
         const propriedadesIniciais = await Document.getInitialProps(contexto);
         return {

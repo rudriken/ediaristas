@@ -14,7 +14,7 @@ module.exports = function (gerarCódigoAutomático, manipuladores) {
 			},
         ],
         actions(dado) {
-            const ações = [
+            const acoes = [
                 {
                     type: "add",
                     path: `src/pages/${dado.pastaPag.toLowerCase()}/${
@@ -30,7 +30,7 @@ module.exports = function (gerarCódigoAutomático, manipuladores) {
                     templateFile: "plop/paginas/pagina-style-modelo.hbs",
                 },
             ];
-            return ações;
+            return acoes;
         },
     });
 };

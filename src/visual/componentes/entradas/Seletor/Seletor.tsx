@@ -4,11 +4,11 @@ import { FormControl, InputLabel, SelectProps } from "@mui/material";
 import { SeletorEstilizado } from "./Seletor.style";
 
 export interface SeletorProps extends SelectProps {
-	rótulo?: string;
+	rotulo?: string;
 }
 
 const Seletor: React.FC<SeletorProps> = ({
-	rótulo,
+	rotulo,
 	children,
 	style,
 	...outras
@@ -23,8 +23,8 @@ const Seletor: React.FC<SeletorProps> = ({
 
 	return (
 		<FormControl variant="outlined" style={style}>
-			<InputLabel id={elementoID}>{rótulo}</InputLabel>
-			<SeletorEstilizado labelId={elementoID} label={rótulo} {...outras}>
+			<InputLabel id={elementoID}>{rotulo}</InputLabel>
+			<SeletorEstilizado labelId={elementoID} label={rotulo} {...outras}>
 				{children}
 			</SeletorEstilizado>
 		</FormControl>

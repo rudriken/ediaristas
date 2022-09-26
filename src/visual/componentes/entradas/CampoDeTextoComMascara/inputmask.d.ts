@@ -1,9 +1,9 @@
 import { PropsWithChildren } from "react";
 
 declare module "react-input-mask" {
-	interface Máscara extends PropsWithChildren {
+	interface Mascara extends PropsWithChildren {
 		children: () => {};
 	}
-	const Rodrigo: Máscara;
+	const Rodrigo: Mascara;
 	export default Rodrigo;
 }

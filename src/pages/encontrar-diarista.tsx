@@ -7,15 +7,16 @@ import VerificarProfissionais from "@parciais/encontrar-diarista/_verificar-prof
 export const getStaticProps: GetStaticProps = async () => {
     return {
         props: {
-            título: "Encontrar Diarista",
+            titulo: "Encontrar Diarista",
         },
     };
 };
 
 const EncontrarDiarista: React.FC = () => {
+	
     return (
         <div>
-            {/* <VerificarProfissionais /> */}
+            <VerificarProfissionais />
 			<Contratacao />
         </div>
     );

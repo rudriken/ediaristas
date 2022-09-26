@@ -13,7 +13,7 @@ const Modelo: ComponentStory<typeof ContadorDeItens> = (argumentos) => (
 
 export const Padrao = Modelo.bind({});
 Padrao.args = {
-	rótulo: "Cozinha",
+	rotulo: "Cozinha",
 	plural: "Cozinhas",
 	contador: 0,
 };

@@ -7,23 +7,23 @@ import {
 import { AcordeonEstilizado } from "./ListaDeDados.style";
 
 export interface ListaDeDadosProps {
-	cabeçalho?: ReactNode;
+	cabecalho?: ReactNode;
 	corpo?: ReactNode;
-	ações?: ReactNode;
+	acoes?: ReactNode;
 }
 
 const ListaDeDados: React.FC<ListaDeDadosProps> = ({
-	cabeçalho,
+	cabecalho,
 	corpo,
-	ações,
+	acoes,
 }) => {
 	return (
 		<AcordeonEstilizado>
 			<AccordionSummary expandIcon={<i className={"twf-caret-down"} />}>
-				{cabeçalho}
+				{cabecalho}
 			</AccordionSummary>
 			<AccordionDetails>{corpo}</AccordionDetails>
-			{ações && <AccordionActions>{ações}</AccordionActions>}
+			{acoes && <AccordionActions>{acoes}</AccordionActions>}
 		</AcordeonEstilizado>
 	);
 };

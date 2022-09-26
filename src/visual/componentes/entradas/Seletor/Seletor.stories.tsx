@@ -19,6 +19,6 @@ const Modelo: ComponentStory<typeof Seletor> = (argumentos) => (
 
 export const Padrao = Modelo.bind({});
 Padrao.args = {
-	rótulo: "Números",
+	rotulo: "Números",
 	value: 10,
 };

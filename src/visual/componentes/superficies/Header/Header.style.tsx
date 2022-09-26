@@ -40,13 +40,13 @@ export const CabecalhoBotoesContainer = styled("div")`
 
 export const CabecalhoGaveta = styled(Drawer)`
     .MuiPaper-root {
-        padding: ${(cláudio) => cláudio.theme.spacing()};
+        padding: ${(claudio) => claudio.theme.spacing()};
         background-color: ${(luiz) => luiz.theme.palette.primary.main};
         color: ${(claudemiro) => claudemiro.theme.palette.primary.contrastText};
     }
 
     .MuiDivider-root {
         margin: ${(pedro) => pedro.theme.spacing(2)};
-        border-color: ${(antônio) => antônio.theme.palette.primary.light};
+        border-color: ${(antonio) => antonio.theme.palette.primary.light};
     }
 `;

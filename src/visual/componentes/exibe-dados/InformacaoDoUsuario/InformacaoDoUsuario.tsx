@@ -11,8 +11,8 @@ import {
 export interface InformacaoDoUsuarioProps {
     nome: string;
     foto: string;
-    avaliação: number;
-    descrição?: string;
+    avaliacao: number;
+    descricao?: string;
     avaliando?: boolean;
     sx?: SystemProps;
 }
@@ -24,9 +24,9 @@ const InformacaoDoUsuario: React.FC<InformacaoDoUsuarioProps> = (propriedades) =
 			avaliando={propriedades.avaliando}
 		>
             <AvatarUsuario src={propriedades.foto}>{propriedades.nome[0]}</AvatarUsuario>
-            <AvaliacaoUsuario value={propriedades.avaliação} readOnly />
+            <AvaliacaoUsuario value={propriedades.avaliacao} readOnly />
             <NomeUsuario>{propriedades.nome}</NomeUsuario>
-            <DescricaoUsuario>{propriedades.descrição}</DescricaoUsuario>
+            <DescricaoUsuario>{propriedades.descricao}</DescricaoUsuario>
         </InformacaoDoUsuarioContainer>
     );
 };

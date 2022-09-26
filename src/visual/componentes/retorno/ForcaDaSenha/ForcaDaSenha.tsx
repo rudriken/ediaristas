@@ -8,25 +8,25 @@ export interface ForcaDaSenhaProps {
 }
 
 const ForcaDaSenha: React.FC<ForcaDaSenhaProps> = ({ senha }) => {
-	const força = senha ? passwordStrength(senha).id : 0,
-		porcentagemDaForça = ((força + 1) / 4) * 100;
+	const forca = senha ? passwordStrength(senha).id : 0,
+		porcentagemDaForca = ((forca + 1) / 4) * 100;
 	return (
-		<div style={{ gridArea: "senha-força" }}>
+		<div style={{ gridArea: "senha-forca" }}>
 			<Typography
 				variant={"body2"}
 				component={"span"}
 				color={"textSecondary"}
 			>
 				Nível da senha: &nbsp;
-				<ForcaDaSenhaRótulo value={porcentagemDaForça}>
-					{força === 0 && "FRACA"}
-					{força === 1 && "MÉDIA"}
-					{força === 2 && "FORTE"}
-					{força === 3 && "PERFEITA"}
+				<ForcaDaSenhaRótulo value={porcentagemDaForca}>
+					{forca === 0 && "FRACA"}
+					{forca === 1 && "MÉDIA"}
+					{forca === 2 && "FORTE"}
+					{forca === 3 && "PERFEITA"}
 				</ForcaDaSenhaRótulo>
 			</Typography>
 			<ForcaDaSenhaBarra
-				value={porcentagemDaForça}
+				value={porcentagemDaForca}
 				variant={"determinate"}
 			/>
 		</div>

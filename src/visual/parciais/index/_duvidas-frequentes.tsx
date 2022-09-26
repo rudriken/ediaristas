@@ -34,20 +34,20 @@ const duvidasLista = [
 const DuvidasFrequentes = () => {
     const [acordeonAtivo, alterarAcordeonAtivo] = useState(0);
 
-    function verificarAbertura(númeroDoAcordeon: number): boolean {
-        return acordeonAtivo === númeroDoAcordeon;
+    function verificarAbertura(numeroDoAcordeon: number): boolean {
+        return acordeonAtivo === numeroDoAcordeon;
     }
 
-    function mudarAcordeonAtivo(númeroDoAcordeon: number): void {
-        if (verificarAbertura(númeroDoAcordeon)) {
+    function mudarAcordeonAtivo(numeroDoAcordeon: number): void {
+        if (verificarAbertura(numeroDoAcordeon)) {
             alterarAcordeonAtivo(0);
         } else {
-            alterarAcordeonAtivo(númeroDoAcordeon);
+            alterarAcordeonAtivo(numeroDoAcordeon);
         }
     }
 
-    function pegarÍcone(númeroDoAcordeon: number): string {
-        return verificarAbertura(númeroDoAcordeon) ? "twf-minus" : "twf-plus";
+    function pegarÍcone(numeroDoAcordeon: number): string {
+        return verificarAbertura(numeroDoAcordeon) ? "twf-minus" : "twf-plus";
     }
 
     return (
@@ -56,14 +56,14 @@ const DuvidasFrequentes = () => {
             <Container>
                 <SecaoTitulo>Ainda está com dúvidas?</SecaoTitulo>
                 <SecaoSubtitulo>Veja abaixo as perguntas frequentes</SecaoSubtitulo>
-                {duvidasLista.map((item, índice) => (
+                {duvidasLista.map((item, indice) => (
                     <AcordeonEstilizado
-                        key={índice}
-                        expanded={verificarAbertura(índice + 1)}
-                        onChange={() => mudarAcordeonAtivo(índice + 1)}
+                        key={indice}
+                        expanded={verificarAbertura(indice + 1)}
+                        onChange={() => mudarAcordeonAtivo(indice + 1)}
                     >
                         <AccordionSummary
-                            expandIcon={<i className={pegarÍcone(índice + 1)} />}
+                            expandIcon={<i className={pegarÍcone(indice + 1)} />}
                         >
                             <Typography color={"primary"}>{item.pergunta}</Typography>
                         </AccordionSummary>

@@ -12,6 +12,6 @@ const Modelo: ComponentStory<typeof TituloPagina> = (argumentos) => (
 
 export const Padrao = Modelo.bind({});
 Padrao.args = {
-    título: "Conheça os profissionais",
-    subtítulo: "Preencha seu endereço e veja todos os profissionais da sua localidade",
+    titulo: "Conheça os profissionais",
+    subtitulo: "Preencha seu endereço e veja todos os profissionais da sua localidade",
 };
