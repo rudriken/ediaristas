@@ -27,8 +27,8 @@ export const ContainerMigalhaDePao = styled("ul")`
 `;
 
 export const ItemMigalhaDePao = styled("li", {
-	shouldForwardProp: (propriedade) => propriedade !== "estáSelecionado",
-})<{ estáSelecionado?: boolean }>`
+	shouldForwardProp: (propriedade) => propriedade !== "estaSelecionado",
+})<{ estaSelecionado?: boolean }>`
 	${({ theme }) => theme.breakpoints.down("sm")} {
 		padding: ${({ theme }) => theme.spacing()};
 	}
@@ -36,14 +36,14 @@ export const ItemMigalhaDePao = styled("li", {
 	${({ theme }) => theme.breakpoints.down("md")} {
 		flex: auto;
 		padding: ${({ theme }) => theme.spacing() + " " + theme.spacing(3)};
-		background-color: ${({ theme, estáSelecionado }) =>
-			theme.palette.grey[estáSelecionado ? 200 : 100]};
+		background-color: ${({ theme, estaSelecionado }) =>
+			theme.palette.grey[estaSelecionado ? 200 : 100]};
 	}
 
 	${({ theme }) => theme.breakpoints.up("md")} {
 		counter-increment: migalhadepao-contador;
-		font-weight: ${({ estáSelecionado }) =>
-			estáSelecionado ? "bold" : "normal"};
+		font-weight: ${({ estaSelecionado }) =>
+			estaSelecionado ? "bold" : "normal"};
 		&::before {
 			content: counter(migalhadepao-contador);
 			margin-right: ${({ theme }) => theme.spacing()};

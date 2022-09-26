@@ -7,11 +7,11 @@ import { OutlinedTextFieldProps } from "@mui/material";
 export interface CampoDeTextoComMascaraProps
 	extends Omit<OutlinedTextFieldProps, "variant"> {
 	// estende todas as propriedades, exceto a "variant"
-	máscara: string;
+	mascara: string;
 }
 
 const CampoDeTextoComMascara: React.FC<CampoDeTextoComMascaraProps> = ({
-	máscara,
+	mascara,
 	value,
 	onChange,
 	onBlur,
@@ -19,7 +19,7 @@ const CampoDeTextoComMascara: React.FC<CampoDeTextoComMascaraProps> = ({
 }) => {
 	return (
 		<InputMask
-			mask={máscara}
+			mask={mascara}
 			value={value as string}
 			onChange={onChange}
 			onBlur={onBlur}

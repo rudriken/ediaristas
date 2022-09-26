@@ -12,17 +12,17 @@ module.exports = {
     core: {
         builder: "@storybook/builder-webpack5",
     },
-    webpackFinal: async (configuração) => {
-        configuração.resolve.modules.push(paraOCaminho("src"));
-        configuração.resolve.alias["@emotion/core"] = paraOCaminho(
+    webpackFinal: async (configuracao) => {
+        configuracao.resolve.modules.push(paraOCaminho("src"));
+        configuracao.resolve.alias["@emotion/core"] = paraOCaminho(
             "node_modules/@emotion/react"
         );
-        configuração.resolve.alias["@emotion/styled"] = paraOCaminho(
+        configuracao.resolve.alias["@emotion/styled"] = paraOCaminho(
             "node_modules/@emotion/styled"
         );
-        configuração.resolve.alias["emotion-theming"] = paraOCaminho(
+        configuracao.resolve.alias["emotion-theming"] = paraOCaminho(
             "node_modules/@emotion/react"
         );
-        return configuração;
+        return configuracao;
     },
 };

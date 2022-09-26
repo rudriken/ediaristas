@@ -12,7 +12,7 @@ const MigalhaDePao: React.FC<MigalhaDePaoProps> = ({ selecionado, itens }) => {
 		<ContainerMigalhaDePao>
 			{itens.map((item, índice) => (
 				<React.Fragment key={item}>
-					<ItemMigalhaDePao estáSelecionado={selecionado === item}>
+					<ItemMigalhaDePao estaSelecionado={selecionado === item}>
 						{item}
 					</ItemMigalhaDePao>
 					{índice !== itens.length - 1 && <span> &gt; </span>}

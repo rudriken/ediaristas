@@ -9,13 +9,13 @@ import {
 } from "./_verificar-profissionais.styled";
 import CampoDeTextoComMascara from "visual/componentes/entradas/CampoDeTextoComMascara/CampoDeTextoComMascara";
 import InformacaoDoUsuario from "visual/componentes/exibe-dados/InformacaoDoUsuario/InformacaoDoUsuario";
-import useVerificarProfissionais from "lógica/ganchos/pages/useVerificarProfissionais.page";
+import useVerificarProfissionais from "logica/ganchos/pages/useVerificarProfissionais.page";
 
 const VerificarProfissionais: React.FC = () => {
     const {
         cep,
         definirCep,
-        cepVálido,
+        cepValido,
         buscarProfissionais,
         erro,
         listaDiaristas,
@@ -27,15 +27,15 @@ const VerificarProfissionais: React.FC = () => {
         <>
             <AmbienteSeguro />
             <TituloPagina
-                título={"Conheça os profissionais"}
-                subtítulo={
+                titulo={"Conheça os profissionais"}
+                subtitulo={
                     "Preencha seu endereço e veja todos os profissionais da sua localida-de"
                 }
             />
             <Container sx={{ mb: 10 }}>
                 <FormularioContainer>
                     <CampoDeTextoComMascara
-                        máscara={"99.999-999"}
+                        mascara={"99.999-999"}
                         label={"Digite seu CEP"}
                         fullWidth
                         value={cep}
@@ -46,7 +46,7 @@ const VerificarProfissionais: React.FC = () => {
                         variant={"contained"}
                         color={"secondary"}
                         sx={{ width: "220px" }}
-                        disabled={!cepVálido || carregando}
+                        disabled={!cepValido || carregando}
                         onClick={() => buscarProfissionais(cep)}
                     >
                         {carregando ? <CircularProgress size={20} /> : "Buscar"}
@@ -61,9 +61,9 @@ const VerificarProfissionais: React.FC = () => {
                                     <InformacaoDoUsuario
                                         key={índice}
                                         nome={item.nome}
-                                        foto={item.foto_do_usuário || ""}
-                                        descrição={item.cidade}
-                                        avaliação={item.reputação || 0}
+                                        foto={item.foto_do_usuario || ""}
+                                        descricao={item.cidade}
+                                        avaliacao={item.reputacao || 0}
                                     />
                                 ))}
                             </ContainerProfissionais>

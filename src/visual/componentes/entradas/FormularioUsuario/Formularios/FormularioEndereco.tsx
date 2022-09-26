@@ -4,7 +4,7 @@ import { Autocomplete, MenuItem } from "@mui/material";
 import { DadosEndereco } from "../FormularioUsuario.style";
 import CampoDeTexto from "../../CampoDeTexto/CampoDeTexto";
 import CampoDeTextoComMascara from "../../CampoDeTextoComMascara/CampoDeTextoComMascara";
-import useFormularioEndereço from "lógica/ganchos/componentes/entradas/FormularioUsuario/Formularios/useFormularioEndereço";
+import useFormularioEndereco from "logica/ganchos/componentes/entradas/FormularioUsuario/Formularios/useFormularioEndereco";
 
 export const FormularioEndereco = () => {
 	const {
@@ -14,35 +14,35 @@ export const FormularioEndereco = () => {
 		errors,
 		estados,
 		opçõesCidades,
-		endereçoEstado,
+		enderecoEstado,
 		register,
-	} = useFormularioEndereço();
+	} = useFormularioEndereco();
 	return (
 		<DadosEndereco>
 			<Controller
-				name={"endereço.cep"}
+				name={"endereco.cep"}
 				defaultValue={enderecoUsuario.cep}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
 					<CampoDeTextoComMascara
 						{...name_onBlur_onChange_value}
 						inputRef={ref}
-						máscara={"99.999-999"}
+						mascara={"99.999-999"}
 						label={"CEP"}
 						style={{ gridArea: "cep" }}
-						error={errors?.endereço?.cep !== undefined}
-						helperText={errors?.endereço?.cep?.message}
+						error={errors?.endereco?.cep !== undefined}
+						helperText={errors?.endereco?.cep?.message}
 					/>
 				)}
 			/>
 			<Controller
-				name={"endereço.estado"}
+				name={"endereco.estado"}
 				defaultValue={enderecoUsuario.estado}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
 					<Seletor
 						{...name_onBlur_onChange_value}
-						rótulo={"Estado"}
+						rotulo={"Estado"}
 						style={{ gridArea: "estado" }}
 					>
 						<MenuItem value={""}>
@@ -57,7 +57,7 @@ export const FormularioEndereco = () => {
 				)}
 			/>
 			<Controller
-				name={"endereço.cidade"}
+				name={"endereco.cidade"}
 				defaultValue={enderecoUsuario.cidade}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
@@ -69,7 +69,7 @@ export const FormularioEndereco = () => {
 						disablePortal
 						options={opçõesCidades}
 						style={{ gridArea: "cidade" }}
-						disabled={endereçoEstado === ""}
+						disabled={enderecoEstado === ""}
 						loading={opçõesCidades.length === 0}
 						loadingText={"Carregando cidades ..."}
 						noOptionsText={"Nenhuma cidade com esse nome!"}
@@ -84,7 +84,7 @@ export const FormularioEndereco = () => {
 				)}
 			/>
 			<Controller
-				name={"endereço.bairro"}
+				name={"endereco.bairro"}
 				defaultValue={enderecoUsuario.bairro}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
@@ -92,13 +92,13 @@ export const FormularioEndereco = () => {
 						label={"Bairro"}
 						style={{ gridArea: "bairro" }}
 						{...name_onBlur_onChange_value}
-						error={errors?.endereço?.bairro !== undefined}
-						helperText={errors?.endereço?.bairro?.message}
+						error={errors?.endereco?.bairro !== undefined}
+						helperText={errors?.endereco?.bairro?.message}
 					/>
 				)}
 			/>
 			<Controller
-				name={"endereço.logradouro"}
+				name={"endereco.logradouro"}
 				defaultValue={enderecoUsuario.logradouro}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
@@ -106,26 +106,26 @@ export const FormularioEndereco = () => {
 						label={"Logradouro"}
 						style={{ gridArea: "logradouro" }}
 						{...name_onBlur_onChange_value}
-						error={errors?.endereço?.logradouro !== undefined}
-						helperText={errors?.endereço?.logradouro?.message}
+						error={errors?.endereco?.logradouro !== undefined}
+						helperText={errors?.endereco?.logradouro?.message}
 					/>
 				)}
 			/>
 			<CampoDeTexto
 				label={"Número"}
-				style={{ gridArea: "número" }}
-				defaultValue={enderecoUsuario.número}
-				{...register("endereço.número")}
-				error={errors?.endereço?.número !== undefined}
-				helperText={errors?.endereço?.número?.message}
+				style={{ gridArea: "numero" }}
+				defaultValue={enderecoUsuario.numero}
+				{...register("endereco.numero")}
+				error={errors?.endereco?.numero !== undefined}
+				helperText={errors?.endereco?.numero?.message}
 			/>
 			<CampoDeTexto
 				label={"Complemento"}
 				style={{ gridArea: "complemento" }}
 				defaultValue={enderecoUsuario.complemento}
-				{...register("endereço.complemento")}
-				error={errors?.endereço?.complemento !== undefined}
-				helperText={errors?.endereço?.complemento?.message}
+				{...register("endereco.complemento")}
+				error={errors?.endereco?.complemento !== undefined}
+				helperText={errors?.endereco?.complemento?.message}
 				required={false}
 			/>
 		</DadosEndereco>

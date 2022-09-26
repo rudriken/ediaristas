@@ -2,7 +2,7 @@ import { styled, LinearProgress, Theme } from "@mui/material";
 // import {  } from "@mui/material";
 // import { ForcaDaSenhaProps } from "./ForcaDaSenha";
 
-export const ForcaDaSenhaRótulo = styled("span", {
+export const ForcaDaSenhaRotulo = styled("span", {
 	shouldForwardProp: (propriedades) => propriedades !== "value",
 })<{ value: number }>`
 	font-weight: bold;

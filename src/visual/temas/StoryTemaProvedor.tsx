@@ -2,9 +2,9 @@ import { ThemeProvider } from "@mui/material";
 import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
 import temaOficial from "./temas";
 
-const StoryTemaProvedor = (funçãoStory: any) => (
+const StoryTemaProvedor = (funcaoStory: any) => (
     <ThemeProvider theme={temaOficial}>
-        <EmotionThemeProvider theme={temaOficial}>{funçãoStory()}</EmotionThemeProvider>
+        <EmotionThemeProvider theme={temaOficial}>{funcaoStory()}</EmotionThemeProvider>
     </ThemeProvider>
 );
 

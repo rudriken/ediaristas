@@ -5,7 +5,7 @@ import type { GetStaticProps, NextPage } from "next";
 import produce from "immer";
 
 export const getStaticProps: GetStaticProps = async () => {
-	return { props: { título: "" } };
+	return { props: { titulo: "" } };
 };
 
 const Index: NextPage = () => {

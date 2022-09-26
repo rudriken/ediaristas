@@ -46,7 +46,7 @@ const DuvidasFrequentes = () => {
         }
     }
 
-    function pegarÍcone(númeroDoAcordeon: number): string {
+    function pegarIcone(númeroDoAcordeon: number): string {
         return verificarAbertura(númeroDoAcordeon) ? "twf-minus" : "twf-plus";
     }
 
@@ -56,14 +56,14 @@ const DuvidasFrequentes = () => {
             <Container>
                 <SecaoTitulo>Ainda está com dúvidas?</SecaoTitulo>
                 <SecaoSubtitulo>Veja abaixo as perguntas frequentes</SecaoSubtitulo>
-                {duvidasLista.map((item, índice) => (
+                {duvidasLista.map((item, indice) => (
                     <AcordeonEstilizado
-                        key={índice}
-                        expanded={verificarAbertura(índice + 1)}
-                        onChange={() => mudarAcordeonAtivo(índice + 1)}
+                        key={indice}
+                        expanded={verificarAbertura(indice + 1)}
+                        onChange={() => mudarAcordeonAtivo(indice + 1)}
                     >
                         <AccordionSummary
-                            expandIcon={<i className={pegarÍcone(índice + 1)} />}
+                            expandIcon={<i className={pegarIcone(indice + 1)} />}
                         >
                             <Typography color={"primary"}>{item.pergunta}</Typography>
                         </AccordionSummary>

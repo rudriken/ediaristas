@@ -59,14 +59,14 @@ export const DadosNovoContato = styled(GradeBase)`
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-areas:
 		"email 				email"
-		"senha 				senha-força"
-		"confirmar-senha 	senha-força";
+		"senha 				senha-forca"
+		"confirmar-senha 	senha-forca";
 
 	${({ theme }) => theme.breakpoints.down("md")} {
 		grid-template-areas:
 			"email"
 			"senha"
-			"senha-força"
+			"senha-forca"
 			"confirmar-senha";
 	}
 `;
@@ -74,17 +74,17 @@ export const DadosNovoContato = styled(GradeBase)`
 export const DadosPagamento = styled(GradeBase)`
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-areas:
-		"número 	número"
+		"numero 	numero"
 		"nome 		nome"
-		"validade 	código"
+		"validade 	codigo"
 		"erro 		erro";
 
 	${({ theme }) => theme.breakpoints.down("md")} {
 		grid-template-areas:
-			"número"
+			"numero"
 			"nome"
 			"validade"
-			"código"
+			"codigo"
 			"erro";
 	}
 `;
@@ -93,10 +93,10 @@ export const DadosEndereco = styled(GradeBase)`
 	grid-template-columns: repeat(7, 1fr);
 	grid-template-areas:
 		"cep 		cep 	estado 		estado 		cidade 	cidade 			cidade"
-		"bairro 	bairro 	logradouro 	logradouro 	número 	complemento 	complemento";
+		"bairro 	bairro 	logradouro 	logradouro 	numero 	complemento 	complemento";
 
 	${({ theme }) => theme.breakpoints.down("md")} {
-		grid-template-areas: "cep" "estado" "cidade" "bairro" "logradouro" "número" "complemento";
+		grid-template-areas: "cep" "estado" "cidade" "bairro" "logradouro" "numero" "complemento";
 	}
 `;
 
