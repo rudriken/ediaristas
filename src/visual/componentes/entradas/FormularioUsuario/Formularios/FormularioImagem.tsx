@@ -4,12 +4,12 @@ import { ImagemSelecionada } from "../FormularioUsuario.style";
 
 export const FormularioImagem = () => {
 	const { control } = useFormContext<{
-		usuario: { foto_documento: string };
+		usuário: { foto_documento: string };
 	}>();
 	return (
 		<ImagemSelecionada>
 			<Controller
-				name={"usuario.foto_documento"}
+				name={"usuário.foto_documento"}
 				defaultValue={""}
 				control={control}
 				render={({ field }) => (

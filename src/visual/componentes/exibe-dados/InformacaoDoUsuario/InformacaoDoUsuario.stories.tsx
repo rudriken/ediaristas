@@ -15,7 +15,7 @@ export const Padrao = Modelo.bind({});
 Padrao.args = {
     nome: "Rodrigo Mendonça",
     foto: "https://github.com/rudriken.png",
-    avaliacao: 3,
-    descricao: "Desenvolvedor Web",
+    avaliação: 3,
+    descrição: "Desenvolvedor Web",
     avaliando: false,
 };

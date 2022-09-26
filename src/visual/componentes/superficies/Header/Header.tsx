@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Container, Toolbar, IconButton, MenuList, MenuItem, Divider } from "@mui/material";
-import useMovelAtivo from "logica/ganchos/useMovelAtivo";
+import useMóvelAtivo from "lógica/ganchos/useMóvelAtivo";
 import { BotaoArredondadoEstilizado } from "visual/componentes/entradas/BotaoArredondado/BotaoArredondado.style";
 import Elo from "visual/componentes/navegacao/Link/Link";
 import {
@@ -11,11 +11,11 @@ import {
 } from "./Header.style";
 
 const Cabecalho = () => {
-    const movelAtivo = useMovelAtivo();
-    return movelAtivo ? <CabecalhoVersaoMovel /> : <CabecalhoVersaoDesktop />;
+    const móvelAtivo = useMóvelAtivo();
+    return móvelAtivo ? <CabecalhoVersãoMóvel /> : <CabecalhoVersãoDesktop />;
 };
 
-const CabecalhoVersaoDesktop = () => (
+const CabecalhoVersãoDesktop = () => (
     <CabecalhoAppBar>
         <Toolbar component={Container}>
             <Elo href={"/"}>
@@ -39,7 +39,7 @@ const CabecalhoVersaoDesktop = () => (
     </CabecalhoAppBar>
 );
 
-const CabecalhoVersaoMovel = () => {
+const CabecalhoVersãoMóvel = () => {
     const [gavetaAberta, alterarGavetaAberta] = useState(false);
     return (
         <CabecalhoAppBar>

@@ -12,10 +12,10 @@ export const FormularioPagamento = () => {
 		control,
 	} = useFormContext<{
 		pagamento: {
-			numero_cartao: string;
-			nome_titular_cartao: string;
+			número_cartão: string;
+			nome_titular_cartão: string;
 			validade: string;
-			codigo_cvv: string;
+			código_cvv: string;
 		};
 		pagamento_recusado: object;
 	}>();
@@ -27,17 +27,17 @@ export const FormularioPagamento = () => {
 	return (
 		<DadosPagamento>
 			<Controller
-				name={"pagamento.numero_cartao"}
+				name={"pagamento.número_cartão"}
 				defaultValue={""}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
 					<CampoDeTextoComMascara
 						{...name_onBlur_onChange_value}
-						mascara={"9999 9999 9999 9999"}
+						máscara={"9999 9999 9999 9999"}
 						label={"Número do cartão"}
 						style={{ gridArea: "número" }}
-						error={errors?.pagamento?.numero_cartao !== undefined}
-						helperText={errors?.pagamento?.numero_cartao?.message}
+						error={errors?.pagamento?.número_cartão !== undefined}
+						helperText={errors?.pagamento?.número_cartão?.message}
 					/>
 				)}
 			/>
@@ -45,9 +45,9 @@ export const FormularioPagamento = () => {
 				defaultValue={""}
 				label={"Nome impresso no cartão"}
 				style={{ gridArea: "nome" }}
-				{...register("pagamento.nome_titular_cartao")}
-				error={errors?.pagamento?.nome_titular_cartao !== undefined}
-				helperText={errors?.pagamento?.nome_titular_cartao?.message}
+				{...register("pagamento.nome_titular_cartão")}
+				error={errors?.pagamento?.nome_titular_cartão !== undefined}
+				helperText={errors?.pagamento?.nome_titular_cartão?.message}
 			/>
 			<Controller
 				name={"pagamento.validade"}
@@ -56,7 +56,7 @@ export const FormularioPagamento = () => {
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
 					<CampoDeTextoComMascara
 						{...name_onBlur_onChange_value}
-						mascara={"99/99"}
+						máscara={"99/99"}
 						label={"Validade"}
 						style={{ gridArea: "validade" }}
 						error={errors?.pagamento?.validade !== undefined}
@@ -65,17 +65,17 @@ export const FormularioPagamento = () => {
 				)}
 			/>
 			<Controller
-				name={"pagamento.codigo_cvv"}
+				name={"pagamento.código_cvv"}
 				defaultValue={""}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
 					<CampoDeTextoComMascara
 						{...name_onBlur_onChange_value}
-						mascara={"9999"}
+						máscara={"9999"}
 						label={"CVV"}
 						style={{ gridArea: "código" }}
-						error={errors?.pagamento?.codigo_cvv !== undefined}
-						helperText={errors?.pagamento?.codigo_cvv?.message}
+						error={errors?.pagamento?.código_cvv !== undefined}
+						helperText={errors?.pagamento?.código_cvv?.message}
 					/>
 				)}
 			/>

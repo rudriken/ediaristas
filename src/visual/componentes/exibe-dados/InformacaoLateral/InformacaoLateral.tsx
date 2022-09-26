@@ -8,36 +8,36 @@ import {
 } from "./InformacaoLateral.style";
 
 export interface InformacaoLateralProps {
-	titulo?: string;
+	título?: string;
 	itens: {
-		tituloI: string;
-		descricaoI: string[];
-		iconeI?: string;
+		títuloI: string;
+		descriçãoI: string[];
+		íconeI?: string;
 	}[];
-	rodape?: {
+	rodapé?: {
 		textoR: string;
-		iconeR: string;
+		íconeR: string;
 	};
 }
 
 const InformacaoLateral: React.FC<InformacaoLateralProps> = (propriedades) => {
 	return (
 		<InformacaoLateralContainer>
-			{propriedades.titulo && (
+			{propriedades.título && (
 				<InformacaoLateralCabecalho>
-					<h3>{propriedades.titulo}</h3>
+					<h3>{propriedades.título}</h3>
 				</InformacaoLateralCabecalho>
 			)}
 
 			<ul>
-				{propriedades.itens.map((itemN1, indiceN1) => (
-					<InformacaoLateralListaItens key={indiceN1}>
-						{itemN1.iconeI && <i className={itemN1.iconeI} />}
+				{propriedades.itens.map((itemN1, índiceN1) => (
+					<InformacaoLateralListaItens key={índiceN1}>
+						{itemN1.íconeI && <i className={itemN1.íconeI} />}
 						<div>
-							<h4>{itemN1.tituloI}</h4>
+							<h4>{itemN1.títuloI}</h4>
 							<ul>
-								{itemN1.descricaoI.map((itemN2, indiceN2) => (
-									<li key={indiceN2}>{itemN2}</li>
+								{itemN1.descriçãoI.map((itemN2, índiceN2) => (
+									<li key={índiceN2}>{itemN2}</li>
 								))}
 							</ul>
 						</div>
@@ -45,12 +45,12 @@ const InformacaoLateral: React.FC<InformacaoLateralProps> = (propriedades) => {
 				))}
 			</ul>
 
-			{propriedades.rodape && (
+			{propriedades.rodapé && (
 				<InformacaoLateralRodape>
-					{propriedades.rodape.iconeR && (
-						<i className={propriedades.rodape.iconeR} />
+					{propriedades.rodapé.íconeR && (
+						<i className={propriedades.rodapé.íconeR} />
 					)}
-					{propriedades.rodape.textoR}
+					{propriedades.rodapé.textoR}
 				</InformacaoLateralRodape>
 			)}
 		</InformacaoLateralContainer>

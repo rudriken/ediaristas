@@ -10,7 +10,7 @@ export default {
 
 const Modelo: ComponentStory<typeof ListaDeDados> = (argumentos) => (
 	<ListaDeDados
-		cabecalho={
+		cabeçalho={
 			<div>
 				Data: 05/08/2022
 				<br />
@@ -24,7 +24,7 @@ const Modelo: ComponentStory<typeof ListaDeDados> = (argumentos) => (
 				Número de cômodos
 			</div>
 		}
-		acoes={
+		ações={
 			<>
 				<Button variant={"contained"} color={"secondary"}>
 					Se candidatar

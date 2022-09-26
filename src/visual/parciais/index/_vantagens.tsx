@@ -11,35 +11,35 @@ import {
 
 const vantagensLista = [
     {
-        icone: "twf-woman",
-        titulo: "Diversidade",
-        descricao: "São mais de 5.000 profissionais esperando por você!",
+        ícone: "twf-woman",
+        título: "Diversidade",
+        descrição: "São mais de 5.000 profissionais esperando por você!",
     },
     {
-        icone: "twf-certificate",
-        titulo: "Confiabilidade",
-        descricao: "Todos os profissionais são verificados.",
+        ícone: "twf-certificate",
+        título: "Confiabilidade",
+        descrição: "Todos os profissionais são verificados.",
     },
     {
-        icone: "twf-search-2",
-        titulo: "Rastreabilidade",
-        descricao: "Você pode acessar todo o histórico do(a) profissional.",
+        ícone: "twf-search-2",
+        título: "Rastreabilidade",
+        descrição: "Você pode acessar todo o histórico do(a) profissional.",
     },
     {
-        icone: "twf-frame-broken",
-        titulo: "Segurança",
-        descricao: "Seguro sobre qualquer possível dano.",
+        ícone: "twf-frame-broken",
+        título: "Segurança",
+        descrição: "Seguro sobre qualquer possível dano.",
     },
     {
-        icone: "twf-payment",
-        titulo: "Controle",
-        descricao:
+        ícone: "twf-payment",
+        título: "Controle",
+        descrição:
             "O pagamento é realizado somente quando o(a) profissional está na sua casa.",
     },
     {
-        icone: "twf-broom-bucket",
-        titulo: "Experiência",
-        descricao: "Mais de 50.000 diárias realizadas.",
+        ícone: "twf-broom-bucket",
+        título: "Experiência",
+        descrição: "Mais de 50.000 diárias realizadas.",
     },
 ];
 
@@ -49,18 +49,18 @@ const Vantagens = () => {
             <Container>
                 <SecaoTitulo>Por que usar o E-diaristas?</SecaoTitulo>
                 <ListaEstilizada>
-                    {vantagensLista.map((item, indice) => (
-                        <Fragment key={item.icone}>
-                            {indice !== 0 && <DivisorLista />}
+                    {vantagensLista.map((item, índice) => (
+                        <Fragment key={item.ícone}>
+                            {índice !== 0 && <DivisorLista />}
                             <ListItem disableGutters>
                                 <ListItemAvatar>
                                     <AvatarEstilizado>
-                                        <i className={item.icone} />
+                                        <i className={item.ícone} />
                                     </AvatarEstilizado>
                                 </ListItemAvatar>
                                 <ListaItemTextoEstilizada
-                                    primary={item.titulo}
-                                    secondary={item.descricao}
+                                    primary={item.título}
+                                    secondary={item.descrição}
                                 />
                             </ListItem>
                         </Fragment>

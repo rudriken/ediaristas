@@ -1,10 +1,10 @@
 import React from "react";
 import { ContainerItens } from "./_detalhes-servico.styled";
 import { Controller, useFormContext } from "react-hook-form";
-import { ServicoInterface } from "logica/@tipos/ServicoInterface";
+import { ServiçoInterface } from "lógica/@tipos/ServiçoInterface";
 import { Typography, Divider, Tooltip, Button, Container } from "@mui/material";
 import CampoDeTexto from "visual/componentes/entradas/CampoDeTexto/CampoDeTexto";
-import { NovaDiariaFormularioDeDadosInterface } from "logica/@tipos/FormularioInterface";
+import { NovaDiáriaFormulárioDeDadosInterface } from "lógica/@tipos/FormulárioInterface";
 import ContadorDeItens from "../../componentes/entradas/ContadorDeItens/ContadorDeItens";
 import { FormularioEndereco } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario";
 import CampoDeTextoComMascara from "visual/componentes/entradas/CampoDeTextoComMascara/CampoDeTextoComMascara";
@@ -13,12 +13,12 @@ import GrupoAlternadorDeBotao, {
 } from "visual/componentes/entradas/GrupoAlternadorDeBotao/GrupoAlternadorDeBotao";
 
 interface DetalhesServicoProps {
-	servicos?: ServicoInterface[];
-	comodos?: number;
+	serviços?: ServiçoInterface[];
+	cômodos?: number;
 	podemosAtender?: boolean;
 }
 
-export const comodosDaCasa = [
+export const cômodosDaCasa = [
 	{
 		singular: "Quarto",
 		plural: "Quartos",
@@ -52,15 +52,15 @@ export const comodosDaCasa = [
 ];
 
 const DetalhesServico: React.FC<DetalhesServicoProps> = ({
-	servicos = [],
-	comodos = 0,
+	serviços = [],
+	cômodos = 0,
 	podemosAtender,
 }) => {
 	const {
 		register,
 		control,
 		formState: { errors },
-	} = useFormContext<NovaDiariaFormularioDeDadosInterface>();
+	} = useFormContext<NovaDiáriaFormulárioDeDadosInterface>();
 	return (
 		<>
 			<Typography sx={{ fontWeight: "bold", pb: 2 }}>
@@ -68,7 +68,7 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
 			</Typography>
 			<Controller
 				name={"faxina.servico"}
-				defaultValue={servicos[0].id}
+				defaultValue={serviços[0].id}
 				control={control}
 				render={({ field }) => {
 					return (
@@ -77,23 +77,23 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
 							value={field.value}
 							onChange={(_evento, novo_value) => {
 								return field.onChange(
-									novo_value || servicos[0].id
+									novo_value || serviços[0].id
 								);
 							}}
 						>
-							{servicos.map((servico) => {
+							{serviços.map((serviço) => {
 								return (
 									<AlternadorDeBotao
-										key={servico.id}
-										value={servico.id}
+										key={serviço.id}
+										value={serviço.id}
 									>
 										<i
 											className={
-												servico.icone ||
+												serviço.icone ||
 												"twf-cleaning-1"
 											}
 										/>{" "}
-										{servico.nome}
+										{serviço.nome}
 									</AlternadorDeBotao>
 								);
 							})}
@@ -106,7 +106,7 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
 				Qual o tamanho da sua casa?
 			</Typography>
 			<ContainerItens>
-				{comodosDaCasa.map((item) => {
+				{cômodosDaCasa.map((item) => {
 					return (
 						<Controller
 							key={item.nome}
@@ -116,7 +116,7 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
 							render={({ field }) => {
 								return (
 									<ContadorDeItens
-										rotulo={item.singular}
+										rótulo={item.singular}
 										plural={item.plural}
 										contador={field.value}
 										incrementar={() =>
@@ -150,7 +150,7 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
 							<CampoDeTextoComMascara
 								{...name_onBlur_onChange_value}
 								inputRef={ref}
-								mascara={"99/99/9999"}
+								máscara={"99/99/9999"}
 								label={"Data"}
 								error={
 									errors?.faxina?.data_atendimento !==
@@ -164,7 +164,7 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
 					}}
 				/>
 				<Controller
-					name={"faxina.hora_inicio"}
+					name={"faxina.hora_início"}
 					defaultValue={""}
 					control={control}
 					render={({
@@ -174,20 +174,20 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
 							<CampoDeTextoComMascara
 								{...name_onBlur_onChange_value}
 								inputRef={ref}
-								mascara={"99:99"}
+								máscara={"99:99"}
 								label={"Hora Início"}
 								error={
-									errors?.faxina?.hora_inicio !== undefined
+									errors?.faxina?.hora_início !== undefined
 								}
 								helperText={
-									errors?.faxina?.hora_inicio?.message
+									errors?.faxina?.hora_início?.message
 								}
 							/>
 						);
 					}}
 				/>
 				<Controller
-					name={"faxina.hora_termino"}
+					name={"faxina.hora_término"}
 					defaultValue={""}
 					control={control}
 					render={({
@@ -199,18 +199,18 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
 									<CampoDeTextoComMascara
 										{...name_onBlur_onChange_value}
 										inputRef={ref}
-										mascara={"99:99"}
+										máscara={"99:99"}
 										inputProps={{
 											readOnly: true,
 											disabled: true,
 										}}
 										label={"Hora Término"}
 										error={
-											errors?.faxina?.hora_termino !==
+											errors?.faxina?.hora_término !==
 											undefined
 										}
 										helperText={
-											errors?.faxina?.hora_termino
+											errors?.faxina?.hora_término
 												?.message
 										}
 										fullWidth
@@ -246,7 +246,7 @@ const DetalhesServico: React.FC<DetalhesServicoProps> = ({
 				<Button
 					variant={"contained"}
 					color={"secondary"}
-					disabled={comodos === 0 || !podemosAtender}
+					disabled={cômodos === 0 || !podemosAtender}
 					type={"submit"}
 				>
 					Ir para identificação

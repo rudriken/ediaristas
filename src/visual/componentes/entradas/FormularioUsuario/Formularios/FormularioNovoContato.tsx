@@ -9,37 +9,37 @@ export const FormularioNovoContato = () => {
 		formState: { errors },
 		watch,
 	} = useFormContext<{
-		usuario: {
+		usuário: {
 			email: string;
 			password: string;
 			password_confirmation: string;
 		};
 	}>();
-	const novaSenha = watch("usuario.password");
+	const novaSenha = watch("usuário.password");
 	return (
 		<DadosNovoContato>
 			<CampoDeTexto
 				label={"E-mail"}
 				style={{ gridArea: "email" }}
-				{...register("usuario.email")}
-				error={errors?.usuario?.email !== undefined}
-				helperText={errors?.usuario?.email?.message}
+				{...register("usuário.email")}
+				error={errors?.usuário?.email !== undefined}
+				helperText={errors?.usuário?.email?.message}
 			/>
 			<CampoDeTexto
 				label={"Senha"}
 				style={{ gridArea: "senha" }}
 				type={"password"}
-				{...register("usuario.password")}
-				error={errors?.usuario?.password !== undefined}
-				helperText={errors?.usuario?.password?.message}
+				{...register("usuário.password")}
+				error={errors?.usuário?.password !== undefined}
+				helperText={errors?.usuário?.password?.message}
 			/>
 			<CampoDeTexto
 				label={"Confirmação da Senha"}
 				style={{ gridArea: "confirmar-senha" }}
 				type={"password"}
-				{...register("usuario.password_confirmation")}
-				error={errors?.usuario?.password_confirmation !== undefined}
-				helperText={errors?.usuario?.password_confirmation?.message}
+				{...register("usuário.password_confirmation")}
+				error={errors?.usuário?.password_confirmation !== undefined}
+				helperText={errors?.usuário?.password_confirmation?.message}
 			/>
 			<ForcaDaSenha senha={novaSenha || ""} />
 		</DadosNovoContato>

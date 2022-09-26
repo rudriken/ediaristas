@@ -18,7 +18,7 @@ module.exports = function (gerarCódigoAutomático) {
         ],
         actions(dado) {
             const caminhoBase = `src/visual/componentes/${dado.tipoC}/${dado.nomeC}/`;
-            const acoes = [
+            const ações = [
                 {
                     type: "add",
                     path: `${caminhoBase}${dado.nomeC}.tsx`,
@@ -40,7 +40,7 @@ module.exports = function (gerarCódigoAutomático) {
                     templateFile: "plop/componentes/componente-teste-modelo.hbs",
                 },
             ];
-            return acoes;
+            return ações;
         },
     });
 };

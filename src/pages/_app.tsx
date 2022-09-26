@@ -7,7 +7,7 @@ import temaOficial from "visual/temas/temas";
 import Cabecalho from "visual/componentes/superficies/Header/Header";
 import Rodape from "visual/componentes/superficies/Footer/Footer";
 import { AppContainer } from "@estilos/pages/_app.styled";
-import { ProvedorPrincipal } from "logica/contextos/ContextoPrincipal";
+import { ProvedorPrincipal } from "lógica/contextos/ContextoPrincipal";
 
 function App({ Component, pageProps }: AppProps) {
 	useEffect(() => {
@@ -18,7 +18,7 @@ function App({ Component, pageProps }: AppProps) {
 		<>
 			<Head>
 				<title>
-					e-diaristas {pageProps.titulo && ` - ${pageProps.titulo}`}
+					e-diaristas {pageProps.título && ` - ${pageProps.título}`}
 				</title>
 			</Head>
 			<ThemeProvider theme={temaOficial}>

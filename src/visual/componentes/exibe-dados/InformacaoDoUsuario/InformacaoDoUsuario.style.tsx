@@ -18,8 +18,8 @@ function tratarGrid(tema: Theme, avaliando?: boolean): string {
 			grid-template-columns: 45px 1fr auto;
 			grid-template-rows: repeat(2, auto);
 			grid-template-areas:
-			"avatar 	nome 		avaliacao"
-			"avatar 	descricao 	avaliacao";
+			"avatar 	nome 		avaliação"
+			"avatar 	descrição 	avaliação";
 			padding: ${tema.spacing(2) + " " + tema.spacing(4)};
 		`;
     }
@@ -28,8 +28,8 @@ function tratarGrid(tema: Theme, avaliando?: boolean): string {
 		grid-template-rows: repeat(3, auto);
 		grid-template-areas:
 		"avatar 	nome"
-		"avatar 	avaliacao"
-		"avatar 	descricao";
+		"avatar 	avaliação"
+		"avatar 	descrição";
 		padding: ${tema.spacing(3)};
 	`;
 }
@@ -42,7 +42,7 @@ export const NomeUsuario = styled("div")`
 `;
 
 export const DescricaoUsuario = styled("div")`
-    grid-area: descricao;
+    grid-area: descrição;
     color: ${({ theme }) => theme.palette.text.secondary};
     font-size: ${({ theme }) => theme.typography.body2.fontSize};
 `;
@@ -55,7 +55,7 @@ export const AvatarUsuario = styled(Avatar)`
 `;
 
 export const AvaliacaoUsuario = styled(Rating)`
-    grid-area: avaliacao;
+    grid-area: avaliação;
 
     &.MuiRating-root {
         font-size: 14px;

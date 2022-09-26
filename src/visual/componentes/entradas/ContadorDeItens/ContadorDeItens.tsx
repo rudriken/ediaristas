@@ -3,7 +3,7 @@ import React from "react";
 import {ContainerContadorDeItens, BotaoCircular } from "./ContadorDeItens.style";
 
 export interface ContadorDeItensProps {
-	rotulo: string;
+	rótulo: string;
 	plural: string;
 	contador: number;
 	incrementar: () => void;
@@ -11,7 +11,7 @@ export interface ContadorDeItensProps {
 }
 
 const ContadorDeItens: React.FC<ContadorDeItensProps> = ({
-	rotulo,
+	rótulo,
 	plural,
 	contador = 0,
 	incrementar,
@@ -23,7 +23,7 @@ const ContadorDeItens: React.FC<ContadorDeItensProps> = ({
 				<i className={"twf-minus"} />
 			</BotaoCircular>
 			<span>
-				{contador} {contador > 1 ? plural : rotulo}
+				{contador} {contador > 1 ? plural : rótulo}
 			</span>
 			<BotaoCircular onClick={incrementar}>
 				<i className={"twf-plus"} />

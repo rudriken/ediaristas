@@ -6,15 +6,15 @@ import {
 } from "./TituloPagina.style";
 
 interface TituloPaginaProps {
-    titulo: string;
-    subtitulo?: string | JSX.Element;
+    título: string;
+    subtítulo?: string | JSX.Element;
 }
 
-const TituloPagina: React.FC<TituloPaginaProps> = ({ titulo, subtitulo }) => {
+const TituloPagina: React.FC<TituloPaginaProps> = ({ título, subtítulo }) => {
     return (
         <TituloPaginaContainer>
-            <TituloPaginaEstilizado>{titulo}</TituloPaginaEstilizado>
-            {subtitulo && <SubtituloPaginaEstilizado>{subtitulo}</SubtituloPaginaEstilizado>}
+            <TituloPaginaEstilizado>{título}</TituloPaginaEstilizado>
+            {subtítulo && <SubtituloPaginaEstilizado>{subtítulo}</SubtituloPaginaEstilizado>}
         </TituloPaginaContainer>
     );
 };

@@ -13,47 +13,47 @@ const Modelo: ComponentStory<typeof InformacaoLateral> = (argumentos) => (
 
 export const Cliente = Modelo.bind({});
 Cliente.args = {
-	titulo: "Detalhes",
+	título: "Detalhes",
 	itens: [
 		{
-			tituloI: "Tipo",
-			descricaoI: ["Lipeza de rotina"],
-			iconeI: "twf-check-circle",
+			títuloI: "Tipo",
+			descriçãoI: ["Lipeza de rotina"],
+			íconeI: "twf-check-circle",
 		},
 		{
-			tituloI: "Tamanho",
-			descricaoI: ["3 cômodos", "2 banheiros"],
-			iconeI: "twf-check-circle",
+			títuloI: "Tamanho",
+			descriçãoI: ["3 cômodos", "2 banheiros"],
+			íconeI: "twf-check-circle",
 		},
 		{
-			tituloI: "Data",
-			descricaoI: ["05/08/2022"],
-			iconeI: "twf-check-circle",
+			títuloI: "Data",
+			descriçãoI: ["05/08/2022"],
+			íconeI: "twf-check-circle",
 		},
 	],
-	rodape: {
+	rodapé: {
 		textoR: "R$ 185,00",
-		iconeR: "twf-credit-card",
+		íconeR: "twf-credit-card",
 	},
 };
 
 export const Diarista = Modelo.bind({});
 Diarista.args = {
-	titulo: "Como Funciona?",
+	título: "Como Funciona?",
 	itens: [
 		{
-			tituloI: "1 - Cadastro",
-			descricaoI: ["Você faz o cadastro e escolhe as cidades atendidas"],
+			títuloI: "1 - Cadastro",
+			descriçãoI: ["Você faz o cadastro e escolhe as cidades atendidas"],
 		},
 		{
-			tituloI: "2 - Receba Propostas",
-			descricaoI: [
+			títuloI: "2 - Receba Propostas",
+			descriçãoI: [
 				"Você receberá os serviços por e-mail e notificação no celular",
 			],
 		},
 		{
-			tituloI: "3 - Diária Agendada",
-			descricaoI: [
+			títuloI: "3 - Diária Agendada",
+			descriçãoI: [
 				"Se o seu perfil for escolhido pelo cliente você receberá a confirmação do agendamento",
 			],
 		},

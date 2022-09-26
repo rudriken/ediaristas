@@ -10,12 +10,12 @@ export interface MigalhaDePaoProps {
 const MigalhaDePao: React.FC<MigalhaDePaoProps> = ({ selecionado, itens }) => {
 	return (
 		<ContainerMigalhaDePao>
-			{itens.map((item, indice) => (
+			{itens.map((item, índice) => (
 				<React.Fragment key={item}>
-					<ItemMigalhaDePao estaSelecionado={selecionado === item}>
+					<ItemMigalhaDePao estáSelecionado={selecionado === item}>
 						{item}
 					</ItemMigalhaDePao>
-					{indice !== itens.length - 1 && <span> &gt; </span>}
+					{índice !== itens.length - 1 && <span> &gt; </span>}
 				</React.Fragment>
 			))}
 		</ContainerMigalhaDePao>

@@ -7,7 +7,7 @@ export default {
     component: Elo,
 } as ComponentMeta<typeof Elo>;
 
-const Modelo: ComponentStory<typeof Elo> = (parametros) => <Elo {...parametros} />;
+const Modelo: ComponentStory<typeof Elo> = (parâmetros) => <Elo {...parâmetros} />;
 
 export const Padrao = Modelo.bind({});
 Padrao.args = {
