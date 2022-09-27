@@ -1,12 +1,10 @@
-import { LoginFormularioDeDadosInterface } from "logica/@tipos/FormularioInterface";
+import { CredenciaisInterface } from "logica/@tipos/FormularioInterface";
 import { InterfaceDoUsuario } from "logica/@tipos/InterfaceDoUsuario";
 import { LocalStorage } from "./ServicoArmazenamento";
 import { ServicoAPI } from "./ServicoAPI";
 
 export const ServicoLogin = {
-	async entrar(
-		credenciais: LoginFormularioDeDadosInterface
-	): Promise<boolean> {
+	async entrar(credenciais: CredenciaisInterface): Promise<boolean> {
 		try {
 			const { data } = await ServicoAPI.post<{
 				acesso: string;

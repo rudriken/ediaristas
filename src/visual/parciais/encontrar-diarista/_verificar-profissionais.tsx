@@ -35,7 +35,7 @@ const VerificarProfissionais: React.FC<VerificarProfissionaisProps> = (
 			<TituloPagina
 				titulo={"Conheça os profissionais"}
 				subtitulo={
-					"Preencha seu endereço e veja todos os profissionais da sua localida-de"
+					"Preencha seu endereço e veja todos os profissionais da sua localidade"
 				}
 			/>
 			<Container sx={{ mb: 10 }}>
@@ -91,7 +91,9 @@ const VerificarProfissionais: React.FC<VerificarProfissionaisProps> = (
 									variant={"contained"}
 									color={"secondary"}
 									sx={{ mt: 5 }}
-									onClick={propriedades.aoContratarProfissional}
+									onClick={
+										propriedades.aoContratarProfissional
+									}
 								>
 									Contratar um(a) profissional
 								</Button>

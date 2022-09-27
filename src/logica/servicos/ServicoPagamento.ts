@@ -9,6 +9,6 @@ export const ServicoPagamento = {
 	pegarHash(cartao: CartaoInterface): Promise<string> {
 		return pagarme.client
 			.connect({ encryption_key: chave_encriptadora })
-			.then((cliente) => cliente.security.encrypt(cartao));
+			.then((client) => client.security.encrypt(cartao));
 	},
 };
