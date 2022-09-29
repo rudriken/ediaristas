@@ -11,7 +11,7 @@ export type TipoDoEstadoInicial = typeof estadoInicial;
 
 export type TipoDaAcaoDosServicosExternos = {
 	tipo: string;
-	carregarPagamento?: unknown;
+	carregarObjeto?: unknown;
 };
 
 export interface RedutorServicosExternosInterface {
@@ -27,7 +27,7 @@ const redutor = (
 		switch (acao.tipo) {
 			case "UPDATE":
 				estadoRascunho.servicosExternos =
-					acao.carregarPagamento as ApiLinksInterface[];
+					acao.carregarObjeto as ApiLinksInterface[];
 				break;
 		}
 	});
@@ -43,7 +43,7 @@ export function useRedutorServicosExternos(): RedutorServicosExternosInterface {
 		}).then(({ data }) => {
 			despacho({
 				tipo: "UPDATE",
-				carregarPagamento: data.links,
+				carregarObjeto: data.links,
 			});
 		});
 	}, []);

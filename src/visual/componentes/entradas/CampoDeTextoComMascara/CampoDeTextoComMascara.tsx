@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import InputMask from "react-input-mask";
 import CampodeTexto from "../CampoDeTexto/CampoDeTexto";
 import { OutlinedTextFieldProps } from "@mui/material";
@@ -10,13 +10,9 @@ export interface CampoDeTextoComMascaraProps
 	mascara: string;
 }
 
-const CampoDeTextoComMascara: React.FC<CampoDeTextoComMascaraProps> = ({
-	mascara,
-	value,
-	onChange,
-	onBlur,
-	...outras
-}) => {
+const CampoDeTextoComMascara: React.FC<
+	PropsWithChildren<CampoDeTextoComMascaraProps>
+> = ({ mascara, value, onChange, onBlur, ...outras }) => {
 	return (
 		<InputMask
 			mask={mascara}

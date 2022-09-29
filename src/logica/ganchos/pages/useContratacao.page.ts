@@ -214,7 +214,7 @@ export default function useContratacao() {
 		const loginSucesso = await ServicoLogin.entrar(credenciais);
 		if (loginSucesso) {
 			if (!usuario) usuario = await ServicoLogin.informacoes();
-			despachoUsuario({ tipo: "SET_USER", carregarPagamento: usuario });
+			despachoUsuario({ tipo: "SET_USER", carregarObjeto: usuario });
 		} else {
 			alterarErroDeLogin("E-mail e/ou senha inválidos!");
 		}

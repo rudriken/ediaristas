@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import produce from "immer";
 import {
 	InterfaceDoUsuario,
@@ -8,6 +8,7 @@ import {
 	CidadeInterface,
 	EnderecoInterface,
 } from "logica/@tipos/EnderecoInterface";
+import { ServicoLogin } from "logica/servicos/ServicoLogin";
 
 export const estadoInicial = {
 	usuario: {
@@ -44,7 +45,7 @@ type AcoesUsuario =
 
 export type TipoDaAcaoDoUsuario = {
 	tipo: AcoesUsuario;
-	carregarPagamento?: unknown;
+	carregarObjeto?: unknown;
 };
 
 export interface RedutorUsuarioInterface {
@@ -60,19 +61,19 @@ const redutor = (
 		switch (acao.tipo) {
 			case "SET_USER":
 				estadoRascunho.usuario =
-					acao.carregarPagamento as InterfaceDoUsuario;
+					acao.carregarObjeto as InterfaceDoUsuario;
 				estadoRascunho.logando = false;
 				break;
 			case "SET_ADDRESS_LIST":
 				estadoRascunho.listaDeEnderecos =
-					acao.carregarPagamento as CidadeInterface[];
+					acao.carregarObjeto as CidadeInterface[];
 				break;
 			case "SET_USER_ADDRESS":
 				estadoRascunho.enderecoUsuario =
-					acao.carregarPagamento as EnderecoInterface;
+					acao.carregarObjeto as EnderecoInterface;
 				break;
 			case "SET_LOGGING":
-				estadoRascunho.logando = acao.carregarPagamento as boolean;
+				estadoRascunho.logando = acao.carregarObjeto as boolean;
 				break;
 		}
 	});
@@ -81,6 +82,22 @@ const redutor = (
 
 export function useRedutorUsuario(): RedutorUsuarioInterface {
 	const [estado, despacho] = useReducer(redutor, estadoInicial);
+
+	useEffect(() => {
+		pegarUsuario();
+	}, [estado.usuario.id]);
+
+	async function pegarUsuario() {
+		try {
+			despacho({ tipo: "SET_LOGGING", carregarObjeto: true });
+			const usuario = await ServicoLogin.informacoes();
+			if (usuario) {
+				despacho({ tipo: "SET_USER", carregarObjeto: usuario });
+			} else {
+				despacho({ tipo: "SET_LOGGING", carregarObjeto: false });
+			}
+		} catch (erro) {}
+	}
 
 	return {
 		estadoUsuario: estado,

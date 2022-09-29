@@ -26,8 +26,8 @@ export default function useLogin() {
 		alterarMensagemDeErro("");
 		const sucessoNoLogin = await ServicoLogin.entrar(dado.login);
 		if (sucessoNoLogin) {
-			const usuario = ServicoLogin.informacoes();
-			despachoUsuario({ tipo: "SET_USER", carregarPagamento: usuario });
+			const usuario = await ServicoLogin.informacoes();
+			despachoUsuario({ tipo: "SET_USER", carregarObjeto: usuario });
 		} else {
 			alterarMensagemDeErro("E-mail e/ou senha inválido(s)");
 		}
