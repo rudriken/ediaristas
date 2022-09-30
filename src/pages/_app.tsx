@@ -44,7 +44,7 @@ function App({ Component, pageProps }: AppProps) {
 			</Head>
 			<ThemeProvider theme={temaOficial}>
 				<AppContainer>
-					<Cabecalho />
+					<Cabecalho usuario={estadoUsuario.usuario} />
 					<main>
 						{podemosExibir() ? (
 							<Component {...pageProps} />
