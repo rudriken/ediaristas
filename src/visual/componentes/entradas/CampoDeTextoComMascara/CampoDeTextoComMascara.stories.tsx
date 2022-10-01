@@ -13,5 +13,5 @@ const Modelo: ComponentStory<typeof CampoDeTextoComMascara> = (argumentos) => (
 
 export const Padrao = Modelo.bind({});
 Padrao.args = {
-    máscara: "99/99/9999",
+    mascara: "99/99/9999",
 };

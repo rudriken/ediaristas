@@ -45,7 +45,7 @@ const MenuCabecalhoDoUsuario: React.FC<MenuCabecalhoDoUsuarioProps> = (
 				<li>
 					<Elo
 						href={""}
-						aoClicar={propriedades.quandoClicarEmSair}
+						onClick={propriedades.quandoClicarEmSair}
 						mui={{ color: "inherit" }}
 					>
 						Sair

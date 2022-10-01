@@ -25,6 +25,7 @@ import PerfilDoUsuarioAvatar from "visual/componentes/exibe-dados/PerfilDoUsuari
 
 export interface CabecalhoProps {
 	usuario: InterfaceDoUsuario;
+	aoDeslogar?: () => void;
 }
 
 const Cabecalho: React.FC<CabecalhoProps> = (propriedades) => {
@@ -99,7 +100,7 @@ const CabecalhoVersaoDesktop: React.FC<CabecalhoProps> = (propriedades) => {
 						quandoClicar={() => alterarMenuAberto(true)}
 						quandoMenuAberto={() => alterarMenuAberto(false)}
 						quandoFecharMenu={() => alterarMenuAberto(false)}
-						quandoClicarEmSair={() => {}}
+						quandoClicarEmSair={propriedades.aoDeslogar}
 					/>
 				) : (
 					<CabecalhoBotoesContainer>
@@ -189,6 +190,13 @@ const CabecalhoVersaoMovel: React.FC<CabecalhoProps> = (propriedades) => {
 									ComponenteReact={MenuItem}
 								>
 									Alterar Dados
+								</Elo>
+								<Elo
+									href={""}
+									ComponenteReact={MenuItem}
+									onClick={propriedades.aoDeslogar}
+								>
+									Sair
 								</Elo>
 							</MenuList>
 						</>

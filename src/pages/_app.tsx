@@ -12,6 +12,7 @@ import { ContextoUsuario } from "logica/contextos/ContextoUsuario";
 import useRoteadorProtetor, {
 	rotasPrivadas,
 } from "logica/ganchos/useRoteadorProtetor.hook";
+import { ServicoLogin } from "logica/servicos/ServicoLogin";
 
 function App({ Component, pageProps }: AppProps) {
 	const { estadoUsuario } = useContext(ContextoUsuario);
@@ -35,6 +36,11 @@ function App({ Component, pageProps }: AppProps) {
 		return true;
 	}
 
+	function deslogar() {
+		ServicoLogin.sair();
+		window.location.reload();
+	}
+
 	return (
 		<>
 			<Head>
@@ -44,7 +50,10 @@ function App({ Component, pageProps }: AppProps) {
 			</Head>
 			<ThemeProvider theme={temaOficial}>
 				<AppContainer>
-					<Cabecalho usuario={estadoUsuario.usuario} />
+					<Cabecalho
+						usuario={estadoUsuario.usuario}
+						aoDeslogar={deslogar}
+					/>
 					<main>
 						{podemosExibir() ? (
 							<Component {...pageProps} />
