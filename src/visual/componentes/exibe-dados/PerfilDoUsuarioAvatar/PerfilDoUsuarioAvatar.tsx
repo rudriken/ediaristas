@@ -5,7 +5,7 @@ import { AvatarDoUsuario, AvatarIcone } from "./PerfilDoUsuarioAvatar.style";
 
 export interface PerfilDoUsuarioAvatarProps {
 	usuario: InterfaceDoUsuario;
-	aoClicar?: (evento: React.MouseEvent) => void;
+	onClick?: (evento: React.MouseEvent) => void;
 }
 
 const PerfilDoUsuarioAvatar: React.FC<PerfilDoUsuarioAvatarProps> = (
@@ -13,7 +13,7 @@ const PerfilDoUsuarioAvatar: React.FC<PerfilDoUsuarioAvatarProps> = (
 ) => {
 	const temUsuarioLogado = propriedades.usuario.nome_completo.length > 0;
 	return (
-		<Button color={"inherit"} onClick={propriedades.aoClicar}>
+		<Button color={"inherit"} onClick={propriedades.onClick}>
 			<Grid container spacing={1} wrap={"nowrap"}>
 				<Grid item>
 					{temUsuarioLogado ? (

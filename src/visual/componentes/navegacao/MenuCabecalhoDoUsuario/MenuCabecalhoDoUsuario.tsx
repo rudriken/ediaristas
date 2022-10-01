@@ -26,7 +26,7 @@ const MenuCabecalhoDoUsuario: React.FC<MenuCabecalhoDoUsuarioProps> = (
 		<MenuCabecalhoDoUsuarioContainer ref={containerRef}>
 			<PerfilDoUsuarioAvatar
 				usuario={propriedades.usuario}
-				aoClicar={propriedades.quandoClicar}
+				onClick={propriedades.quandoClicar}
 			/>
 			<MenuDoUsuario
 				open={propriedades.menuAberto}
