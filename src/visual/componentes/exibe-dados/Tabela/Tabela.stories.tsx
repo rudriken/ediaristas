@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import Tabela, { Celula_Tabela, Linha_Tabela } from "./Tabela";
+import Tabela, { T_Celula, T_Linha } from "./Tabela";
 
 export default {
 	title: "exibe-dados/Tabela",
@@ -8,16 +8,16 @@ export default {
 	argTypes: {},
 } as ComponentMeta<typeof Tabela>;
 
-interface ModeloDePropriedadesInterface {
+const Modelo: ComponentStory<typeof Tabela> = (argumentos) => (
+	<Tabela {...argumentos} />
+);
+
+export type LimpezaTipo = {
 	data: string;
 	tipo: string;
 	comodos: number;
 	cidade: string;
-}
-
-const Modelo: ComponentStory<typeof Tabela> = (argumentos) => (
-	<Tabela {...argumentos} />
-);
+};
 
 export const Padrao = Modelo.bind({});
 Padrao.args = {
@@ -42,20 +42,20 @@ Padrao.args = {
 			cidade: "Araguari - MG",
 		},
 	],
-	elementoDeLinha(_item, indice) {
-		const item = _item as ModeloDePropriedadesInterface;
+	renderizarLinha(_item, indice) {
+		const item = _item as LimpezaTipo;
 		return (
-			<Linha_Tabela key={indice}>
-				<Celula_Tabela>
+			<T_Linha key={indice}>
+				<T_Celula>
 					<strong>{item.data}</strong>
-				</Celula_Tabela>
-				<Celula_Tabela>{item.tipo}</Celula_Tabela>
-				<Celula_Tabela>{item.comodos}</Celula_Tabela>
-				<Celula_Tabela>{item.cidade}</Celula_Tabela>
-				<Celula_Tabela align="right">
-					<Button>Visualilzar</Button>
-				</Celula_Tabela>
-			</Linha_Tabela>
+				</T_Celula>
+				<T_Celula>{item.tipo}</T_Celula>
+				<T_Celula>{item.comodos} cômodos</T_Celula>
+				<T_Celula>{item.cidade}</T_Celula>
+				<T_Celula align="right">
+					<Button>Visualizar</Button>
+				</T_Celula>
+			</T_Linha>
 		);
 	},
 };
