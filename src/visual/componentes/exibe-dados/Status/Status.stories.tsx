@@ -13,6 +13,6 @@ const Modelo: ComponentStory<typeof Status> = (argumentos) => (
 
 export const Padrao = Modelo.bind({});
 Padrao.args = {
-	aviso: "success",
+	cor: "success",
 	children: "Sucesso",
 };

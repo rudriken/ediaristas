@@ -1,13 +1,14 @@
 import React from "react";
-// import {  } from "@mui/material";
 import { StatusE } from "./Status.style";
+import { CorDoTexto } from "logica/@tipos/DiariaInterface";
+// import {  } from "@mui/material";
 
 export interface StatusProps {
-	aviso?: "success" | "error" | "warning" | "primary" | "secondary";
+	cor?: CorDoTexto;
 }
 
-const Status: React.FC<StatusProps> = ({ aviso = "success", ...outras }) => {
-	return <StatusE sx={{ bgcolor: `${aviso}.main` }} {...outras} />;
+const Status: React.FC<StatusProps> = ({ cor = "success", ...outras }) => {
+	return <StatusE sx={{ bgcolor: `${cor}.main` }} {...outras} />;
 };
 
 export default Status;
