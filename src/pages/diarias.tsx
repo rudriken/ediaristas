@@ -1,7 +1,23 @@
 import React from "react";
+import { GetStaticProps } from "next";
+import { ProvedorDiaria } from "logica/contextos/ContextoDiarias";
+import MinhasDiarias from "@parciais/diarias/_minhas-diarias";
+// import {  } from "@estilos/pages/diarias.styled";
 
-const diarias = () => {
-	return <h1>Sou um(a) cliente.</h1>;
+export const getStaticProps: GetStaticProps = async () => {
+	return {
+		props: {
+			titulo: "Diárias",
+		},
+	};
 };
 
-export default diarias;
+const Diarias: React.FC = () => {
+	return (
+		<ProvedorDiaria>
+			<MinhasDiarias />
+		</ProvedorDiaria>
+	);
+};
+
+export default Diarias;
