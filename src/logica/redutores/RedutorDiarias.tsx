@@ -11,25 +11,25 @@ export const estadoInicial = {
 
 type EstadoInicialTipo = typeof estadoInicial;
 
-type DiariaAcao = "ATUALIZAR_DIARIA" | "ATUALIZAR_BUSCANDO";
+type DiariaAcoes = "ATUALIZAR_DIARIAS" | "ATUALIZAR_BUSCANDO";
 
-export type DiariaAcaoTipo = {
-	tipo: DiariaAcao;
+export type DiariaAcoesTipo = {
+	tipo: DiariaAcoes;
 	carregarObjeto?: unknown;
 };
 
 export interface RedutorDiariaInterface {
 	estadoDiaria: EstadoInicialTipo;
-	despachoDiaria: React.Dispatch<DiariaAcaoTipo>;
+	despachoDiaria: React.Dispatch<DiariaAcoesTipo>;
 }
 
 const redutor = (
 	estadoAtual: EstadoInicialTipo,
-	acao: DiariaAcaoTipo
+	acao: DiariaAcoesTipo
 ): EstadoInicialTipo => {
 	const proximoEstado = produce(estadoAtual, (estadoRascunho) => {
 		switch (acao.tipo) {
-			case "ATUALIZAR_DIARIA":
+			case "ATUALIZAR_DIARIAS":
 				estadoRascunho.diarias =
 					acao.carregarObjeto as DiariaInterface[];
 				estadoRascunho.buscando = false;
@@ -53,7 +53,7 @@ export function useRedutorDiaria(): RedutorDiariaInterface {
 
 	useEffect(() => {
 		if (diarias) {
-			despacho({ tipo: "ATUALIZAR_DIARIA", carregarObjeto: diarias });
+			despacho({ tipo: "ATUALIZAR_DIARIAS", carregarObjeto: diarias });
 		}
 	}, [diarias]);
 
