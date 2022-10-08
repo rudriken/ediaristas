@@ -42,4 +42,8 @@ export const TCelula = styled(TableCell)`
 	}
 `;
 
-export const TPaginacao = styled(Pagination)``;
+export const TPaginacao = styled(Pagination)`
+	display: flex;
+	justify-content: flex-end;
+	margin: ${({ theme }) => theme.spacing(4)};
+`;

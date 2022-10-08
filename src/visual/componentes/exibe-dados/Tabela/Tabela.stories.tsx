@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
-import Tabela, { T_Celula, T_Linha } from "./Tabela";
+import Tabela, { T_Celula, T_Linha, T_Paginacao } from "./Tabela";
 
 export default {
 	title: "exibe-dados/Tabela",
@@ -9,7 +9,10 @@ export default {
 } as ComponentMeta<typeof Tabela>;
 
 const Modelo: ComponentStory<typeof Tabela> = (argumentos) => (
-	<Tabela {...argumentos} />
+	<>
+		<Tabela {...argumentos} />
+		<T_Paginacao count={10} />
+	</>
 );
 
 export type LimpezaTipo = {

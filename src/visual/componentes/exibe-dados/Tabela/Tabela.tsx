@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 // import {  } from "@mui/material";
 import {
 	TPapel,
@@ -15,13 +15,29 @@ export interface TabelaProps<T> {
 	cabecalho: string[];
 	dados: T[];
 	renderizarLinha: (item: T, indice: number) => React.ReactNode;
+	itensPorPagina?: number;
+	paginaAtual?: number;
 }
 
 export type ComponenteTabelaTipo = <T>(
 	propriedades: TabelaProps<T>
 ) => React.ReactElement;
 
-const Tabela: ComponenteTabelaTipo = ({ dados, ...propriedades }) => {
+const Tabela: ComponenteTabelaTipo = ({
+	dados,
+	itensPorPagina,
+	paginaAtual,
+	...propriedades
+}) => {
+	const dadosVisiveisNaTabela = useMemo<typeof dados>(() => {
+		if (itensPorPagina !== undefined && paginaAtual !== undefined) {
+			return dados.slice(
+				(paginaAtual - 1) * itensPorPagina,
+				(paginaAtual - 1) * itensPorPagina + itensPorPagina
+			);
+		}
+		return dados;
+	}, [dados, itensPorPagina, paginaAtual]);
 	return (
 		<TPapel>
 			<TContainer>
@@ -33,7 +49,9 @@ const Tabela: ComponenteTabelaTipo = ({ dados, ...propriedades }) => {
 							})}
 						</TLinha>
 					</TCabecalho>
-					<TCorpo>{dados.map(propriedades.renderizarLinha)}</TCorpo>
+					<TCorpo>
+						{dadosVisiveisNaTabela.map(propriedades.renderizarLinha)}
+					</TCorpo>
 				</TTabela>
 			</TContainer>
 		</TPapel>

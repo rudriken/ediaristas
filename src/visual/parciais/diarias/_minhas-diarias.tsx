@@ -5,7 +5,13 @@ import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagi
 // import { Component } from "./_minhas-diarias.styled";
 
 const MinhasDiarias: React.FC = () => {
-	const { movel } = useMinhasDiarias();
+	const {
+		paginaAtual,
+		alterarPaginaAtual,
+		totalPaginas,
+		itensPorPagina,
+		movel,
+	} = useMinhasDiarias();
 	return (
 		<>
 			<Container>
