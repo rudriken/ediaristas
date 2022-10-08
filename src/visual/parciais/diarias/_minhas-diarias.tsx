@@ -1,12 +1,18 @@
+import { Container } from "@mui/material";
+import useMinhasDiarias from "logica/ganchos/pages/diarias/useMinhasDiarias.page";
 import React from "react";
+import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagina";
 // import { Component } from "./_minhas-diarias.styled";
 
 const MinhasDiarias: React.FC = () => {
-    return (
-        <div>
-            <div>MinhasDiarias</div>
-        </div>
-    );
+	const { movel } = useMinhasDiarias();
+	return (
+		<>
+			<Container>
+				<TituloPagina titulo={"Minhas Diárias"} />
+			</Container>
+		</>
+	);
 };
 
 export default MinhasDiarias;
