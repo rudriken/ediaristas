@@ -6,10 +6,12 @@ import { ContextoDiaria } from "logica/contextos/ContextoDiarias";
 export default function useMinhasDiarias() {
 	const movel = useMovelAtivo(),
 		{ estadoDiaria } = useContext(ContextoDiaria),
-		{ diarias } = estadoDiaria;
+		{ diarias } = estadoDiaria,
+		dadosFiltrados = diarias;
 	const { paginaAtual, alterarPaginaAtual, totalPaginas, itensPorPagina } =
-		usePaginacao(diarias, 5);
+		usePaginacao(diarias, 7);
 	return {
+		dadosFiltrados,
 		paginaAtual,
 		alterarPaginaAtual,
 		totalPaginas,
