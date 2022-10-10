@@ -1,4 +1,4 @@
-import { Container, Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
 import { DiariaStatus } from "logica/@tipos/DiariaInterface";
 import useMinhasDiarias from "logica/ganchos/pages/diarias/useMinhasDiarias.page";
 import { ServicoDiaria } from "logica/servicos/ServicoDiaria";
@@ -12,6 +12,7 @@ import Tabela, {
 	T_Paginacao,
 } from "visual/componentes/exibe-dados/Tabela/Tabela";
 import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagina";
+import Elo from "visual/componentes/navegacao/Link/Link";
 // import { Component } from "./_minhas-diarias.styled";
 
 const MinhasDiarias: React.FC = () => {
@@ -22,6 +23,7 @@ const MinhasDiarias: React.FC = () => {
 		totalPaginas,
 		itensPorPagina,
 		movel,
+		podeVisualizar,
 	} = useMinhasDiarias();
 	return (
 		<>
@@ -56,6 +58,20 @@ const MinhasDiarias: React.FC = () => {
 												Valor:{" "}
 												{ServicoFormatadorDeTexto.formatarMoeda(
 													item.preco
+												)}
+											</>
+										}
+										acoes={
+											<>
+												{podeVisualizar(item) && (
+													<Button
+														component={Elo}
+														href={`?id=${item.id}`}
+														color={"inherit"}
+														variant={"outlined"}
+													>
+														Detalhes
+													</Button>
 												)}
 											</>
 										}
@@ -108,6 +124,15 @@ const MinhasDiarias: React.FC = () => {
 											<T_Celula>
 												{ServicoFormatadorDeTexto.formatarMoeda(
 													item.preco
+												)}
+											</T_Celula>
+											<T_Celula>
+												{podeVisualizar(item) && (
+													<Elo
+														href={`?id=${item.id}`}
+													>
+														Detalhes
+													</Elo>
 												)}
 											</T_Celula>
 										</T_Linha>
