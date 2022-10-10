@@ -4,6 +4,7 @@ import useMinhasDiarias from "logica/ganchos/pages/diarias/useMinhasDiarias.page
 import { ServicoDiaria } from "logica/servicos/ServicoDiaria";
 import { ServicoFormatadorDeTexto } from "logica/servicos/ServicoFormatadorDeTexto";
 import React from "react";
+import ListaDeDados from "visual/componentes/exibe-dados/ListaDeDados/ListaDeDados";
 import Status from "visual/componentes/exibe-dados/Status/Status";
 import Tabela, {
 	T_Celula,
@@ -24,11 +25,44 @@ const MinhasDiarias: React.FC = () => {
 	} = useMinhasDiarias();
 	return (
 		<>
-			<Container>
+			<Container sx={{ mb: 5, p: 0 }}>
 				<TituloPagina titulo={"Minhas Diárias"} />
 				{dadosFiltrados.length > 0 ? (
 					movel ? (
-						"lista de dados"
+						<>
+							{dadosFiltrados.map((item) => {
+								return (
+									<ListaDeDados
+										key={item.id}
+										cabecalho={
+											<>
+												Data:{" "}
+												{ServicoFormatadorDeTexto.reverterFormatoDeData(
+													item.data_atendimento as string
+												)}
+												<br />
+												{item.nome_servico}
+											</>
+										}
+										corpo={
+											<>
+												Status:{" "}
+												{
+													ServicoDiaria.pegarStatus(
+														item.status
+													).rotulo
+												}
+												<br />
+												Valor:{" "}
+												{ServicoFormatadorDeTexto.formatarMoeda(
+													item.preco
+												)}
+											</>
+										}
+									/>
+								);
+							})}
+						</>
 					) : (
 						<>
 							<Tabela
@@ -48,8 +82,7 @@ const MinhasDiarias: React.FC = () => {
 										<T_Linha key={indice}>
 											<T_Celula>
 												<strong>
-													{ServicoFormatadorDeTexto
-														.reverterFormatoDeData(
+													{ServicoFormatadorDeTexto.reverterFormatoDeData(
 														item.data_atendimento as string
 													)}
 												</strong>
