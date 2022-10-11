@@ -16,6 +16,12 @@ export const ServicoData = {
 		data.setFullYear(data.getFullYear() - 100);
 		return data;
 	},
+	pegarTempoDeData(data: string): string {
+		/* a data recebida terá o formato "2022-10-11T13:04:41Z", portanto ... */
+		const [_dia, tempo] = data.split("T"),
+			[hora, minuto, ..._resto] = tempo.split(":");
+		return `${hora}:${minuto}`;
+	},
 	converterStringEmData(valor: any, valorOriginal: any): any {
 		if (typeof valorOriginal === "string") {
 			const [dia, mês, ano] = valorOriginal.split("/");
