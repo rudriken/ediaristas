@@ -30,7 +30,7 @@ export interface DiariaInterface {
 	quantidade_outros: number;
 
 	observacoes?: string;
-
+	diarista?: InterfaceDoUsuario;
 	servico: number;
 	nome_servico: string;
 }
