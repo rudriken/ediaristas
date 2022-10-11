@@ -51,4 +51,12 @@ export const ServicoFormatadorDeTexto = {
 
 		return enderecoFormatado;
 	},
+	formatarTelefone(telefone: string): string {
+		const combinacao = telefone.match(/^(\d{2})(\d{5})(\d{4})/);
+		if (combinacao) {
+			const [_, ddd, n1, n2] = combinacao;
+			return `(${ddd}) ${n1}-${n2}`;
+		}
+		return telefone;
+	},
 };
