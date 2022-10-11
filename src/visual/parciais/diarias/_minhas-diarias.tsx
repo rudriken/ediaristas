@@ -51,7 +51,7 @@ const MinhasDiarias: React.FC = () => {
 												Status:{" "}
 												{
 													ServicoDiaria.pegarStatus(
-														item.status
+														item.status as DiariaStatus
 													).rotulo
 												}
 												<br />

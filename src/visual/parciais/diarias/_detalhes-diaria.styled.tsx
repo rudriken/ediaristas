@@ -39,3 +39,26 @@ export const DetalhesDoServico = styled(Paper)`
 		margin-bottom: ${({ theme }) => theme.spacing(5)};
 	}
 `;
+
+export const TituloDoUsuario = styled(Typography)`
+	color: ${({ theme }) => theme.palette.primary.main};
+	font-weight: bold;
+
+	${({ theme }) => theme.breakpoints.down("md")} {
+		background-color: ${({ theme }) => theme.palette.grey[100]};
+		padding: ${({ theme }) => theme.spacing(3)};
+		margin: ${({ theme }) => "0 " + theme.spacing(-3)};
+	}
+`;
+
+export const CartaoDoUsuario = styled(Paper)`
+	display: flex;
+	flex-direction: column;
+	gap: ${({ theme }) => theme.spacing()};
+	padding: ${({ theme }) => theme.spacing(4)};
+
+	${({ theme }) => theme.breakpoints.down("md")} {
+		padding: 0;
+		box-shadow: none;
+	}
+`;
