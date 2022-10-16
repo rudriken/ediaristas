@@ -100,6 +100,10 @@ export const DadosEndereco = styled(GradeBase)`
 	}
 `;
 
+export const DadoFinanceiro = styled(GradeBase)`
+	grid-template-columns: 1fr;
+`;
+
 export const ImagemSelecionada = styled(GradeBase)`
 	grid-template-columns: 1fr;
 	padding: 0;

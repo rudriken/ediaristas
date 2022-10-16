@@ -18,3 +18,4 @@ export * from "./Formularios/FormularioPagamento";
 export * from "./Formularios/FormularioImagem";
 export * from "./Formularios/FormularioDadosUsuario";
 export * from "./Formularios/FormularioLogin";
+export * from "./Formularios/FormularioFinanceiro";
