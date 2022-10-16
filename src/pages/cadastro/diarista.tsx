@@ -7,6 +7,8 @@ import Elo from "visual/componentes/navegacao/Link/Link";
 import useCadastroDiarista from "logica/ganchos/pages/cadastro/useCadastroDiarista.page";
 import { FormularioUsuarioContainer } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario";
 import { ContainerPaginaFormulario } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario.style";
+import useMovelAtivo from "logica/ganchos/useMovelAtivo";
+import InformacaoLateral from "visual/componentes/exibe-dados/InformacaoLateral/InformacaoLateral";
 // import {  } from "@estilos/pages/diarista.styled";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -18,7 +20,8 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const Diarista: React.FC = () => {
-	const { passo, migalhaDePaoItens } = useCadastroDiarista();
+	const movel = useMovelAtivo(),
+		{ passo, migalhaDePaoItens } = useCadastroDiarista();
 	return (
 		<>
 			<AmbienteSeguro />
@@ -49,7 +52,34 @@ const Diarista: React.FC = () => {
 				/>
 			)}
 			<FormularioUsuarioContainer>
-				<ContainerPaginaFormulario></ContainerPaginaFormulario>
+				<ContainerPaginaFormulario>
+					<div></div>
+					{!movel && (
+						<InformacaoLateral
+							titulo={"Como funciona?"}
+							itens={[
+								{
+									tituloI: "1 - Cadastro",
+									descricaoI: [
+										"Você faz o cadastro e escolhe as cidades atendidas",
+									],
+								},
+								{
+									tituloI: "2 - Receba Propostas",
+									descricaoI: [
+										"Você receberá avisos por E-mail sobre novos serviços nas cidades atendidas",
+									],
+								},
+								{
+									tituloI: "3 - Diária Agendada",
+									descricaoI: [
+										"Se o seu perfil for escolhido pelo cliente, você receberá a confirmação do agendamento",
+									],
+								},
+							]}
+						/>
+					)}
+				</ContainerPaginaFormulario>
 			</FormularioUsuarioContainer>
 		</>
 	);
