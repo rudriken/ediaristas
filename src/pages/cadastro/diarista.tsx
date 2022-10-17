@@ -5,10 +5,19 @@ import MigalhaDePao from "visual/componentes/navegacao/MigalhaDePao/MigalhaDePao
 import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagina";
 import Elo from "visual/componentes/navegacao/Link/Link";
 import useCadastroDiarista from "logica/ganchos/pages/cadastro/useCadastroDiarista.page";
-import { FormularioUsuarioContainer } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario";
+import {
+	FormularioDadosUsuario,
+	FormularioEndereco,
+	FormularioFinanceiro,
+	FormularioImagem,
+	FormularioNovoContato,
+	FormularioUsuarioContainer,
+} from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario";
 import { ContainerPaginaFormulario } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario.style";
 import useMovelAtivo from "logica/ganchos/useMovelAtivo";
 import InformacaoLateral from "visual/componentes/exibe-dados/InformacaoLateral/InformacaoLateral";
+import { FormProvider } from "react-hook-form";
+import { Button, Container, Divider, Paper, Typography } from "@mui/material";
 // import {  } from "@estilos/pages/diarista.styled";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -21,7 +30,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const Diarista: React.FC = () => {
 	const movel = useMovelAtivo(),
-		{ passo, migalhaDePaoItens } = useCadastroDiarista();
+		{ passo, migalhaDePaoItens, formularioUsuario } = useCadastroDiarista();
 	return (
 		<>
 			<AmbienteSeguro />
@@ -53,7 +62,63 @@ const Diarista: React.FC = () => {
 			)}
 			<FormularioUsuarioContainer>
 				<ContainerPaginaFormulario>
-					<div></div>
+					{passo === 1 && (
+						<FormProvider {...formularioUsuario}>
+							<Paper sx={{ p: 4 }}>
+								<Typography sx={{ fontWeight: "bold", pb: 2 }}>
+									Dados pessoais
+								</Typography>
+								<FormularioDadosUsuario />
+
+								<Divider sx={{ mb: 5 }} />
+
+								<Typography sx={{ fontWeight: "bold", pb: 2 }}>
+									Financeiro
+								</Typography>
+								<FormularioFinanceiro />
+
+								<Divider sx={{ mb: 5 }} />
+
+								<Typography sx={{ fontWeight: "bold" }}>
+									Hora da self! Envie uma self segurando o documento
+								</Typography>
+								<Typography sx={{ pb: 2 }}>
+									Para sua segurança, todos os profissionais e clientes precisam enviar
+								</Typography>
+								<FormularioImagem />
+								<Typography
+									sx={{ pt: 1, pb: 5 }}
+									variant={"body2"}
+								>
+									Essa foto não será vista por ninguém
+								</Typography>
+
+								<Divider sx={{ mb: 5 }} />
+
+								<Typography sx={{ fontWeight: "bold", pb: 2 }}>
+									Endereço
+								</Typography>
+								<FormularioEndereco />
+
+								<Divider sx={{ mb: 5 }} />
+
+								<Typography sx={{ fontWeight: "bold", pb: 2 }}>
+									Dados de acesso
+								</Typography>
+								<FormularioNovoContato />
+
+								<Container sx={{ textAlign: "center" }}>
+									<Button
+										variant={"contained"}
+										color={"secondary"}
+										type={"submit"}
+									>
+										Cadastrar e escolher cidades
+									</Button>
+								</Container>
+							</Paper>
+						</FormProvider>
+					)}
 					{!movel && (
 						<InformacaoLateral
 							titulo={"Como funciona?"}
