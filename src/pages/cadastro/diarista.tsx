@@ -6,6 +6,7 @@ import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagi
 import Elo from "visual/componentes/navegacao/Link/Link";
 import useCadastroDiarista from "logica/ganchos/pages/cadastro/useCadastroDiarista.page";
 import {
+	FormularioCidades,
 	FormularioDadosUsuario,
 	FormularioEndereco,
 	FormularioFinanceiro,
@@ -30,7 +31,12 @@ export const getStaticProps: GetStaticProps = async () => {
 
 const Diarista: React.FC = () => {
 	const movel = useMovelAtivo(),
-		{ passo, migalhaDePaoItens, formularioUsuario } = useCadastroDiarista();
+		{
+			passo,
+			migalhaDePaoItens,
+			formularioUsuario,
+			formularioListaDeCidades,
+		} = useCadastroDiarista();
 	return (
 		<>
 			<AmbienteSeguro />
@@ -80,10 +86,12 @@ const Diarista: React.FC = () => {
 								<Divider sx={{ mb: 5 }} />
 
 								<Typography sx={{ fontWeight: "bold" }}>
-									Hora da self! Envie uma self segurando o documento
+									Hora da self! Envie uma self segurando o
+									documento
 								</Typography>
 								<Typography sx={{ pb: 2 }}>
-									Para sua segurança, todos os profissionais e clientes precisam enviar
+									Para sua segurança, todos os profissionais e
+									clientes precisam enviar
 								</Typography>
 								<FormularioImagem />
 								<Typography
@@ -119,6 +127,27 @@ const Diarista: React.FC = () => {
 							</Paper>
 						</FormProvider>
 					)}
+
+					{passo === 2 && (
+						<FormProvider {...formularioListaDeCidades}>
+							<Paper sx={{ p: 4 }}>
+								<Typography sx={{ fontWeight: "bold", pb: 2 }}>
+									Selecione a cidade
+								</Typography>
+								<FormularioCidades estado={"MG"} />
+								<Container sx={{ textAlign: "center" }}>
+									<Button
+										variant={"contained"}
+										color={"secondary"}
+										type={"submit"}
+									>
+										Finalizar o cadastro
+									</Button>
+								</Container>
+							</Paper>
+						</FormProvider>
+					)}
+
 					{!movel && (
 						<InformacaoLateral
 							titulo={"Como funciona?"}
