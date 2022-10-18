@@ -104,6 +104,11 @@ export const DadoFinanceiro = styled(GradeBase)`
 	grid-template-columns: 1fr;
 `;
 
+export const CidadesSelecao = styled(GradeBase)`
+	grid-template-columns: 1fr;
+	grid-template-areas: "busca-cidade";
+`;
+/* ( . . . ) */
 export const ImagemSelecionada = styled(GradeBase)`
 	grid-template-columns: 1fr;
 	padding: 0;
