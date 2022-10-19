@@ -34,9 +34,15 @@ const Diarista: React.FC = () => {
 	const movel = useMovelAtivo(),
 		{
 			passo,
+			esperandoResposta,
 			migalhaDePaoItens,
 			formularioUsuario,
 			formularioListaDeCidades,
+			novoEndereco,
+			sucessoCadastro,
+			cidadesAtendidas,
+			aoSubmeterUsuario,
+			aoSubmeterEndereco,
 		} = useCadastroDiarista();
 	return (
 		<>
@@ -178,7 +184,7 @@ const Diarista: React.FC = () => {
 			</FormularioUsuarioContainer>
 
 			<Dialogo
-				aberto={true}
+				aberto={false}
 				aoFechar={() => {}}
 				titulo={"Cadastro realizado com sucesso!"}
 				naoTerBotaoCancelar
