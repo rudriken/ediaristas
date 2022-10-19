@@ -19,6 +19,7 @@ import useMovelAtivo from "logica/ganchos/useMovelAtivo";
 import InformacaoLateral from "visual/componentes/exibe-dados/InformacaoLateral/InformacaoLateral";
 import { FormProvider } from "react-hook-form";
 import { Button, Container, Divider, Paper, Typography } from "@mui/material";
+import Dialogo from "visual/componentes/retorno/Dialogo/Dialogo";
 // import {  } from "@estilos/pages/diarista.styled";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -175,6 +176,18 @@ const Diarista: React.FC = () => {
 					)}
 				</ContainerPaginaFormulario>
 			</FormularioUsuarioContainer>
+
+			<Dialogo
+				aberto={true}
+				aoFechar={() => {}}
+				titulo={"Cadastro realizado com sucesso!"}
+				naoTerBotaoCancelar
+				aoConfirmar={() => window.location.reload()}
+				rotuloConfirmar={"Ver oportunidades"}
+			>
+				Agora você pode visualizar as oportunidades disponíveis na sua
+				região.
+			</Dialogo>
 		</>
 	);
 };
