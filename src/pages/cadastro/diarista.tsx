@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GetStaticProps } from "next";
 import AmbienteSeguro from "visual/componentes/retorno/AmbienteSeguro/AmbienteSeguro";
 import MigalhaDePao from "visual/componentes/navegacao/MigalhaDePao/MigalhaDePao";
@@ -20,6 +20,7 @@ import InformacaoLateral from "visual/componentes/exibe-dados/InformacaoLateral/
 import { FormProvider } from "react-hook-form";
 import { Button, Container, Divider, Paper, Typography } from "@mui/material";
 import Dialogo from "visual/componentes/retorno/Dialogo/Dialogo";
+import { ServicoNavegador } from "logica/servicos/ServicoNavegador";
 // import {  } from "@estilos/pages/diarista.styled";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -44,6 +45,11 @@ const Diarista: React.FC = () => {
 			aoSubmeterUsuario,
 			aoSubmeterEndereco,
 		} = useCadastroDiarista();
+
+	useEffect(() => {
+		ServicoNavegador.rolarParaCima();
+	}, [passo]);
+
 	return (
 		<>
 			<AmbienteSeguro />
@@ -77,11 +83,17 @@ const Diarista: React.FC = () => {
 				<ContainerPaginaFormulario>
 					{passo === 1 && (
 						<FormProvider {...formularioUsuario}>
-							<Paper sx={{ p: 4 }}>
+							<Paper
+								sx={{ p: 4 }}
+								component={"form"}
+								onSubmit={formularioUsuario.handleSubmit(
+									aoSubmeterUsuario
+								)}
+							>
 								<Typography sx={{ fontWeight: "bold", pb: 2 }}>
 									Dados pessoais
 								</Typography>
-								<FormularioDadosUsuario />
+								<FormularioDadosUsuario cadastro={true} />
 
 								<Divider sx={{ mb: 5 }} />
 
@@ -127,6 +139,7 @@ const Diarista: React.FC = () => {
 										variant={"contained"}
 										color={"secondary"}
 										type={"submit"}
+										disabled={esperandoResposta}
 									>
 										Cadastrar e escolher cidades
 									</Button>
@@ -137,16 +150,30 @@ const Diarista: React.FC = () => {
 
 					{passo === 2 && (
 						<FormProvider {...formularioListaDeCidades}>
-							<Paper sx={{ p: 4 }}>
+							<Paper
+								sx={{ p: 4 }}
+								component={"form"}
+								onSubmit={formularioListaDeCidades.handleSubmit(
+									aoSubmeterEndereco
+								)}
+							>
 								<Typography sx={{ fontWeight: "bold", pb: 2 }}>
 									Selecione a cidade
 								</Typography>
-								<FormularioCidades estado={"MG"} />
+								{novoEndereco && (
+									<FormularioCidades
+										estado={novoEndereco.estado}
+									/>
+								)}
 								<Container sx={{ textAlign: "center" }}>
 									<Button
 										variant={"contained"}
 										color={"secondary"}
 										type={"submit"}
+										disabled={
+											esperandoResposta ||
+											cidadesAtendidas?.length === 0
+										}
 									>
 										Finalizar o cadastro
 									</Button>
@@ -184,7 +211,7 @@ const Diarista: React.FC = () => {
 			</FormularioUsuarioContainer>
 
 			<Dialogo
-				aberto={false}
+				aberto={sucessoCadastro}
 				aoFechar={() => {}}
 				titulo={"Cadastro realizado com sucesso!"}
 				naoTerBotaoCancelar
