@@ -1,7 +1,7 @@
 import React from "react";
 import { GetStaticProps } from "next";
 import useOportunidadesTrabalho from "logica/ganchos/pages/useOportunidades.page";
-import { Container, Typography } from "@mui/material";
+import { Box, Container, Divider, Typography } from "@mui/material";
 import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagina";
 import ListaDeDados from "visual/componentes/exibe-dados/ListaDeDados/ListaDeDados";
 import Tabela, {
@@ -9,6 +9,9 @@ import Tabela, {
 	T_Linha,
 	T_Paginacao,
 } from "visual/componentes/exibe-dados/Tabela/Tabela";
+import Dialogo from "visual/componentes/retorno/Dialogo/Dialogo";
+import InformacoesDoServico from "visual/componentes/exibe-dados/InformacoesDoServico/InformacoesDoServico";
+import InformacaoDoUsuario from "visual/componentes/exibe-dados/InformacaoDoUsuario/InformacaoDoUsuario";
 // import {  } from "@estilos/pages/oportunidades.styled";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -27,6 +30,9 @@ const Oportunidades: React.FC = () => {
 		alterarPaginaAtual,
 		totalPaginas,
 		itensPorPagina,
+		oportunidadeSelecionada,
+		alterarOportunidadeSelecionada,
+		seCandidatar,
 	} = useOportunidadesTrabalho();
 	return (
 		<>
@@ -96,6 +102,76 @@ const Oportunidades: React.FC = () => {
 					</Typography>
 				)}
 			</Container>
+			{oportunidadeSelecionada && (
+				<Dialogo
+					aberto={oportunidadeSelecionada !== undefined || true}
+					titulo={"Se candidatar à diária"}
+					subtitulo={
+						"Tem certeza que deseja se candidatar à diária abaixo?"
+					}
+					aoFechar={() => {
+						alterarOportunidadeSelecionada(undefined);
+					}}
+					aoConfirmar={() => {
+						seCandidatar(oportunidadeSelecionada);
+					}}
+				>
+					<Box>
+						<InformacoesDoServico>
+							<>
+								<div>
+									Data: <strong>01/01/2023</strong>
+								</div>
+								<div>
+									Rua Alvacaz, 1000 - Cruzeiro do Sul,
+									Uberlâdia - MG
+								</div>
+								<div>
+									<strong>Valor: R$ 240,00</strong>
+								</div>
+							</>
+						</InformacoesDoServico>
+					</Box>
+					<InformacaoDoUsuario
+						nome={"Rodrigo"}
+						avaliacao={3}
+						foto={"https://github.com/rudriken.png"}
+					/>
+					<Divider />
+					{(oportunidadeSelecionada?.avaliacoes_cliente.length > 0 ||
+						true) && (
+						<>
+							<Typography
+								sx={{
+									p: 3,
+									fontWeight: "medium",
+									bgcolor: "grey.50",
+								}}
+							>
+								Últimas avaliações do cliente
+							</Typography>
+							<InformacaoDoUsuario
+								nome={"Rodrigo"}
+								avaliacao={3}
+								foto={"https://github.com/rudriken.png"}
+								avaliando={true}
+								descricao={"Algum texto"}
+							/>
+						</>
+					)}
+					<Typography
+						sx={{ py: 2 }}
+						variant={"subtitle2"}
+						color={"textSecondary"}
+					>
+						Ao se candidatar você ainda não é o(a) diarista
+						escolhido(a) para realizar o trabalho. Vamos analisar
+						suas qualificações e a distância para o local da diária.
+						Caso você seja a pessoa selecionada, receberá um e-mail
+						avisando. Atente-se à sua caixa de entrada!
+					</Typography>
+				</Dialogo>
+			)}
 		</>
 	);
 };
