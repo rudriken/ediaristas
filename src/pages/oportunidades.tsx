@@ -12,6 +12,7 @@ import Tabela, {
 import Dialogo from "visual/componentes/retorno/Dialogo/Dialogo";
 import InformacoesDoServico from "visual/componentes/exibe-dados/InformacoesDoServico/InformacoesDoServico";
 import InformacaoDoUsuario from "visual/componentes/exibe-dados/InformacaoDoUsuario/InformacaoDoUsuario";
+import { ServicoFormatadorDeTexto } from "logica/servicos/ServicoFormatadorDeTexto";
 // import {  } from "@estilos/pages/oportunidades.styled";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -35,32 +36,45 @@ const Oportunidades: React.FC = () => {
 		seCandidatar,
 		mensagemFeedback,
 		alterarMensagemFeedback,
+		totalComodos,
 	} = useOportunidadesTrabalho();
 	return (
 		<>
 			<Container sx={{ mb: 5, p: 0 }}>
 				<TituloPagina titulo={"Oportunidades de trabalho"} />
-				{oportunidades.length === 0 ? (
+				{oportunidades.length > 0 ? (
 					movel ? (
 						<>
-							<ListaDeDados
-								cabecalho={
-									<>
-										Data: 01/01/2023
-										<br />
-										Limpeza Pesada
-										<br />
-										R$ 240,00
-									</>
-								}
-								corpo={
-									<>
-										Cidade: Uberlândia
-										<br />
-										Número de cômodos: 2
-									</>
-								}
-							/>
+							{oportunidades.map((item) => {
+								return (
+									<ListaDeDados
+										key={item.id}
+										cabecalho={
+											<>
+												Data:{" "}
+												{ServicoFormatadorDeTexto
+													.reverterFormatoDeData(
+													item.data_atendimento as string
+												)}
+												<br />
+												{item.nome_servico}
+												<br />
+												{ServicoFormatadorDeTexto.formatarMoeda(
+													item.preco
+												)}
+											</>
+										}
+										corpo={
+											<>
+												Cidade: {item.cidade}
+												<br />
+												Número de cômodos:{" "}
+												{totalComodos(item)}
+											</>
+										}
+									/>
+								);
+							})}
 						</>
 					) : (
 						<>
@@ -73,21 +87,38 @@ const Oportunidades: React.FC = () => {
 									"Valor",
 									"",
 								]}
-								dados={[1]}
-								renderizarLinha={() => {
+								dados={oportunidades}
+								renderizarLinha={(itemT, indiceT) => {
 									return (
-										<T_Linha>
+										<T_Linha key={indiceT}>
 											<T_Celula>
-												<strong>01/01/2023</strong>
+												<strong>
+													{ServicoFormatadorDeTexto
+														.reverterFormatoDeData(
+														itemT.data_atendimento as string
+													)}
+												</strong>
 											</T_Celula>
-											<T_Celula>Limpeza Pesada</T_Celula>
-											<T_Celula>3 cômodos</T_Celula>
-											<T_Celula>Uberlândia - MG</T_Celula>
-											<T_Celula>R$ 240,00</T_Celula>
+											<T_Celula>
+												{itemT.nome_servico}
+											</T_Celula>
+											<T_Celula>
+												{totalComodos(itemT)} cômodos
+											</T_Celula>
+											<T_Celula>
+												{itemT.cidade} - {itemT.estado}
+											</T_Celula>
+											<T_Celula>
+												{ServicoFormatadorDeTexto.formatarMoeda(
+													itemT.preco
+												)}
+											</T_Celula>
 											<T_Celula></T_Celula>
 										</T_Linha>
 									);
 								}}
+								itensPorPagina={itensPorPagina}
+								paginaAtual={paginaAtual}
 							/>
 							<T_Paginacao
 								count={totalPaginas}

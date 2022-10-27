@@ -1,2 +1,4 @@
-SELECT id, logradouro, numero, complemento, bairro, cidade, estado, cep, user_id 
-    FROM ediaristas_temp.enderecos;
+SELECT 
+	id, data_atendimento, `status`, preco, valor_comissao, 
+	cliente_id, diarista_id, cidade, estado, servico_id
+    FROM ediaristas_temp.diarias;
