@@ -1,7 +1,7 @@
 import React from "react";
 import { GetStaticProps } from "next";
 import useOportunidadesTrabalho from "logica/ganchos/pages/useOportunidades.page";
-import { Box, Container, Divider, Typography } from "@mui/material";
+import { Box, Container, Divider, Snackbar, Typography } from "@mui/material";
 import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagina";
 import ListaDeDados from "visual/componentes/exibe-dados/ListaDeDados/ListaDeDados";
 import Tabela, {
@@ -33,6 +33,8 @@ const Oportunidades: React.FC = () => {
 		oportunidadeSelecionada,
 		alterarOportunidadeSelecionada,
 		seCandidatar,
+		mensagemFeedback,
+		alterarMensagemFeedback,
 	} = useOportunidadesTrabalho();
 	return (
 		<>
@@ -172,6 +174,14 @@ const Oportunidades: React.FC = () => {
 					</Typography>
 				</Dialogo>
 			)}
+			<Snackbar
+				open={mensagemFeedback.length > 0}
+				message={mensagemFeedback}
+				autoHideDuration={4000}
+				onClose={() => {
+					alterarMensagemFeedback("");
+				}}
+			/>
 		</>
 	);
 };

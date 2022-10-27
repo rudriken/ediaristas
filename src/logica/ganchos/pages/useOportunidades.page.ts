@@ -9,7 +9,8 @@ export default function useOportunidadesTrabalho() {
 		{ paginaAtual, alterarPaginaAtual, totalPaginas, itensPorPagina } =
 			usePaginacao(oportunidades || [], 5),
 		[oportunidadeSelecionada, alterarOportunidadeSelecionada] =
-			useState<Oportunidade>();
+			useState<Oportunidade>(),
+		[mensagemFeedback, alterarMensagemFeedback] = useState("teste");
 
 	function seCandidatar(oportunidade: Oportunidade) {}
 
@@ -23,5 +24,7 @@ export default function useOportunidadesTrabalho() {
 		oportunidadeSelecionada,
 		alterarOportunidadeSelecionada,
 		seCandidatar,
+		mensagemFeedback,
+		alterarMensagemFeedback,
 	};
 }
