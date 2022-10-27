@@ -1,5 +1,6 @@
 import { Oportunidade } from "logica/@tipos/OportunidadeInterface";
 import { ContextoUsuario } from "logica/contextos/ContextoUsuario";
+import { linksResolver } from "logica/servicos/ServicoAPI";
 import { useContext, useState } from "react";
 import { useApiHateoas } from "../useApi.hook";
 import useMovelAtivo from "../useMovelAtivo";
@@ -32,6 +33,12 @@ export default function useOportunidadesTrabalho() {
 		return total;
 	}
 
+	function podeCandidatar(oportunidade: Oportunidade) {
+		return (
+			linksResolver(oportunidade.links, "candidatar_diaria") !== undefined
+		);
+	}
+
 	return {
 		movel,
 		oportunidades,
@@ -45,5 +52,6 @@ export default function useOportunidadesTrabalho() {
 		mensagemFeedback,
 		alterarMensagemFeedback,
 		totalComodos,
+		podeCandidatar,
 	};
 }

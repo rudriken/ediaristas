@@ -1,7 +1,14 @@
 import React from "react";
 import { GetStaticProps } from "next";
 import useOportunidadesTrabalho from "logica/ganchos/pages/useOportunidades.page";
-import { Box, Container, Divider, Snackbar, Typography } from "@mui/material";
+import {
+	Box,
+	Button,
+	Container,
+	Divider,
+	Snackbar,
+	Typography,
+} from "@mui/material";
 import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagina";
 import ListaDeDados from "visual/componentes/exibe-dados/ListaDeDados/ListaDeDados";
 import Tabela, {
@@ -37,6 +44,7 @@ const Oportunidades: React.FC = () => {
 		mensagemFeedback,
 		alterarMensagemFeedback,
 		totalComodos,
+		podeCandidatar,
 	} = useOportunidadesTrabalho();
 	return (
 		<>
@@ -70,6 +78,23 @@ const Oportunidades: React.FC = () => {
 												<br />
 												Número de cômodos:{" "}
 												{totalComodos(item)}
+											</>
+										}
+										acoes={
+											<>
+												{podeCandidatar(item) && (
+													<Button
+														variant={"contained"}
+														color={"secondary"}
+														onClick={() =>
+															alterarOportunidadeSelecionada(
+																item
+															)
+														}
+													>
+														Se candidatar
+													</Button>
+												)}
 											</>
 										}
 									/>
@@ -113,7 +138,19 @@ const Oportunidades: React.FC = () => {
 													itemT.preco
 												)}
 											</T_Celula>
-											<T_Celula></T_Celula>
+											<T_Celula>
+												{podeCandidatar(itemT) && (
+													<Button
+														onClick={() =>
+															alterarOportunidadeSelecionada(
+																itemT
+															)
+														}
+													>
+														Se candidatar
+													</Button>
+												)}
+											</T_Celula>
 										</T_Linha>
 									);
 								}}
