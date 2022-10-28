@@ -20,6 +20,7 @@ import Dialogo from "visual/componentes/retorno/Dialogo/Dialogo";
 import InformacoesDoServico from "visual/componentes/exibe-dados/InformacoesDoServico/InformacoesDoServico";
 import InformacaoDoUsuario from "visual/componentes/exibe-dados/InformacaoDoUsuario/InformacaoDoUsuario";
 import { ServicoFormatadorDeTexto } from "logica/servicos/ServicoFormatadorDeTexto";
+import { EnderecoInterface } from "logica/@tipos/EnderecoInterface";
 // import {  } from "@estilos/pages/oportunidades.styled";
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -60,8 +61,7 @@ const Oportunidades: React.FC = () => {
 										cabecalho={
 											<>
 												Data:{" "}
-												{ServicoFormatadorDeTexto
-													.reverterFormatoDeData(
+												{ServicoFormatadorDeTexto.reverterFormatoDeData(
 													item.data_atendimento as string
 												)}
 												<br />
@@ -118,8 +118,7 @@ const Oportunidades: React.FC = () => {
 										<T_Linha key={indiceT}>
 											<T_Celula>
 												<strong>
-													{ServicoFormatadorDeTexto
-														.reverterFormatoDeData(
+													{ServicoFormatadorDeTexto.reverterFormatoDeData(
 														itemT.data_atendimento as string
 													)}
 												</strong>
@@ -174,7 +173,7 @@ const Oportunidades: React.FC = () => {
 			</Container>
 			{oportunidadeSelecionada && (
 				<Dialogo
-					aberto={oportunidadeSelecionada !== undefined || true}
+					aberto={oportunidadeSelecionada !== undefined}
 					titulo={"Se candidatar à diária"}
 					subtitulo={
 						"Tem certeza que deseja se candidatar à diária abaixo?"
@@ -190,26 +189,42 @@ const Oportunidades: React.FC = () => {
 						<InformacoesDoServico>
 							<>
 								<div>
-									Data: <strong>01/01/2023</strong>
+									Data:{" "}
+									<strong>
+										{ServicoFormatadorDeTexto.pegarDataEHora(
+											oportunidadeSelecionada?.data_atendimento as string
+										)}
+									</strong>
 								</div>
 								<div>
-									Rua Alvacaz, 1000 - Cruzeiro do Sul,
-									Uberlâdia - MG
+									{ServicoFormatadorDeTexto.pegarEndereco(
+										oportunidadeSelecionada as EnderecoInterface
+									)}
 								</div>
 								<div>
-									<strong>Valor: R$ 240,00</strong>
+									<strong>
+										Valor:{" "}
+										{ServicoFormatadorDeTexto.formatarMoeda(
+											oportunidadeSelecionada?.preco
+										)}
+									</strong>
 								</div>
 							</>
 						</InformacoesDoServico>
 					</Box>
 					<InformacaoDoUsuario
-						nome={"Rodrigo"}
-						avaliacao={3}
-						foto={"https://github.com/rudriken.png"}
+						nome={
+							oportunidadeSelecionada?.cliente.nome_completo || ""
+						}
+						avaliacao={
+							oportunidadeSelecionada?.cliente.reputacao || 0
+						}
+						foto={
+							oportunidadeSelecionada?.cliente.foto_usuario || ""
+						}
 					/>
 					<Divider />
-					{(oportunidadeSelecionada?.avaliacoes_cliente.length > 0 ||
-						true) && (
+					{oportunidadeSelecionada?.avaliacoes_cliente.length > 0 && (
 						<>
 							<Typography
 								sx={{
@@ -220,13 +235,21 @@ const Oportunidades: React.FC = () => {
 							>
 								Últimas avaliações do cliente
 							</Typography>
-							<InformacaoDoUsuario
-								nome={"Rodrigo"}
-								avaliacao={3}
-								foto={"https://github.com/rudriken.png"}
-								avaliando={true}
-								descricao={"Algum texto"}
-							/>
+
+							{oportunidadeSelecionada?.avaliacoes_cliente.map(
+								(item, indice) => {
+									return (
+										<InformacaoDoUsuario
+											key={indice}
+											nome={item.nome_avaliador}
+											avaliacao={item.nota}
+											foto={item.foto_avaliador}
+											avaliando={true}
+											descricao={item.descricao}
+										/>
+									);
+								}
+							)}
 						</>
 					)}
 					<Typography

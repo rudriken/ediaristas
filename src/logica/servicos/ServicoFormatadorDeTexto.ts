@@ -59,4 +59,9 @@ export const ServicoFormatadorDeTexto = {
 		}
 		return telefone;
 	},
+	pegarDataEHora(data = ""): string {
+		const dia = ServicoFormatadorDeTexto.reverterFormatoDeData(data),
+			hora = data.substring(11, 16);
+		return `${dia} às ${hora}`;
+	},
 };
