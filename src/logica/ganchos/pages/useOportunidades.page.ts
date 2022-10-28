@@ -1,7 +1,8 @@
 import { Oportunidade } from "logica/@tipos/OportunidadeInterface";
 import { ContextoUsuario } from "logica/contextos/ContextoUsuario";
-import { linksResolver } from "logica/servicos/ServicoAPI";
+import { linksResolver, ServicoAPIHateoas } from "logica/servicos/ServicoAPI";
 import { useContext, useState } from "react";
+import { mutate } from "swr";
 import { useApiHateoas } from "../useApi.hook";
 import useMovelAtivo from "../useMovelAtivo";
 import usePaginacao from "../usePaginacao.hook";
@@ -20,7 +21,27 @@ export default function useOportunidadesTrabalho() {
 			useState<Oportunidade>(),
 		[mensagemFeedback, alterarMensagemFeedback] = useState("teste");
 
-	function seCandidatar(oportunidade: Oportunidade) {}
+	async function seCandidatar(oportunidade: Oportunidade) {
+		ServicoAPIHateoas(
+			oportunidade.links,
+			"candidatar_diaria",
+			async (requisicao) => {
+				try {
+					await requisicao();
+					alterarMensagemFeedback("Candidatura enviada!");
+					alterarOportunidadeSelecionada(undefined);
+					atualizarListaDeOportunidades();
+				} catch (erro) {}
+			}
+		);
+	}
+
+	function atualizarListaDeOportunidades() {
+		/* mutate força a reexecução da requisição acima com string "lista_oportunidades" */
+		mutate("lista_oportunidades");
+		/* feito isso, o objeto 'oportunidades' é carregado com a nova lista de oportunidades
+		 */
+	}
 
 	function totalComodos(oportunidade: Oportunidade) {
 		let total = 0;
