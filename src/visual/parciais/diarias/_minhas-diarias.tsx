@@ -24,6 +24,9 @@ const MinhasDiarias: React.FC = () => {
 		itensPorPagina,
 		movel,
 		podeVisualizar,
+		diariaConfirmar,
+		alterarDiariaConfirmar,
+		podeConfirmar,
 	} = useMinhasDiarias();
 	return (
 		<>
@@ -39,7 +42,8 @@ const MinhasDiarias: React.FC = () => {
 										cabecalho={
 											<>
 												Data:{" "}
-												{ServicoFormatadorDeTexto.reverterFormatoDeData(
+												{ServicoFormatadorDeTexto
+													.reverterFormatoDeData(
 													item.data_atendimento as string
 												)}
 												<br />
@@ -73,6 +77,19 @@ const MinhasDiarias: React.FC = () => {
 														Detalhes
 													</Button>
 												)}
+												{podeConfirmar(item) && (
+													<Button
+														color={"success"}
+														variant={"contained"}
+														onClick={() =>
+															alterarDiariaConfirmar(
+																item
+															)
+														}
+													>
+														Confirmar Presença
+													</Button>
+												)}
 											</>
 										}
 									/>
@@ -98,7 +115,8 @@ const MinhasDiarias: React.FC = () => {
 										<T_Linha key={indice}>
 											<T_Celula>
 												<strong>
-													{ServicoFormatadorDeTexto.reverterFormatoDeData(
+													{ServicoFormatadorDeTexto
+														.reverterFormatoDeData(
 														item.data_atendimento as string
 													)}
 												</strong>
@@ -133,6 +151,20 @@ const MinhasDiarias: React.FC = () => {
 													>
 														Detalhes
 													</Elo>
+												)}
+											</T_Celula>
+											<T_Celula>
+												{podeConfirmar(item) && (
+													<Button
+														color={"success"}
+														onClick={() =>
+															alterarDiariaConfirmar(
+																item
+															)
+														}
+													>
+														Confirmar Presença
+													</Button>
 												)}
 											</T_Celula>
 										</T_Linha>

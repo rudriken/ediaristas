@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import useMovelAtivo from "logica/ganchos/useMovelAtivo";
 import usePaginacao from "logica/ganchos/usePaginacao.hook";
 import { ContextoDiaria } from "logica/contextos/ContextoDiarias";
@@ -11,10 +11,17 @@ export default function useMinhasDiarias() {
 		{ diarias } = estadoDiaria,
 		dadosFiltrados = diarias;
 	const { paginaAtual, alterarPaginaAtual, totalPaginas, itensPorPagina } =
-		usePaginacao(diarias, 7);
+			usePaginacao(diarias, 7),
+		[diariaConfirmar, alterarDiariaConfirmar] = useState(
+			{} as DiariaInterface
+		);
 
 	function podeVisualizar(diaria: DiariaInterface): boolean {
 		return linksResolver(diaria.links, "self") !== undefined;
+	}
+
+	function podeConfirmar(diaria: DiariaInterface): boolean {
+		return linksResolver(diaria.links, "confirmar_diarista") !== undefined;
 	}
 
 	return {
@@ -25,5 +32,8 @@ export default function useMinhasDiarias() {
 		itensPorPagina,
 		movel,
 		podeVisualizar,
+		diariaConfirmar,
+		alterarDiariaConfirmar,
+		podeConfirmar,
 	};
 }
