@@ -3,7 +3,8 @@ import useMovelAtivo from "logica/ganchos/useMovelAtivo";
 import usePaginacao from "logica/ganchos/usePaginacao.hook";
 import { ContextoDiaria } from "logica/contextos/ContextoDiarias";
 import { DiariaInterface } from "logica/@tipos/DiariaInterface";
-import { linksResolver } from "logica/servicos/ServicoAPI";
+import { linksResolver, ServicoAPIHateoas } from "logica/servicos/ServicoAPI";
+import { mutate } from "swr";
 
 export default function useMinhasDiarias() {
 	const movel = useMovelAtivo(),
@@ -24,6 +25,24 @@ export default function useMinhasDiarias() {
 		return linksResolver(diaria.links, "confirmar_diarista") !== undefined;
 	}
 
+	async function confirmarDiaria(diaria: DiariaInterface) {
+		ServicoAPIHateoas(
+			diaria.links,
+			"confirmar_diarista",
+			async (requisicao) => {
+				try {
+					await requisicao();
+					alterarDiariaConfirmar({} as DiariaInterface);
+					atualizarDiarias();
+				} catch (erro) {}
+			}
+		);
+	}
+
+	function atualizarDiarias() {
+		mutate("lista_diarias");
+	}
+
 	return {
 		dadosFiltrados,
 		paginaAtual,
@@ -35,5 +54,6 @@ export default function useMinhasDiarias() {
 		diariaConfirmar,
 		alterarDiariaConfirmar,
 		podeConfirmar,
+		confirmarDiaria,
 	};
 }
