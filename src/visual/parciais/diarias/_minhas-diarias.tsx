@@ -1,5 +1,5 @@
 import { Button, Container, Typography } from "@mui/material";
-import { DiariaStatus } from "logica/@tipos/DiariaInterface";
+import { DiariaInterface, DiariaStatus } from "logica/@tipos/DiariaInterface";
 import useMinhasDiarias from "logica/ganchos/pages/diarias/useMinhasDiarias.page";
 import { ServicoDiaria } from "logica/servicos/ServicoDiaria";
 import { ServicoFormatadorDeTexto } from "logica/servicos/ServicoFormatadorDeTexto";
@@ -13,6 +13,7 @@ import Tabela, {
 } from "visual/componentes/exibe-dados/Tabela/Tabela";
 import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagina";
 import Elo from "visual/componentes/navegacao/Link/Link";
+import { ConfirmarDialogo } from "./_minhas-diarias-dialogos";
 // import { Component } from "./_minhas-diarias.styled";
 
 const MinhasDiarias: React.FC = () => {
@@ -42,8 +43,7 @@ const MinhasDiarias: React.FC = () => {
 										cabecalho={
 											<>
 												Data:{" "}
-												{ServicoFormatadorDeTexto
-													.reverterFormatoDeData(
+												{ServicoFormatadorDeTexto.reverterFormatoDeData(
 													item.data_atendimento as string
 												)}
 												<br />
@@ -115,8 +115,7 @@ const MinhasDiarias: React.FC = () => {
 										<T_Linha key={indice}>
 											<T_Celula>
 												<strong>
-													{ServicoFormatadorDeTexto
-														.reverterFormatoDeData(
+													{ServicoFormatadorDeTexto.reverterFormatoDeData(
 														item.data_atendimento as string
 													)}
 												</strong>
@@ -186,6 +185,15 @@ const MinhasDiarias: React.FC = () => {
 					</Typography>
 				)}
 			</Container>
+			{diariaConfirmar.id && (
+				<ConfirmarDialogo
+					diaria={diariaConfirmar}
+					aoCancelar={() =>
+						alterarDiariaConfirmar({} as DiariaInterface)
+					}
+					aoConfirmar={() => {}}
+				/>
+			)}
 		</>
 	);
 };
