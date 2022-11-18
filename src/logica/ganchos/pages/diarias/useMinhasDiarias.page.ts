@@ -13,9 +13,8 @@ export default function useMinhasDiarias() {
 		dadosFiltrados = diarias;
 	const { paginaAtual, alterarPaginaAtual, totalPaginas, itensPorPagina } =
 			usePaginacao(diarias, 7),
-		[diariaConfirmar, alterarDiariaConfirmar] = useState(
-			{} as DiariaInterface
-		);
+		[diariaConfirmar, alterarDiariaConfirmar] = useState({} as DiariaInterface),
+		[diariaAvaliar, alterarDiariaAvaliar] = useState({} as DiariaInterface);
 
 	function podeVisualizar(diaria: DiariaInterface): boolean {
 		return linksResolver(diaria.links, "self") !== undefined;
@@ -23,6 +22,10 @@ export default function useMinhasDiarias() {
 
 	function podeConfirmar(diaria: DiariaInterface): boolean {
 		return linksResolver(diaria.links, "confirmar_diarista") !== undefined;
+	}
+
+	function podeAvaliar(diaria: DiariaInterface): boolean {
+		return linksResolver(diaria.links, "avaliar_diaria") !== undefined;
 	}
 
 	async function confirmarDiaria(diaria: DiariaInterface) {
@@ -55,5 +58,8 @@ export default function useMinhasDiarias() {
 		alterarDiariaConfirmar,
 		podeConfirmar,
 		confirmarDiaria,
+		diariaAvaliar,
+		alterarDiariaAvaliar,
+		podeAvaliar,
 	};
 }
