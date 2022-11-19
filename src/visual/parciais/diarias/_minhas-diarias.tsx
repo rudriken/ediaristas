@@ -13,7 +13,7 @@ import Tabela, {
 } from "visual/componentes/exibe-dados/Tabela/Tabela";
 import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagina";
 import Elo from "visual/componentes/navegacao/Link/Link";
-import { ConfirmarDialogo } from "./_minhas-diarias-dialogos";
+import { AvaliarDialogo, ConfirmarDialogo } from "./_minhas-diarias-dialogos";
 // import { Component } from "./_minhas-diarias.styled";
 
 const MinhasDiarias: React.FC = () => {
@@ -221,6 +221,15 @@ const MinhasDiarias: React.FC = () => {
 						alterarDiariaConfirmar({} as DiariaInterface)
 					}
 					aoConfirmar={confirmarDiaria}
+				/>
+			)}
+			{diariaAvaliar.id && (
+				<AvaliarDialogo
+					diaria={diariaAvaliar}
+					aoCancelar={() =>
+						alterarDiariaAvaliar({} as DiariaInterface)
+					}
+					aoConfirmar={() => {}}
 				/>
 			)}
 		</>
