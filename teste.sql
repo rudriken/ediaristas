@@ -1,4 +1,3 @@
-SELECT 
-	id, data_atendimento, `status`, preco, valor_comissao, 
-	cliente_id, diarista_id, servico_id
-	FROM ediaristas_temp.diarias;
+SELECT id, nome_completo, nascimento, tipo_usuario, email, reputacao
+    FROM ediaristas_temp.users
+    WHERE id = 29;

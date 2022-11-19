@@ -32,6 +32,7 @@ const MinhasDiarias: React.FC = () => {
 		diariaAvaliar,
 		alterarDiariaAvaliar,
 		podeAvaliar,
+		avaliarDiaria,
 	} = useMinhasDiarias();
 	return (
 		<>
@@ -229,7 +230,7 @@ const MinhasDiarias: React.FC = () => {
 					aoCancelar={() =>
 						alterarDiariaAvaliar({} as DiariaInterface)
 					}
-					aoConfirmar={() => {}}
+					aoConfirmar={avaliarDiaria}
 				/>
 			)}
 		</>

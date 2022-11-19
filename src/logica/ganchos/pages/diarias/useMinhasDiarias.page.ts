@@ -13,7 +13,9 @@ export default function useMinhasDiarias() {
 		dadosFiltrados = diarias;
 	const { paginaAtual, alterarPaginaAtual, totalPaginas, itensPorPagina } =
 			usePaginacao(diarias, 7),
-		[diariaConfirmar, alterarDiariaConfirmar] = useState({} as DiariaInterface),
+		[diariaConfirmar, alterarDiariaConfirmar] = useState(
+			{} as DiariaInterface
+		),
 		[diariaAvaliar, alterarDiariaAvaliar] = useState({} as DiariaInterface);
 
 	function podeVisualizar(diaria: DiariaInterface): boolean {
@@ -42,6 +44,23 @@ export default function useMinhasDiarias() {
 		);
 	}
 
+	async function avaliarDiaria(
+		diaria: DiariaInterface,
+		avaliacao: { descricao: string; nota: number }
+	) {
+		ServicoAPIHateoas(
+			diaria.links,
+			"avaliar_diaria",
+			async (requisicao) => {
+				try {
+					await requisicao({ data: avaliacao });
+					alterarDiariaAvaliar({} as DiariaInterface);
+					atualizarDiarias();
+				} catch (erro) {}
+			}
+		);
+	}
+
 	function atualizarDiarias() {
 		mutate("lista_diarias");
 	}
@@ -61,5 +80,6 @@ export default function useMinhasDiarias() {
 		diariaAvaliar,
 		alterarDiariaAvaliar,
 		podeAvaliar,
+		avaliarDiaria,
 	};
 }
