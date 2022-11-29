@@ -33,6 +33,9 @@ const MinhasDiarias: React.FC = () => {
 		alterarDiariaAvaliar,
 		podeAvaliar,
 		avaliarDiaria,
+		podeCancelar,
+		diariaCancelar,
+		alterarDiariaCancelar,
 	} = useMinhasDiarias();
 	return (
 		<>
@@ -106,6 +109,19 @@ const MinhasDiarias: React.FC = () => {
 														}
 													>
 														Avaliar
+													</Button>
+												)}
+												{podeCancelar(item) && (
+													<Button
+														color={"error"}
+														variant={"contained"}
+														onClick={() =>
+															alterarDiariaCancelar(
+																item
+															)
+														}
+													>
+														Cancelar
 													</Button>
 												)}
 											</>
@@ -193,6 +209,18 @@ const MinhasDiarias: React.FC = () => {
 														}
 													>
 														Avaliar
+													</Button>
+												)}
+												{podeCancelar(item) && (
+													<Button
+														color={"error"}
+														onClick={() =>
+															alterarDiariaCancelar(
+																item
+															)
+														}
+													>
+														Cancelar
 													</Button>
 												)}
 											</T_Celula>

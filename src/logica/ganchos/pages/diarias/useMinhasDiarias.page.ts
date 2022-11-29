@@ -16,7 +16,10 @@ export default function useMinhasDiarias() {
 		[diariaConfirmar, alterarDiariaConfirmar] = useState(
 			{} as DiariaInterface
 		),
-		[diariaAvaliar, alterarDiariaAvaliar] = useState({} as DiariaInterface);
+		[diariaAvaliar, alterarDiariaAvaliar] = useState({} as DiariaInterface),
+		[diariaCancelar, alterarDiariaCancelar] = useState(
+			{} as DiariaInterface
+		);
 
 	function podeVisualizar(diaria: DiariaInterface): boolean {
 		return linksResolver(diaria.links, "self") !== undefined;
@@ -28,6 +31,10 @@ export default function useMinhasDiarias() {
 
 	function podeAvaliar(diaria: DiariaInterface): boolean {
 		return linksResolver(diaria.links, "avaliar_diaria") !== undefined;
+	}
+
+	function podeCancelar(diaria: DiariaInterface): boolean {
+		return linksResolver(diaria.links, "cancelar_diaria") !== undefined;
 	}
 
 	async function confirmarDiaria(diaria: DiariaInterface) {
@@ -81,5 +88,8 @@ export default function useMinhasDiarias() {
 		alterarDiariaAvaliar,
 		podeAvaliar,
 		avaliarDiaria,
+		podeCancelar,
+		diariaCancelar,
+		alterarDiariaCancelar,
 	};
 }

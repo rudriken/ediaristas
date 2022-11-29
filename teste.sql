@@ -1,3 +1,1 @@
-SELECT id, nome_completo, nascimento, tipo_usuario, email, reputacao
-    FROM ediaristas_temp.users
-    WHERE id = 29;
+UPDATE ediaristas_temp.diarias SET `status` = '2', motivo_cancelamento = null WHERE id = 65;
