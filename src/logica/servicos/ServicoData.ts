@@ -32,4 +32,9 @@ export const ServicoData = {
 		}
 		return valor;
 	},
+	pegarDiferencaDeHoras(dataETempo: Date): number {
+		const agora = Date.now(),
+			dataFutura = dataETempo.getTime();
+		return (dataFutura - agora) / 1000 / 60 / 60;
+	},
 };
