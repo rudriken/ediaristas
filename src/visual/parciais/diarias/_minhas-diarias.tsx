@@ -41,15 +41,38 @@ const MinhasDiarias: React.FC = () => {
 		diariaCancelar,
 		alterarDiariaCancelar,
 		cancelarDiaria,
+		filtro,
+		alterarFiltro,
 	} = useMinhasDiarias();
 	return (
 		<>
 			<Container sx={{ mb: 5, p: 0 }}>
 				<TituloPagina titulo={"Minhas Diárias"} />
 				<BotoesContainer>
-					<Button>Pendentes</Button>
-					<Button>Avaliadas</Button>
-					<Button>Canceladas</Button>
+					<Button
+						onClick={() => alterarFiltro("pendentes")}
+						variant={
+							filtro === "pendentes" ? "contained" : "outlined"
+						}
+					>
+						Pendentes
+					</Button>
+					<Button
+						onClick={() => alterarFiltro("avaliadas")}
+						variant={
+							filtro === "avaliadas" ? "contained" : "outlined"
+						}
+					>
+						Avaliadas
+					</Button>
+					<Button
+						onClick={() => alterarFiltro("canceladas")}
+						variant={
+							filtro === "canceladas" ? "contained" : "outlined"
+						}
+					>
+						Canceladas
+					</Button>
 				</BotoesContainer>
 				{dadosFiltrados.length > 0 ? (
 					movel ? (

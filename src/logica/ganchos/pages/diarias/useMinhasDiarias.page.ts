@@ -10,8 +10,8 @@ export default function useMinhasDiarias() {
 	const movel = useMovelAtivo(),
 		{ estadoDiaria } = useContext(ContextoDiaria),
 		{ diarias } = estadoDiaria,
-		dadosFiltrados = diarias;
-	const { paginaAtual, alterarPaginaAtual, totalPaginas, itensPorPagina } =
+		dadosFiltrados = diarias,
+		{ paginaAtual, alterarPaginaAtual, totalPaginas, itensPorPagina } =
 			usePaginacao(diarias, 7),
 		[diariaConfirmar, alterarDiariaConfirmar] = useState(
 			{} as DiariaInterface
@@ -19,7 +19,8 @@ export default function useMinhasDiarias() {
 		[diariaAvaliar, alterarDiariaAvaliar] = useState({} as DiariaInterface),
 		[diariaCancelar, alterarDiariaCancelar] = useState(
 			{} as DiariaInterface
-		);
+		),
+		[filtro, alterarFiltro] = useState("pendentes");
 
 	function podeVisualizar(diaria: DiariaInterface): boolean {
 		return linksResolver(diaria.links, "self") !== undefined;
@@ -106,5 +107,7 @@ export default function useMinhasDiarias() {
 		diariaCancelar,
 		alterarDiariaCancelar,
 		cancelarDiaria,
+		filtro,
+		alterarFiltro,
 	};
 }
