@@ -1,5 +1,12 @@
 import { styled } from "@mui/material";
 
+export const BotoesContainer = styled("div")`
+	display: flex;
+	flex-wrap: wrap;
+	gap: ${({ theme }) => theme.spacing(2)};
+	margin-bottom: ${({ theme }) => theme.spacing(4)};
+`;
+
 export const CaixinhaDeAvaliacao = styled("div")`
 	display: grid;
 	grid-template-columns: 100px 1fr;

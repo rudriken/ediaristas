@@ -18,7 +18,7 @@ import {
 	ConfirmarDialogo,
 	CancelarDialogo,
 } from "./_minhas-diarias-dialogos";
-// import { Component } from "./_minhas-diarias.styled";
+import { BotoesContainer } from "./_minhas-diarias.styled";
 
 const MinhasDiarias: React.FC = () => {
 	const {
@@ -46,6 +46,11 @@ const MinhasDiarias: React.FC = () => {
 		<>
 			<Container sx={{ mb: 5, p: 0 }}>
 				<TituloPagina titulo={"Minhas Diárias"} />
+				<BotoesContainer>
+					<Button>Pendentes</Button>
+					<Button>Avaliadas</Button>
+					<Button>Canceladas</Button>
+				</BotoesContainer>
 				{dadosFiltrados.length > 0 ? (
 					movel ? (
 						<>
