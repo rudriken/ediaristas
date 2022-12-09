@@ -15,7 +15,7 @@ export default function usePagamentos() {
 			estadoUsuario.usuario.links,
 			"lista_pagamentos"
 		).data,
-		[filtro, alterarFiltro] = useState("pendentes"),
+		[filtro, alterarFiltro] = useState("pago"),
 		dadosFiltrados = useMemo(() => {
 			return filtrarPagamentos(pagamentos || [], filtro);
 		}, [pagamentos, filtro]),
