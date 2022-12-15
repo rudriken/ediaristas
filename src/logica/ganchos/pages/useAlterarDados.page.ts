@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 export default function useAlterarDados() {
 	const { estadoUsuario, despachoUsuario } = useContext(ContextoUsuario),
 		{ usuario } = estadoUsuario,
-		metodosFormulario = useForm<CadastroDiaristaFormularioDeDadosInterface>(
+		formularioMetodos = useForm<CadastroDiaristaFormularioDeDadosInterface>(
 			{
 				resolver: pegarResolver(),
 			}
@@ -20,8 +20,13 @@ export default function useAlterarDados() {
 			ServicoEstruturaFormulario.contato()
 		);
 		if (usuario.tipo_usuario === TipoDoUsuario.Diarista) {
-			resolver = resolver.concat(ServicoEstruturaFormulario.endereco);
+			resolver = resolver.concat(ServicoEstruturaFormulario.endereco());
 		}
 		return yupResolver(resolver);
 	}
+
+	return {
+		usuario,
+		formularioMetodos,
+	};
 }
