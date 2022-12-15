@@ -2,6 +2,8 @@ import { useFormContext } from "react-hook-form";
 import { DadosContato } from "../FormularioUsuario.style";
 import CampoDeTexto from "../../CampoDeTexto/CampoDeTexto";
 import ForcaDaSenha from "visual/componentes/retorno/ForcaDaSenha/ForcaDaSenha";
+import { useContext } from "react";
+import { ContextoUsuario } from "logica/contextos/ContextoUsuario";
 
 export const FormularioContato = () => {
 	const {
@@ -16,12 +18,14 @@ export const FormularioContato = () => {
 			password_confirmation: string;
 		};
 	}>();
-	const novaSenha = watch("usuario.new_password");
+	const novaSenha = watch("usuario.new_password"),
+		{ usuario } = useContext(ContextoUsuario).estadoUsuario;
 	return (
 		<DadosContato>
 			<CampoDeTexto
 				label={"E-mail"}
 				style={{ gridArea: "email" }}
+				defaultValue={usuario.email}
 				{...register("usuario.email")}
 				error={errors?.usuario?.email !== undefined}
 				helperText={errors?.usuario?.email?.message}

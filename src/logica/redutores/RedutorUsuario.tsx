@@ -9,6 +9,7 @@ import {
 	EnderecoInterface,
 } from "logica/@tipos/EnderecoInterface";
 import { ServicoLogin } from "logica/servicos/ServicoLogin";
+import { ServicoAPIHateoas } from "logica/servicos/ServicoAPI";
 
 export const estadoInicial = {
 	usuario: {
@@ -93,10 +94,46 @@ export function useRedutorUsuario(): RedutorUsuarioInterface {
 			const usuario = await ServicoLogin.informacoes();
 			if (usuario) {
 				despacho({ tipo: "SET_USER", carregarObjeto: usuario });
+				if (usuario.tipo_usuario === TipoDoUsuario.Diarista) {
+					pegarEndereco(usuario);
+					pegarListaDeCidades(usuario);
+				}
 			} else {
 				despacho({ tipo: "SET_LOGGING", carregarObjeto: false });
 			}
 		} catch (erro) {}
+	}
+
+	async function pegarEndereco(usuario: InterfaceDoUsuario) {
+		ServicoAPIHateoas(
+			usuario.links,
+			"listar_endereco",
+			async (requisicao) => {
+				try {
+					const resposta = await requisicao();
+					despacho({
+						tipo: "SET_USER_ADDRESS",
+						carregarObjeto: resposta.data,
+					});
+				} catch (erro) {}
+			}
+		);
+	}
+
+	async function pegarListaDeCidades(usuario: InterfaceDoUsuario) {
+		ServicoAPIHateoas(
+			usuario.links,
+			"cidades_atendidas",
+			async (requisicao) => {
+				try {
+					const resposta = await requisicao();
+					despacho({
+						tipo: "SET_ADDRESS_LIST",
+						carregarObjeto: resposta.data,
+					});
+				} catch (erro) {}
+			}
+		);
 	}
 
 	return {

@@ -1,10 +1,12 @@
 import { CidadeInterface } from "logica/@tipos/EnderecoInterface";
+import { ContextoUsuario } from "logica/contextos/ContextoUsuario";
 import useCidades from "logica/ganchos/useCidades.hook";
-import { useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 
 export default function useFormularioCidades(estado: string) {
-	const { register, setValue, watch } = useFormContext(),
+	const { listaDeEnderecos } = useContext(ContextoUsuario).estadoUsuario,
+		{ register, setValue, watch } = useFormContext(),
 		listaDeCidades: CidadeInterface[] = useCidades(estado),
 		cidadesAtendidas: CidadeInterface[] = watch("cidadesAtendidas", []),
 		cidadesSelecionadas: string[] = useMemo(() => {
@@ -21,6 +23,11 @@ export default function useFormularioCidades(estado: string) {
 	useEffect(() => {
 		register("cidadesAtendidas", { value: [] });
 	}, []);
+
+	useEffect(() => {
+		listaDeEnderecos.length &&
+			setValue("cidadesAtendidas", listaDeEnderecos);
+	}, [listaDeEnderecos]);
 
 	function aoSelecionarCidade(cidade: string | null) {
 		if (cidade) {
