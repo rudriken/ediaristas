@@ -14,6 +14,7 @@ export default FormularioUsuario;
 
 export * from "./Formularios/FormularioEndereco";
 export * from "./Formularios/FormularioNovoContato";
+export * from "./Formularios/FormularioContato";
 export * from "./Formularios/FormularioPagamento";
 export * from "./Formularios/FormularioImagem";
 export * from "./Formularios/FormularioDadosUsuario";

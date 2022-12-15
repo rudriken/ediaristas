@@ -71,6 +71,25 @@ export const DadosNovoContato = styled(GradeBase)`
 	}
 `;
 
+export const DadosContato = styled(GradeBase)`
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-areas:
+		"email 				email"
+		"senha-antiga 		senha-antiga"
+		"nova-senha			confirmar-senha"
+		"senha-forca		_";
+
+	${({ theme }) => theme.breakpoints.down("md")} {
+		grid-template-areas:
+			"email"
+			"senha-antiga"
+			"senha-antiga"
+			"nova-senha"
+			"senha-forca"
+			"confirmar-senha";
+	}
+`;
+
 export const DadosPagamento = styled(GradeBase)`
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-areas:

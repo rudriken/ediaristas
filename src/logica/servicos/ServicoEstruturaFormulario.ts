@@ -84,6 +84,35 @@ export const ServicoEstruturaFormulario = {
 			})
 			.defined();
 	},
+	contato() {
+		return yup
+			.object()
+			.shape({
+				usuario: yup.object().shape({
+					email: yup.string().email("E-mail inválido"),
+					password: yup
+						.string()
+						.nullable()
+						.default(undefined)
+						.notRequired(),
+					new_password: yup
+						.string()
+						.nullable()
+						.default(undefined)
+						.notRequired(),
+					password_confirmation: yup
+						.string()
+						.nullable()
+						.default(undefined)
+						.notRequired()
+						.oneOf(
+							[yup.ref("new_password"), null],
+							"As senhas não conferem"
+						),
+				}),
+			})
+			.defined();
+	},
 	pagamento() {
 		return yup
 			.object()
@@ -147,7 +176,8 @@ export const ServicoEstruturaFormulario = {
 						.typeError("Digite uma data válida")
 						.test(
 							"verificar prazo mínimo para agendamento",
-							"O agendamento deve ser feito com, pelo menos, 48 horas de antecedência",
+							"O agendamento deve ser feito com, pelo menos, " + 
+							"48 horas de antecedência",
 							(valor, dados) => {
 								if (typeof valor === "object") {
 									return ServicoValidacao.verificarPrazoMinimoParaAgendamento(
