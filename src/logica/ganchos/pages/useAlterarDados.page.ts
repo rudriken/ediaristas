@@ -94,6 +94,26 @@ export default function useAlterarDados() {
 		);
 	}
 
+	async function atualizarListaDeCidadesAtendidas(
+		dados: CadastroDiaristaFormularioDeDadosInterface
+	) {
+		ServicoAPIHateoas(
+			usuario.links,
+			"relacionar_cidades",
+			async (requisicao) => {
+				try {
+					await requisicao<EnderecoInterface>({
+						data: { cidades: dados.cidadesAtendidas },
+					});
+					despachoUsuario({
+						tipo: "SET_ADDRESS_LIST",
+						carregarObjeto: dados.cidadesAtendidas,
+					});
+				} catch (erro) {}
+			}
+		);
+	}
+
 	return {
 		usuario,
 		formularioMetodos,
@@ -101,5 +121,6 @@ export default function useAlterarDados() {
 		aoAlterarFoto,
 		atualizarFoto,
 		atualizarEnderecoDoUsuario,
+		atualizarListaDeCidadesAtendidas,
 	};
 }
