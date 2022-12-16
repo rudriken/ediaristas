@@ -12,9 +12,11 @@ import {
 } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario";
 import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagina";
 import { Box, Button, Paper, Typography } from "@mui/material";
-import { FormularioContainer } from "@estilos/pages/alterar-dados.styled";
+import {
+	FormularioContainer,
+	FotoDoUsuario,
+} from "@estilos/pages/alterar-dados.styled";
 import { TipoDoUsuario } from "logica/@tipos/InterfaceDoUsuario";
-// import {  } from "@estilos/pages/alterar-dados.styled";
 
 export const getStaticProps: GetStaticProps = async () => {
 	return {
@@ -25,14 +27,27 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const AlterarDados: React.FC = () => {
-	const { usuario, formularioMetodos } = useAlterarDados();
+	const { usuario, formularioMetodos, foto, aoAlterarFoto } =
+		useAlterarDados();
 	return (
 		<FormProvider {...formularioMetodos}>
 			<form onSubmit={() => {}}>
 				<FormularioUsuarioContainer>
 					<TituloPagina titulo={"Alterar dados cadastrais"} />
 
-					<Paper sx={{ mb: 3 }}>
+					<Paper sx={{ mb: 3, mt: 15, position: "relative" }}>
+						<FotoDoUsuario>
+							{foto && <img src={foto} alt={"Usuário"} />}
+							<input
+								type={"file"}
+								{...formularioMetodos.register(
+									"usuario.foto_usuario"
+								)}
+								onChange={aoAlterarFoto}
+								accept={".jpeg, .jpg, .png"}
+							/>
+							<i className={"twf-camera"} />
+						</FotoDoUsuario>
 						<Typography sx={{ pt: 14, pb: 2 }} align={"center"}>
 							Dados Pessoais
 						</Typography>

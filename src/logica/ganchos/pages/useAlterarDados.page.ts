@@ -3,7 +3,7 @@ import { CadastroDiaristaFormularioDeDadosInterface } from "logica/@tipos/Formul
 import { TipoDoUsuario } from "logica/@tipos/InterfaceDoUsuario";
 import { ContextoUsuario } from "logica/contextos/ContextoUsuario";
 import { ServicoEstruturaFormulario } from "logica/servicos/ServicoEstruturaFormulario";
-import { useContext } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function useAlterarDados() {
@@ -13,7 +13,12 @@ export default function useAlterarDados() {
 			{
 				resolver: pegarResolver(),
 			}
-		);
+		),
+		[foto, alterarFoto] = useState("");
+
+	useEffect(() => {
+		alterarFoto(usuario.foto_usuario || "");
+	}, [usuario]);
 
 	function pegarResolver() {
 		let resolver = ServicoEstruturaFormulario.dadosUsuario().concat(
@@ -25,8 +30,19 @@ export default function useAlterarDados() {
 		return yupResolver(resolver);
 	}
 
+	function aoAlterarFoto(evento: ChangeEvent) {
+		const alvo = evento.target as HTMLInputElement,
+			arquivos = alvo.files;
+		if (arquivos !== null && arquivos.length) {
+			const arquivo = arquivos[0];
+			alterarFoto(URL.createObjectURL(arquivo));
+		}
+	}
+
 	return {
 		usuario,
 		formularioMetodos,
+		foto,
+		aoAlterarFoto,
 	};
 }
