@@ -11,7 +11,7 @@ import {
 	FormularioUsuarioContainer,
 } from "visual/componentes/entradas/FormularioUsuario/FormularioUsuario";
 import TituloPagina from "visual/componentes/exibe-dados/TituloPagina/TituloPagina";
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper, Snackbar, Typography } from "@mui/material";
 import {
 	FormularioContainer,
 	FotoDoUsuario,
@@ -27,11 +27,21 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 const AlterarDados: React.FC = () => {
-	const { usuario, formularioMetodos, foto, aoAlterarFoto } =
-		useAlterarDados();
+	const {
+		usuario,
+		enderecoUsuario,
+		formularioMetodos,
+		foto,
+		aoAlterarFoto,
+		mensagemDeFeedback,
+		alterarMensagemDeFeedback,
+		aoSubmeterFormulario,
+	} = useAlterarDados();
 	return (
 		<FormProvider {...formularioMetodos}>
-			<form onSubmit={() => {}}>
+			<form
+				onSubmit={formularioMetodos.handleSubmit(aoSubmeterFormulario)}
+			>
 				<FormularioUsuarioContainer>
 					<TituloPagina titulo={"Alterar dados cadastrais"} />
 
@@ -98,7 +108,9 @@ const AlterarDados: React.FC = () => {
 									Cidades
 								</Typography>
 								<FormularioContainer>
-									<FormularioCidades estado={"MG"} />
+									<FormularioCidades
+										estado={enderecoUsuario.estado}
+									/>
 								</FormularioContainer>
 							</Paper>
 						</>
@@ -116,6 +128,12 @@ const AlterarDados: React.FC = () => {
 					</Box>
 				</FormularioUsuarioContainer>
 			</form>
+			<Snackbar
+				open={mensagemDeFeedback.length > 0}
+				message={mensagemDeFeedback}
+				autoHideDuration={4000}
+				onClose={() => alterarMensagemDeFeedback("")}
+			/>
 		</FormProvider>
 	);
 };

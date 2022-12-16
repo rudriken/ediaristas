@@ -16,13 +16,15 @@ import { useForm } from "react-hook-form";
 
 export default function useAlterarDados() {
 	const { estadoUsuario, despachoUsuario } = useContext(ContextoUsuario),
-		{ usuario } = estadoUsuario,
+		{ usuario, enderecoUsuario } = estadoUsuario,
 		formularioMetodos = useForm<CadastroDiaristaFormularioDeDadosInterface>(
 			{
 				resolver: pegarResolver(),
 			}
 		),
-		[foto, alterarFoto] = useState("");
+		[foto, alterarFoto] = useState(""),
+		[arquivoDaFoto, alterarArquivoDaFoto] = useState<File>(),
+		[mensagemDeFeedback, alterarMensagemDeFeedback] = useState("");
 
 	useEffect(() => {
 		alterarFoto(usuario.foto_usuario || "");
@@ -38,12 +40,27 @@ export default function useAlterarDados() {
 		return yupResolver(resolver);
 	}
 
+	async function aoSubmeterFormulario(
+		dados: CadastroDiaristaFormularioDeDadosInterface
+	) {
+		await atualizarFoto();
+		await atualizarUsuario(dados);
+		if (usuario.tipo_usuario === TipoDoUsuario.Diarista) {
+			await Promise.all([
+				atualizarEnderecoDoUsuario(dados),
+				atualizarListaDeCidadesAtendidas(dados),
+			]);
+		}
+		alterarMensagemDeFeedback("Dados atualizados!");
+	}
+
 	function aoAlterarFoto(evento: ChangeEvent) {
 		const alvo = evento.target as HTMLInputElement,
 			arquivos = alvo.files;
 		if (arquivos !== null && arquivos.length) {
 			const arquivo = arquivos[0];
 			alterarFoto(URL.createObjectURL(arquivo));
+			alterarArquivoDaFoto(arquivo);
 		}
 	}
 
@@ -52,14 +69,16 @@ export default function useAlterarDados() {
 			usuario.links,
 			"alterar_foto_usuario",
 			async (requisicao) => {
-				const listaDeArquivos = formularioMetodos.getValues(
-					"usuario.foto_usuario"
-				);
-				if (listaDeArquivos && listaDeArquivos.length) {
-					const fotoDoUsuario = listaDeArquivos[0];
+				// const listaDeArquivos = formularioMetodos.getValues(
+				// 	"usuario.foto_usuario"
+				// );
+				// if (listaDeArquivos && listaDeArquivos.length)
+				if (arquivoDaFoto) {
+					// const fotoDoUsuario = listaDeArquivos[0];
 					try {
 						const dadosDoUsuario = ServicoObjeto.jsonParaFormData({
-							foto_usuario: fotoDoUsuario,
+							// foto_usuario: fotoDoUsuario,
+							foto_usuario: arquivoDaFoto,
 						});
 						await requisicao<InterfaceDoUsuario>({
 							data: dadosDoUsuario,
@@ -192,12 +211,12 @@ export default function useAlterarDados() {
 
 	return {
 		usuario,
+		enderecoUsuario,
 		formularioMetodos,
 		foto,
 		aoAlterarFoto,
-		atualizarFoto,
-		atualizarEnderecoDoUsuario,
-		atualizarListaDeCidadesAtendidas,
-		atualizarUsuario,
+		mensagemDeFeedback,
+		alterarMensagemDeFeedback,
+		aoSubmeterFormulario,
 	};
 }
