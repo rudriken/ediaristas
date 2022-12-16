@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import axios, { AxiosResponse } from "axios";
 import { EnderecoInterface } from "logica/@tipos/EnderecoInterface";
 import { CadastroDiaristaFormularioDeDadosInterface } from "logica/@tipos/FormularioInterface";
 import {
@@ -114,6 +115,81 @@ export default function useAlterarDados() {
 		);
 	}
 
+	async function atualizarUsuario(
+		dados: CadastroDiaristaFormularioDeDadosInterface
+	) {
+		ServicoAPIHateoas(
+			usuario.links,
+			"editar_usuario",
+			async (requisicao) => {
+				const endereco = {
+					...dados.endereco,
+					cep: ServicoFormatadorDeTexto.pegarNumerosParaTexto(
+						dados.endereco.cep
+					),
+				};
+				try {
+					const nascimento = ServicoFormatadorDeTexto.dataParaString(
+							dados.usuario.nascimento as Date
+						),
+						cpf = ServicoFormatadorDeTexto.pegarNumerosParaTexto(
+							dados.usuario.cpf
+						),
+						telefone =
+							ServicoFormatadorDeTexto.pegarNumerosParaTexto(
+								dados.usuario.telefone
+							),
+						dadosDoUsuario = {
+							...dados.usuario,
+							nascimento,
+							cpf,
+							telefone,
+						};
+
+					delete dadosDoUsuario.foto_usuario;
+
+					if (
+						!dadosDoUsuario.password ||
+						!dadosDoUsuario.password_confirmation ||
+						!dadosDoUsuario.new_password
+					) {
+						delete dadosDoUsuario.password;
+						delete dadosDoUsuario.password_confirmation;
+						delete dadosDoUsuario.new_password;
+					}
+
+					const usuarioAtualizado = (
+						await requisicao<InterfaceDoUsuario>({
+							data: dadosDoUsuario,
+						})
+					).data;
+
+					despachoUsuario({
+						tipo: "SET_USER",
+						carregarObjeto: { ...usuario, ...usuarioAtualizado },
+					});
+				} catch (erro) {
+					if (axios.isAxiosError(erro)) {
+						interface maisUmCampoParaAxiosResponse
+							extends AxiosResponse {
+							password: string;
+						}
+
+						let senha = erro?.response
+							?.data as maisUmCampoParaAxiosResponse;
+
+						if (senha?.password) {
+							formularioMetodos.setError("usuario.password", {
+								type: "invalida",
+								message: "Senha inválida",
+							});
+						}
+					}
+				}
+			}
+		);
+	}
+
 	return {
 		usuario,
 		formularioMetodos,
@@ -122,5 +198,6 @@ export default function useAlterarDados() {
 		atualizarFoto,
 		atualizarEnderecoDoUsuario,
 		atualizarListaDeCidadesAtendidas,
+		atualizarUsuario,
 	};
 }
