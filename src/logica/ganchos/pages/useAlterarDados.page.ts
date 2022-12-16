@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { EnderecoInterface } from "logica/@tipos/EnderecoInterface";
 import { CadastroDiaristaFormularioDeDadosInterface } from "logica/@tipos/FormularioInterface";
 import {
 	InterfaceDoUsuario,
@@ -7,6 +8,7 @@ import {
 import { ContextoUsuario } from "logica/contextos/ContextoUsuario";
 import { ServicoAPIHateoas } from "logica/servicos/ServicoAPI";
 import { ServicoEstruturaFormulario } from "logica/servicos/ServicoEstruturaFormulario";
+import { ServicoFormatadorDeTexto } from "logica/servicos/ServicoFormatadorDeTexto";
 import { ServicoObjeto } from "logica/servicos/ServicoObjeto";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -68,11 +70,36 @@ export default function useAlterarDados() {
 		);
 	}
 
+	async function atualizarEnderecoDoUsuario(
+		dados: CadastroDiaristaFormularioDeDadosInterface
+	) {
+		ServicoAPIHateoas(
+			usuario.links,
+			"editar_endereco",
+			async (requisicao) => {
+				const endereco = {
+					...dados.endereco,
+					cep: ServicoFormatadorDeTexto.pegarNumerosParaTexto(
+						dados.endereco.cep
+					),
+				};
+				try {
+					await requisicao<EnderecoInterface>({ data: endereco });
+					despachoUsuario({
+						tipo: "SET_USER_ADDRESS",
+						carregarObjeto: endereco,
+					});
+				} catch (erro) {}
+			}
+		);
+	}
+
 	return {
 		usuario,
 		formularioMetodos,
 		foto,
 		aoAlterarFoto,
 		atualizarFoto,
+		atualizarEnderecoDoUsuario,
 	};
 }
