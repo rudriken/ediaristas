@@ -21,7 +21,31 @@ const RecuperarSenha: React.FC = () => {
 		<Container>
 			<TituloPagina titulo={"Recuperação de Senha"} />
 			{roteador.query.token ? (
-				<>RESETAR SENHA</>
+				<ContainerCamposDoFormulario>
+					<CampoDeTexto
+						label={"Digite seu e-mail"}
+						type={"email"}
+						fullWidth
+					/>
+					<CampoDeTexto
+						label={"Digite a nova senha"}
+						type={"password"}
+						fullWidth
+					/>
+					<CampoDeTexto
+						label={"Confirme a nova senha"}
+						type={"password"}
+						fullWidth
+					/>
+					<BotaoLogin
+						size={"large"}
+						variant={"contained"}
+						color={"secondary"}
+					>
+						Redefinir Senha
+					</BotaoLogin>
+					RESETAR SENHA
+				</ContainerCamposDoFormulario>
 			) : (
 				<ContainerCamposDoFormulario>
 					<CampoDeTexto label={"Digite seu e-mail"} type={"email"} />
