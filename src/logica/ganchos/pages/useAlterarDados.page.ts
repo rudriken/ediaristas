@@ -141,6 +141,12 @@ export default function useAlterarDados() {
 			usuario.links,
 			"editar_usuario",
 			async (requisicao) => {
+				const endereco = {
+					...dados.endereco,
+					cep: ServicoFormatadorDeTexto.pegarNumerosParaTexto(
+						dados.endereco.cep
+					),
+				};
 				try {
 					const nascimento = ServicoFormatadorDeTexto.dataParaString(
 							dados.usuario.nascimento as Date
