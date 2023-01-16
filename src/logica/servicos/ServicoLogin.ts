@@ -11,7 +11,7 @@ export const ServicoLogin = {
 				refresh: string;
 				token_tipo: string;
 				expira_em: number;
-			}>("/autenticacao/token/", credenciais);
+			}>("/autenticacao/token", credenciais);
 			LocalStorage.gravar("token", data.acesso);
 			LocalStorage.gravar("token_refresh", data.refresh);
 			ServicoAPI.defaults.headers.common["Authorization"] =
