@@ -1,37 +1,6 @@
-[
-	{
-		"type": "GET",
-		"rel": "diaristas_cidade",
-		"uri": "http://127.0.0.1:8000/api/diaristas/localidades"
-	},
-	{
-		"type": "GET",
-		"rel": "verificar_disponibilidade_atendimento",
-		"uri": "http://127.0.0.1:8000/api/diaristas/disponibilidade"
-	},
-	{
-		"type": "GET",
-		"rel": "endereco_cep",
-		"uri": "http://127.0.0.1:8000/api/enderecos"
-	},
-	{
-		"type": "GET",
-		"rel": "listar_servicos",
-		"uri": "http://127.0.0.1:8000/api/servicos"
-	},
-	{
-		"type": "POST",
-		"rel": "cadastrar_usuario",
-		"uri": "http://127.0.0.1:8000/api/usuarios"
-	},
-	{
-		"type": "POST",
-		"rel": "login",
-		"uri": "http://127.0.0.1:8000/autenticacao/token"
-	},
-	{
-		"type": "GET",
-		"rel": "usuario_logado",
-		"uri": "http://127.0.0.1:8000/api/eu"
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"isolatedModules": false
 	}
-]
+}
