@@ -5,10 +5,11 @@
 		"@next/next/no-img-element": "off",
 		"@next/next/no-css-tags": "off",
 		"prettier/prettier": ["error", {
-			"endOfLine": "CRLF"
+			"endOfLine": "crlf"
 		}] // Prettier mostra onde estão os erros e confirma que o término da linha será CRLF
 		// "quotes": ["error", "double"], // padroniza strings com aspas duplas
 		// "semi": ["error", "aways"] // padroniza que a linha sempre deve encerrar com ";"
 	}
 }
+
 
