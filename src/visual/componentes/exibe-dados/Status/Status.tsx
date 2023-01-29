@@ -1,9 +1,9 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { StatusE } from "./Status.style";
 import { CorDoTexto } from "logica/@tipos/DiariaInterface";
 // import {  } from "@mui/material";
 
-export interface StatusProps {
+export interface StatusProps extends PropsWithChildren {
 	cor?: CorDoTexto;
 }
 

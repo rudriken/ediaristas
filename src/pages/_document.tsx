@@ -5,28 +5,39 @@ import Document, {
 	Main,
 	NextScript,
 	DocumentContext,
-	DocumentInitialProps,
 } from "next/document";
-import { ServerStyleSheets } from "@mui/styles";
+import createEmotionServer from "@emotion/server/create-instance";
+import createEmotionCache from "logica/servicos/EmotionCache";
 
 export default class QualquerNome extends Document {
-	static async getInitialProps(
-		contexto: DocumentContext
-	): Promise<DocumentInitialProps> {
-		const folhas = new ServerStyleSheets(),
-			renderizaçãoPáginaOriginal = contexto.renderPage;
+	static async getInitialProps(contexto: DocumentContext) {
+		const renderizacaoPaginaOriginal = contexto.renderPage;
+		const cache = createEmotionCache();
+		const { extractCriticalToChunks } = createEmotionServer(cache);
 		contexto.renderPage = () =>
-			renderizaçãoPáginaOriginal({
-				enhanceApp: (Aplicacao) => (propriedades) =>
-					folhas.collect(<Aplicacao {...propriedades} />),
+			renderizacaoPaginaOriginal({
+				enhanceApp: (Aplicacao: any) =>
+					function EnhanceApp(propriedades) {
+						return (
+							<Aplicacao emotionCache={cache} {...propriedades} />
+						);
+					},
 			});
 		const propriedadesIniciais = await Document.getInitialProps(contexto);
+		const emotionStyles = extractCriticalToChunks(
+			propriedadesIniciais.html
+		);
+		const emotionStyleTags = emotionStyles.styles.map((estilo) => (
+			<style
+				data-emotion={`${estilo.key} ${estilo.ids.join(" ")}`}
+				key={estilo.key}
+				dangerouslySetInnerHTML={{ __html: estilo.css }}
+			/>
+		));
+
 		return {
 			...propriedadesIniciais,
-			styles: [
-				...React.Children.toArray(propriedadesIniciais.styles),
-				folhas.getStyleElement(),
-			],
+			emotionStyleTags,
 		};
 	}
 
@@ -34,6 +45,7 @@ export default class QualquerNome extends Document {
 		return (
 			<Html lang="pt-BR">
 				<Head>
+					{(this.props as any).emotionStyleTags}
 					<link
 						rel="stylesheet"
 						href="

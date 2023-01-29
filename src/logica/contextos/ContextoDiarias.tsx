@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, PropsWithChildren } from "react";
 import {
 	RedutorDiariaInterface,
 	estadoInicial,
@@ -12,7 +12,7 @@ const valorInicial: RedutorDiariaInterface = {
 
 export const ContextoDiaria = createContext(valorInicial);
 
-export const ProvedorDiaria: React.FC = ({ children }) => {
+export const ProvedorDiaria: React.FC<PropsWithChildren> = ({ children }) => {
 	const redutor = useRedutorDiaria();
 	return (
 		<ContextoDiaria.Provider value={redutor}>

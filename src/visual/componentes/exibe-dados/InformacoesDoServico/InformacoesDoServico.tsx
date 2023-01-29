@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 // import {  } from "@mui/material";
 import {
 	InformacoesDoServicoContainer,
@@ -6,7 +6,7 @@ import {
 	DadosDoServicoContainer,
 } from "./InformacoesDoServico.style";
 
-export interface InformacoesDoServicoProps {}
+export interface InformacoesDoServicoProps extends PropsWithChildren {}
 
 const InformacoesDoServico: React.FC<InformacoesDoServicoProps> = ({
 	children,
