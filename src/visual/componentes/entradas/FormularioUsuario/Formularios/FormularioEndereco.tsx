@@ -13,7 +13,7 @@ export const FormularioEndereco = () => {
 		control,
 		errors,
 		estados,
-		opçõesCidades,
+		opcoesCidades,
 		enderecoEstado,
 		register,
 	} = useFormularioEndereco();
@@ -67,10 +67,10 @@ export const FormularioEndereco = () => {
 							name_onBlur_onChange_value.onChange(novoValor);
 						}}
 						disablePortal
-						options={opçõesCidades}
+						options={opcoesCidades}
 						style={{ gridArea: "cidade" }}
 						disabled={enderecoEstado === ""}
-						loading={opçõesCidades.length === 0}
+						loading={opcoesCidades.length === 0}
 						loadingText={"Carregando cidades ..."}
 						noOptionsText={"Nenhuma cidade com esse nome!"}
 						renderInput={(parâmetros) => (

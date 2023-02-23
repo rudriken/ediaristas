@@ -22,7 +22,7 @@ export default function useFormularioEndereco() {
 		]),
 		estados = ServicoLocalizacao.listarEstados(),
 		listaCidades = useCidades(enderecoEstado),
-		opçõesCidades = useMemo(
+		opcoesCidades = useMemo(
 			() => listaCidades.map((item) => item.cidade),
 			[listaCidades]
 		);
@@ -70,7 +70,7 @@ export default function useFormularioEndereco() {
 		control,
 		errors,
 		estados,
-		opçõesCidades,
+		opcoesCidades,
 		enderecoEstado,
 		enderecoCidade,
 		enderecoCEP,
