@@ -4,21 +4,21 @@ import CampoDeTexto from "../../CampoDeTexto/CampoDeTexto";
 import { DadosPagamento } from "../FormularioUsuario.style";
 import { Controller, useFormContext } from "react-hook-form";
 import CampoDeTextoComMascara from "../../CampoDeTextoComMascara/CampoDeTextoComMascara";
+import {
+	CartaoDadosInterface,
+	PagamentoFormularioDeDadosInterface,
+} from "logica/@tipos/FormularioInterface";
 
 export const FormularioPagamento = () => {
 	const {
 		register,
 		formState: { errors },
 		control,
-	} = useFormContext<{
-		pagamento: {
-			numero_cartao: string;
-			nome_titular_cartao: string;
-			validade: string;
-			codigo_cvv: string;
-		};
-		pagamento_recusado: object;
-	}>();
+	} = useFormContext<
+		PagamentoFormularioDeDadosInterface<CartaoDadosInterface> & {
+			pagamento_recusado: object;
+		}
+	>();
 
 	useEffect(() => {
 		register("pagamento_recusado");
@@ -45,9 +45,9 @@ export const FormularioPagamento = () => {
 				defaultValue={""}
 				label={"Nome impresso no cartão"}
 				style={{ gridArea: "nome" }}
-				{...register("pagamento.nome_titular_cartao")}
-				error={errors?.pagamento?.nome_titular_cartao !== undefined}
-				helperText={errors?.pagamento?.nome_titular_cartao?.message}
+				{...register("pagamento.nome_cartao")}
+				error={errors?.pagamento?.nome_cartao !== undefined}
+				helperText={errors?.pagamento?.nome_cartao?.message}
 			/>
 			<Controller
 				name={"pagamento.validade"}
@@ -65,7 +65,7 @@ export const FormularioPagamento = () => {
 				)}
 			/>
 			<Controller
-				name={"pagamento.codigo_cvv"}
+				name={"pagamento.codigo"}
 				defaultValue={""}
 				control={control}
 				render={({ field: { ref, ...name_onBlur_onChange_value } }) => (
@@ -74,8 +74,8 @@ export const FormularioPagamento = () => {
 						mascara={"9999"}
 						label={"CVV"}
 						style={{ gridArea: "codigo" }}
-						error={errors?.pagamento?.codigo_cvv !== undefined}
-						helperText={errors?.pagamento?.codigo_cvv?.message}
+						error={errors?.pagamento?.codigo !== undefined}
+						helperText={errors?.pagamento?.codigo?.message}
 					/>
 				)}
 			/>
