@@ -132,7 +132,7 @@ export const ServicoEstruturaFormulario = {
 								}).card_number;
 							}
 						),
-					nome_titular_cartao: yup.string(),
+					nome_cartao: yup.string(),
 					validade: yup
 						.string()
 						.test(
@@ -147,7 +147,7 @@ export const ServicoEstruturaFormulario = {
 								}).card_expiration_date;
 							}
 						),
-					codigo_cvv: yup
+					codigo: yup
 						.string()
 						.test(
 							"verificar código validador do cartão",
@@ -176,8 +176,8 @@ export const ServicoEstruturaFormulario = {
 						.typeError("Digite uma data válida")
 						.test(
 							"verificar prazo mínimo para agendamento",
-							"O agendamento deve ser feito com, pelo menos, " + 
-							"48 horas de antecedência",
+							"O agendamento deve ser feito com, pelo menos, " +
+								"48 horas de antecedência",
 							(valor, dados) => {
 								if (typeof valor === "object") {
 									return ServicoValidacao.verificarPrazoMinimoParaAgendamento(
