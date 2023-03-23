@@ -61,7 +61,8 @@ export const ServicoFormatadorDeTexto = {
 	},
 	pegarDataEHora(data = ""): string {
 		const dia = ServicoFormatadorDeTexto.reverterFormatoDeData(data),
-			hora = data.substring(11, 16);
-		return `${dia} às ${hora}`;
+			hora = +data.substring(11, 13) - 3,
+			minuto = data.substring(14, 16);
+		return `${dia} às ${hora}:${minuto}`;
 	},
 };

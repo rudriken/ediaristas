@@ -18,8 +18,14 @@ export const ServicoData = {
 	},
 	pegarTempoDeData(data: string): string {
 		/* a data recebida terá o formato "2022-10-11T13:04:41Z", portanto ... */
-		const [_dia, tempo] = data.split("T"),
-			[hora, minuto, ..._resto] = tempo.split(":");
+		// const [_dia, tempo] = data.split("T"),
+		// 	[hora, minuto, ..._resto] = tempo.split(":");
+		// return `${hora}:${minuto}`;
+
+		const [_dia, tempo] = data.split("T");
+		let [hora, minuto, ..._resto] = tempo.split(":");
+		const horaBrasil = +hora - 3;
+		hora = horaBrasil.toString().padStart(2, "0");
 		return `${hora}:${minuto}`;
 	},
 	converterStringEmData(valor: any, valorOriginal: any): any {
