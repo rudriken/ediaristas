@@ -20,7 +20,8 @@ export const AlternadorDeBotaoEstilizado = styled(ToggleButton)`
 			color: white;
 			border: 2px solid ${({ theme }) => theme.palette.secondary.dark};
 			&:hover {
-				background-color: ${({ theme }) => theme.palette.secondary.dark};
+				background-color: ${({ theme }) =>
+					theme.palette.secondary.dark};
 			}
 		}
 	}

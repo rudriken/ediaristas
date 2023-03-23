@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // reactStrictMode: true,
+	// reactStrictMode: true,
 	env: {
-		NEXT_PUBLIC_ABC: 123
-	}
+		NEXT_PUBLIC_ABC: 123,
+	},
 };
 
 module.exports = nextConfig;

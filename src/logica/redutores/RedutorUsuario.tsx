@@ -86,6 +86,7 @@ export function useRedutorUsuario(): RedutorUsuarioInterface {
 
 	useEffect(() => {
 		pegarUsuario();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [estado.usuario.id]);
 
 	async function pegarUsuario() {

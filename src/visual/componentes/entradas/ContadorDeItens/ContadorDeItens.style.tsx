@@ -31,7 +31,8 @@ export const BotaoCircular = styled(IconButton)`
 		background-color: ${({ theme }) => theme.palette.background.paper};
 		padding: 8px 6px;
 		&:hover {
-			background-color: ${({ theme }) => theme.palette.background.default};
+			background-color: ${({ theme }) =>
+				theme.palette.background.default};
 		}
 	}
 	i {

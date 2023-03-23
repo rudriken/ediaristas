@@ -4,7 +4,9 @@ import { styled, LinearProgress, Theme } from "@mui/material";
 
 export const ForcaDaSenhaRotulo = styled("span", {
 	shouldForwardProp: (propriedades) => propriedades !== "value",
-})<{ value: number }>`
+})<{
+	value: number;
+}>`
 	font-weight: bold;
 	color: ${({ theme, value }) => tratarCorBarra(theme, value)};
 `;

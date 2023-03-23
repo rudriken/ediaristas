@@ -18,7 +18,6 @@ import {
 
 const DetalhesDiaria: React.FC<{ id: string }> = ({ id }) => {
 	const { diaria, diarista, cliente } = useDetalhesDiaria(id);
-	console.log(diarista);
 	if (!diaria.id) {
 		return (
 			<Container sx={{ textAlign: "center", my: 10 }}>

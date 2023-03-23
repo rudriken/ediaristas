@@ -22,11 +22,13 @@ export default function useFormularioCidades(estado: string) {
 
 	useEffect(() => {
 		register("cidadesAtendidas", { value: [] });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		listaDeEnderecos.length &&
 			setValue("cidadesAtendidas", listaDeEnderecos);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [listaDeEnderecos]);
 
 	function aoSelecionarCidade(cidade: string | null) {

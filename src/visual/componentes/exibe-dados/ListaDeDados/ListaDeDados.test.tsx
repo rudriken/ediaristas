@@ -8,5 +8,5 @@ test("Exibir o componente 'ListaDeDados'", () => {
 	// expect(screen.queryByText(testMessage)).toBeNull();
 	// expect(screen.getByText(testMessage)).toBeInTheDocument();
 	// expect(screen.queryByText(text)).toBeVisible();
-	expect(true).toBe(true);
+	// expect(true).toBe(true);
 });

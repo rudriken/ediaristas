@@ -2,12 +2,12 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 import AmbienteSeguro from "./AmbienteSeguro";
 
 export default {
-    title: "retorno/AmbienteSeguro",
-    component: AmbienteSeguro,
+	title: "retorno/AmbienteSeguro",
+	component: AmbienteSeguro,
 } as ComponentMeta<typeof AmbienteSeguro>;
 
 const Modelo: ComponentStory<typeof AmbienteSeguro> = () => {
-    return <AmbienteSeguro />;
+	return <AmbienteSeguro />;
 };
 
 export const Padrao = Modelo.bind({});

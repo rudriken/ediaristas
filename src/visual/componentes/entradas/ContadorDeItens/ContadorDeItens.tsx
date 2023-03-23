@@ -1,6 +1,9 @@
 import React from "react";
 // import {  } from "@mui/material";
-import {ContainerContadorDeItens, BotaoCircular } from "./ContadorDeItens.style";
+import {
+	ContainerContadorDeItens,
+	BotaoCircular,
+} from "./ContadorDeItens.style";
 
 export interface ContadorDeItensProps {
 	rotulo: string;

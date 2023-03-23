@@ -3,7 +3,6 @@ import { ApiLinksInterface } from "logica/@tipos/ApiLinksInterface";
 import { LocalStorage } from "./ServicoArmazenamento";
 
 const url = process.env.NEXT_PUBLIC_API;
-console.log(process.env.NEXT_PUBLIC_ABC);
 
 export const ServicoAPI = axios.create({
 	baseURL: url,

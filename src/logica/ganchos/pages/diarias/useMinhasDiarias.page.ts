@@ -89,11 +89,14 @@ export default function useMinhasDiarias() {
 		mutate("lista_diarias");
 	}
 
-	function filtrarDiarias(diarias: DiariaInterface[], filtro: string): DiariaInterface[] {
+	function filtrarDiarias(
+		diarias: DiariaInterface[],
+		filtro: string
+	): DiariaInterface[] {
 		return diarias.filter((item) => {
-			const avaliada = [
-				DiariaStatus.AVALIADO
-			].includes(item.status as DiariaStatus);
+			const avaliada = [DiariaStatus.AVALIADO].includes(
+				item.status as DiariaStatus
+			);
 			const cancelada = [
 				DiariaStatus.CANCELADO,
 				DiariaStatus.SEM_PAGAMENTO,

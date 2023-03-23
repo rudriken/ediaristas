@@ -50,7 +50,9 @@ const Tabela: ComponenteTabelaTipo = ({
 						</TLinha>
 					</TCabecalho>
 					<TCorpo>
-						{dadosVisiveisNaTabela.map(propriedades.renderizarLinha)}
+						{dadosVisiveisNaTabela.map(
+							propriedades.renderizarLinha
+						)}
 					</TCorpo>
 				</TTabela>
 			</TContainer>

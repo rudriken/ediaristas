@@ -29,6 +29,7 @@ export default function useFormularioEndereco() {
 
 	useEffect(() => {
 		register("endereco.codigo_ibge");
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -40,6 +41,7 @@ export default function useFormularioEndereco() {
 				setValue("endereco.codigo_ibge", cidade.codigo_ibge);
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [enderecoCidade]);
 
 	useEffect(() => {
@@ -63,6 +65,7 @@ export default function useFormularioEndereco() {
 				}
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [enderecoCEP]);
 	return {
 		enderecoUsuario,

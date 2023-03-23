@@ -11,7 +11,9 @@ export const ContainerFormularioEstilizado = styled(Container)`
 
 export const ContainerPaginaFormulario = styled("div", {
 	shouldForwardProp: (propriedade) => propriedade !== "larguraTotal",
-})<{ larguraTotal?: boolean }>`
+})<{
+	larguraTotal?: boolean;
+}>`
 	display: grid;
 	grid-template-columns: ${({ larguraTotal }) =>
 		larguraTotal ? "1fr" : "minmax(652px, 1fr) minmax(150px, 318px)"};

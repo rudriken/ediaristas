@@ -35,6 +35,7 @@ export default function useRoteadorProtetor(
 		return () => {
 			roteador.events.off("routeChangeStart", tratarNavegacao);
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [roteador, logado, logando]);
 
 	function tratarNavegacao(url: string) {
